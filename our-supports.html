@@ -397,6 +397,240 @@ footer{
 }
 .footer-legal a{color:var(--purple-pale)}
 
+/* CALLOUT BOXES */
+.callout-cost{
+  border-left:4px solid var(--teal);
+  background:var(--purple-mist);
+  border-radius:0 4px 4px 0;
+  padding:1.75rem 2rem;
+  margin-top:2.5rem;
+}
+.callout-cost p+p{margin-top:0.6rem}
+
+.callout-interest{
+  border:1px solid var(--purple-pale);
+  border-top:4px solid var(--hot-pink);
+  border-radius:0 0 4px 4px;
+  background:var(--cream);
+  padding:2.5rem 3rem;
+}
+.callout-interest h2{color:var(--purple-deep)}
+
+/* TIMETABLE FILTER */
+.filter-row{
+  display:flex;flex-wrap:wrap;gap:0.75rem;
+  margin:1.5rem 0;
+}
+.filter-btn{
+  padding:0.5rem 1.4rem;
+  border-radius:2px;
+  border:1.5px solid var(--purple-pale);
+  background:var(--warm-white);
+  color:var(--text-mid);
+  font-family:'Figtree',sans-serif;
+  font-size:0.85rem;font-weight:500;
+  cursor:pointer;transition:all 0.2s;
+}
+.filter-btn:hover{border-color:var(--purple);color:var(--purple)}
+.filter-btn[data-group="all"].active{background:var(--purple-deep);border-color:var(--purple-deep);color:white}
+.filter-btn[data-group="6-8"].active{background:var(--hot-pink);border-color:var(--hot-pink);color:white}
+.filter-btn[data-group="9-12"].active{background:var(--teal);border-color:var(--teal);color:white}
+.filter-btn[data-group="teens"].active{background:var(--purple);border-color:var(--purple);color:white}
+.filter-btn[data-group="adults"].active{background:var(--gold);border-color:var(--gold);color:var(--text)}
+
+/* WEEK GRID */
+.week-grid-wrap{overflow-x:auto;margin-top:1.5rem;-webkit-overflow-scrolling:touch}
+.week-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(155px,1fr));
+  gap:0.6rem;
+  min-width:940px;
+}
+.week-day{
+  background:var(--warm-white);
+  border:1px solid var(--purple-pale);
+  border-radius:4px;
+  overflow:hidden;
+}
+.week-day-hdr{
+  background:var(--purple-deep);color:white;
+  padding:0.55rem 0.75rem;
+  font-family:'Figtree',sans-serif;font-size:0.75rem;
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+}
+.week-sessions{padding:0.4rem;display:flex;flex-direction:column;gap:0.35rem}
+.ws{
+  padding:0.4rem 0.55rem 0.4rem 0.65rem;
+  border-left:3px solid var(--purple-pale);
+  border-radius:0 3px 3px 0;
+  background:var(--purple-ghost);
+  transition:opacity 0.2s;
+}
+.ws.ag-6-8{border-left-color:var(--hot-pink);background:#fff0f5}
+.ws.ag-9-12{border-left-color:var(--teal);background:#f0fafa}
+.ws.ag-teens{border-left-color:var(--purple);background:var(--purple-ghost)}
+.ws.ag-adults{border-left-color:var(--gold);background:#fdf8ee}
+.ws-time{font-size:0.68rem;color:var(--text-soft);line-height:1.3;letter-spacing:0.01em}
+.ws-prog{font-size:0.82rem;font-weight:500;color:var(--text);margin-top:0.15rem;line-height:1.3}
+
+/* Filter dimming */
+.week-grid.filter-6-8 .ws:not(.ag-6-8){opacity:0.15;pointer-events:none}
+.week-grid.filter-9-12 .ws:not(.ag-9-12){opacity:0.15;pointer-events:none}
+.week-grid.filter-teens .ws:not(.ag-teens){opacity:0.15;pointer-events:none}
+.week-grid.filter-adults .ws:not(.ag-adults){opacity:0.15;pointer-events:none}
+
+/* Scroll hint */
+.scroll-hint{font-size:0.78rem;color:var(--text-soft);margin-top:0.5rem;display:none}
+@media(max-width:1000px){.scroll-hint{display:block}}
+.timetable-placeholder{
+  background:var(--purple-ghost);
+  border:1px solid var(--purple-pale);
+  border-radius:4px;
+  padding:2rem 2.5rem;
+  color:var(--text-mid);
+  font-size:0.92rem;
+}
+
+/* SESSION TABLE */
+.session-table{width:100%;border-collapse:collapse;font-size:0.9rem}
+.session-table thead tr{background:var(--purple-deep);color:white}
+.session-table thead th{
+  padding:0.65rem 1rem;text-align:left;
+  font-family:'Figtree',sans-serif;font-weight:600;
+  font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;
+}
+.session-table tbody tr{border-bottom:1px solid var(--purple-pale)}
+.session-table tbody tr:last-child{border-bottom:none}
+.session-table tbody tr:hover td{background:var(--purple-ghost)}
+.session-table td{padding:0.75rem 1rem;vertical-align:middle;color:var(--text)}
+.session-table td:first-child{color:var(--text-mid);font-size:0.85rem;white-space:nowrap;width:90px}
+.session-table td:nth-child(2){white-space:nowrap;width:150px;color:var(--text-mid);font-size:0.85rem}
+.session-table .s-name{font-weight:500}
+.badge-new{
+  display:inline-block;
+  background:var(--hot-pink);color:white;
+  font-size:0.65rem;font-weight:700;
+  padding:0.1rem 0.35rem;border-radius:2px;
+  margin-left:0.4rem;letter-spacing:0.04em;
+  vertical-align:middle;text-transform:uppercase;
+}
+.badge-full{
+  display:inline-block;
+  background:var(--gold);color:var(--text);
+  font-size:0.65rem;font-weight:700;
+  padding:0.1rem 0.35rem;border-radius:2px;
+  margin-left:0.4rem;letter-spacing:0.04em;
+  vertical-align:middle;text-transform:uppercase;
+}
+@media(max-width:600px){
+  .session-table td:first-child,.session-table td:nth-child(2){white-space:normal}
+}
+
+/* INTEREST FORM */
+.interest-form{
+  margin-top:1.5rem;
+  display:grid;gap:1rem;
+}
+.interest-form input,
+.interest-form select,
+.interest-form textarea{
+  width:100%;padding:0.75rem 1rem;
+  border:1.5px solid var(--purple-pale);
+  border-radius:2px;
+  font-family:'Figtree',sans-serif;
+  font-size:0.92rem;color:var(--text);
+  background:var(--warm-white);
+  transition:border-color 0.2s;
+  box-sizing:border-box;
+}
+.interest-form input:focus,
+.interest-form select:focus,
+.interest-form textarea:focus{outline:none;border-color:var(--purple)}
+.interest-form textarea{min-height:100px;resize:vertical}
+.form-note{font-size:0.8rem;color:var(--text-soft);margin-top:0.25rem;line-height:1.5}
+
+/* FUNDING CARDS */
+.funding-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.5rem;margin-top:2rem;
+}
+.funding-card{
+  background:var(--warm-white);
+  border:1px solid var(--purple-pale);
+  border-top:3px solid var(--purple);
+  border-radius:4px;
+  padding:1.75rem;
+}
+.funding-card .fc-code{
+  display:inline-block;
+  background:var(--purple-deep);color:white;
+  font-size:0.72rem;font-weight:600;
+  padding:0.18rem 0.5rem;border-radius:2px;
+  font-family:'Figtree',monospace;
+  margin-bottom:0.6rem;
+}
+.funding-card h3{font-size:1rem;color:var(--purple-deep);margin-bottom:0.4rem}
+.funding-card p{font-size:0.9rem;color:var(--text-mid)}
+
+/* EXPAND / COLLAPSE */
+.expandable{overflow:hidden;transition:max-height 0.4s ease}
+.expandable.collapsed{max-height:0}
+.expandable.expanded{max-height:9999px}
+.expand-toggle{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  margin-top:1.25rem;
+  background:none;border:none;padding:0;
+  color:var(--purple);font-family:'Figtree',sans-serif;
+  font-size:0.92rem;font-weight:500;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px;
+}
+.expand-toggle:hover{color:var(--purple-deep)}
+.expand-toggle .toggle-arrow{
+  display:inline-block;transition:transform 0.3s;font-style:normal;
+}
+.expand-toggle.open .toggle-arrow{transform:rotate(180deg)}
+
+/* REGISTRATION CODE ACCORDION */
+.reg-accordion{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.5rem}
+.reg-item{border:1px solid var(--purple-pale);border-radius:4px;overflow:hidden}
+.reg-trigger{
+  display:flex;align-items:center;gap:1rem;
+  width:100%;padding:0.9rem 1.25rem;
+  background:var(--warm-white);
+  border:none;cursor:pointer;text-align:left;
+  font-family:'Figtree',sans-serif;
+  transition:background 0.15s;
+}
+.reg-trigger:hover{background:var(--purple-ghost)}
+.reg-trigger[aria-expanded="true"]{background:var(--purple-ghost)}
+.reg-code{
+  display:inline-block;
+  background:var(--purple-deep);color:white;
+  font-size:0.75rem;font-weight:700;
+  padding:0.22rem 0.6rem;border-radius:2px;
+  font-family:'Figtree',monospace;
+  flex-shrink:0;
+}
+.reg-title{font-size:0.95rem;font-weight:500;color:var(--text);flex:1}
+.reg-arrow{
+  font-size:0.7rem;color:var(--text-soft);flex-shrink:0;
+  transition:transform 0.25s;
+}
+.reg-trigger[aria-expanded="true"] .reg-arrow{transform:rotate(180deg)}
+.reg-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.3s ease;
+}
+.reg-body.open{max-height:400px}
+.reg-body-inner{
+  padding:0.9rem 1.25rem 1.1rem 1.25rem;
+  border-top:1px solid var(--purple-pale);
+  background:var(--purple-ghost);
+  font-size:0.92rem;color:var(--text-mid);
+  line-height:1.6;
+}
+
 /* RESPONSIVE */
 @media(max-width:900px){
   .two-col,.two-col-narrow{grid-template-columns:1fr;gap:2.5rem}
@@ -461,7 +695,8 @@ footer{
   <div class="section-intro">
     <span class="section-tag">Overview</span>
     <h2>What We Offer</h2>
-    <p>Neurodivergent Empowered provides support coordination, psychosocial recovery coaching, early childhood supports, capacity building, community participation, and therapeutic supports. Our services are delivered in a way that respects neurodivergent identity, prioritises participant authority, and adapts to how your nervous system actually works on any given day. We are an NDIS registered provider operating on the Sunshine Coast, Queensland, and we work with participants across a range of registration groups depending on their individual plan and goals.</p>
+    <p>Neurodivergent Empowered provides interest-based participation supports, support coordination, psychosocial recovery coaching, early childhood supports, capacity building, community participation, and therapeutic supports.</p>
+    <p style="margin-top:1rem">Our services are delivered in a way that respects neurodivergent identity, prioritises participant authority, and adapts to how your nervous system actually works on any given day. We are an NDIS registered provider operating on the Sunshine Coast, Queensland, and we work with participants across a range of registration codes depending on their individual plan and goals.</p>
   </div>
 </div>
 </div>
@@ -476,7 +711,19 @@ footer{
       <p style="color:var(--text-mid);margin-top:1rem">These are structured supports designed around genuine interest and natural engagement, not programmes built around behavioural compliance. When participation is interest-driven, skill development happens alongside it, rather than as the goal in itself.</p>
       <p style="color:var(--text-mid);margin-top:1rem">Sessions are delivered at <strong>The Nest</strong>, our purpose-built space at Caloundra Rumba Resort on the Sunshine Coast. The Nest is a sensory-aware, low-demand environment designed to reduce the cost of showing up. It is not a clinical room. It is a place where people can regulate, connect, and participate in ways that make sense for them.</p>
 
-      <p style="color:var(--text-mid);margin-top:1.5rem">To find out what is currently running at The Nest and check availability, <a href="contact.html" class="link-accent">get in touch with us directly</a>. Sessions change each term and we are happy to talk through what would suit you or your person.</p>
+      <button class="expand-toggle" id="ibsToggle" aria-expanded="false" aria-controls="ibsExtra">
+        Why specialist delivery matters <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+
+      <div class="expandable collapsed" id="ibsExtra">
+      <p style="color:var(--text-mid);margin-top:1.5rem">Every session at The Nest is delivered by a practitioner who is a trained therapy assistant or therapist in training, working under clinical supervision. We work exclusively with Autistic and neurodivergent people. This is not a general disability service that accommodates neurodivergence. It is a specialist environment built specifically for it, by people who understand it from the inside.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">That distinction matters. Mainstream community groups, hobby clubs, and general disability services do not provide neurodivergent-affirming facilitation. They do not create an Autistic peer environment. They do not include clinical oversight of participation. Research consistently shows that Autistic people mask significantly more in neurotypical social settings, and that sustained masking elevates stress, depletes capacity, and contributes to burnout. The support NE provides is not a more accessible version of what already exists in the community. It addresses a documented need that community settings are not equipped to meet.</p>
+      <p style="color:var(--text-mid);margin-top:1.5rem">Autistic and neurodivergent people face specific disability-related barriers to social participation that most community settings do not address. Unstructured social environments, neurotypical communication norms, unpredictable sensory conditions, and the demand to mask are not inconveniences. They are the reason participation often does not happen at all. Every session at The Nest is designed around removing those specific barriers, not around managing the person who faces them. The interest is the vehicle. The barrier is what we are funded to address.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">Sessions connect directly to NDIS plan goals including building friendships and social connection, increasing community participation, developing daily living and communication skills, and building capacity for greater independence. You do not need a specific goal for every session, but the support is always working toward something real in your life.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">Interest-matched participation also represents strong value for NDIS funding. Connecting Autistic participants with others who share their interests in a specialist-facilitated environment reduces social isolation, builds peer connection that exists outside funded supports, and develops skills and confidence that reduce reliance on higher-intensity supports over time. We actively look for where shared delivery is appropriate so that costs stay manageable while outcomes stay high.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">Every Australian has the opportunity to connect with people who share their interests. For many Autistic people, that opportunity has not been reliably available - not because the interests are not there, but because the environments where those connections happen were not built for them. These sessions exist to change that. Connection through shared interest is not a programme extra. It is what an ordinary life looks like.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">Our interest-based approach is supported by peer-reviewed research demonstrating that interest-matched environments reduce masking, reduce anxiety, and improve social outcomes for Autistic people in ways that generic community settings cannot replicate. Evidence references are available on request and provided to support plan reassessment reports.</p>
+      </div>
     </div>
     <div class="info-panel" style="position:sticky;top:6rem">
       <h3>About The Nest</h3>
@@ -485,35 +732,308 @@ footer{
       <p style="margin-top:0.75rem">Lighting, layout, and noise levels are managed to support a range of sensory profiles. Participants can arrive in whatever state they arrive in.</p>
     </div>
   </div>
+
+  <div class="callout-cost">
+    <p style="font-weight:600;color:var(--text);font-family:'Figtree',sans-serif">You bring your interests. We bring the support.</p>
+    <p style="color:var(--text-mid);font-size:0.92rem">NDIS funding through NE covers the support that makes participation possible - the practitioner in the room, the matching, the facilitation, and the clinical oversight.</p>
+    <p style="color:var(--text-mid);font-size:0.92rem">If you are unsure what your plan covers, your support coordinator can help you work that out before you start.</p>
+  </div>
 </div>
 </div>
 
-<!-- CAPACITY BUILDING COACHING -->
+<!-- TIMETABLE -->
 <div class="section-wrap">
 <div class="section">
-  <span class="section-tag">1:1 Support</span>
-  <div class="two-col">
+  <span class="section-tag">What's On at The Nest</span>
+  <h2>Term 1 schedule.</h2>
+  <p style="color:var(--text-mid);max-width:680px;margin-top:1rem">All supports running Monday to Saturday at The Nest, Caloundra. Use the filters to focus on a specific age range.</p>
+
+  <div class="filter-row" id="timetableFilters" style="margin-top:1.5rem">
+    <button class="filter-btn active" data-group="all">All Sessions</button>
+    <button class="filter-btn" data-group="6-8" style="border-color:var(--hot-pink);color:var(--hot-pink)">6 - 8 Years</button>
+    <button class="filter-btn" data-group="9-12" style="border-color:var(--teal);color:var(--teal)">9 - 12 Years</button>
+    <button class="filter-btn" data-group="teens" style="border-color:var(--purple);color:var(--purple)">Teens</button>
+    <button class="filter-btn" data-group="adults" style="border-color:var(--gold);color:var(--text)">Adults</button>
+  </div>
+  <p class="scroll-hint">Scroll right to see all days &rarr;</p>
+
+  <div class="week-grid-wrap">
+  <div class="week-grid" id="weekGrid">
+
+    <!-- MONDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Monday</div>
+      <div class="week-sessions">
+        <div class="ws ag-teens">
+          <div class="ws-time">9:30 - 11:30am</div>
+          <div class="ws-prog">Gaming Design</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">12:00 - 1:30pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">12:00 - 1:30pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">1:30 - 3:00pm</div>
+          <div class="ws-prog">How to be a DM</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">1:30 - 3:00pm</div>
+          <div class="ws-prog">How 2 Be a DM</div>
+        </div>
+        <div class="ws ag-adults">
+          <div class="ws-time">6:00 - 8:00pm</div>
+          <div class="ws-prog">Role Playing Games</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TUESDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Tuesday</div>
+      <div class="week-sessions">
+        <div class="ws ag-adults">
+          <div class="ws-time">11:30am - 12:30pm</div>
+          <div class="ws-prog">Chaos to Calm</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">1:00 - 3:00pm</div>
+          <div class="ws-prog">Youtuber Creation <span class="badge-new">New</span></div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">3:00 - 5:00pm</div>
+          <div class="ws-prog">Pokemon Takeover</div>
+        </div>
+        <div class="ws ag-adults">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEDNESDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Wednesday</div>
+      <div class="week-sessions">
+        <div class="ws ag-9-12">
+          <div class="ws-time">11:00am - 2:00pm</div>
+          <div class="ws-prog">9-12 Nesting</div>
+        </div>
+        <div class="ws ag-6-8">
+          <div class="ws-time">11:00am - 2:00pm</div>
+          <div class="ws-prog">Minecraft Mates</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">11:00am - 2:00pm</div>
+          <div class="ws-prog">Minecraft Mates</div>
+        </div>
+        <div class="ws ag-6-8">
+          <div class="ws-time">11:00am - 2:00pm</div>
+          <div class="ws-prog">Roblox</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">11:00am - 2:00pm</div>
+          <div class="ws-prog">Roblox</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">2:00 - 5:00pm</div>
+          <div class="ws-prog">Autistic Teens</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Anime Connections</div>
+        </div>
+        <div class="ws ag-adults">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Anime Connections</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THURSDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Thursday</div>
+      <div class="week-sessions">
+        <div class="ws ag-9-12">
+          <div class="ws-time">3:30 - 5:00pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons</div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">3:30 - 5:00pm</div>
+          <div class="ws-prog">Roblox</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">3:30 - 5:00pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons <span class="badge-full">Full</span></div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Magic the Gathering</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Magic the Gathering</div>
+        </div>
+        <div class="ws ag-adults">
+          <div class="ws-time">5:30 - 7:30pm</div>
+          <div class="ws-prog">Beanbag Banter &amp; Boardgames</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRIDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Friday</div>
+      <div class="week-sessions">
+        <div class="ws ag-9-12">
+          <div class="ws-time">12:00 - 3:00pm</div>
+          <div class="ws-prog">Music Connections <span class="badge-new">New</span></div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">12:00 - 3:00pm</div>
+          <div class="ws-prog">Teens Nesting <span class="badge-new">New</span></div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">3:30 - 5:00pm</div>
+          <div class="ws-prog">Furry Friends <span class="badge-new">New</span></div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">3:30 - 5:00pm</div>
+          <div class="ws-prog">Dungeons &amp; Dragons</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SATURDAY -->
+    <div class="week-day">
+      <div class="week-day-hdr">Saturday</div>
+      <div class="week-sessions">
+        <div class="ws ag-9-12">
+          <div class="ws-time">10:00am - 12:00pm</div>
+          <div class="ws-prog">Movement Adventures <span class="badge-new">New</span></div>
+        </div>
+        <div class="ws ag-9-12">
+          <div class="ws-time">10:00am - 2:00pm</div>
+          <div class="ws-prog">9-12 Years Nesting</div>
+        </div>
+        <div class="ws ag-teens">
+          <div class="ws-time">2:15 - 5:15pm</div>
+          <div class="ws-prog">Autistic Teens</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>
+</div>
+
+<!-- REGISTER INTEREST -->
+<div class="section-wrap-alt">
+<div class="section">
+  <div style="max-width:780px">
+    <div class="callout-interest">
+      <h2>Don't see your interest listed?</h2>
+      <p style="color:var(--text-mid);margin-top:0.75rem">Tell us what lights you up. When three or more people register the same interest, we build a session around it.</p>
+      <p style="color:var(--text-mid);margin-top:0.75rem">We do not prescribe what you have to be interested in. You bring the interest. We find the people who share it and create the space for it.</p>
+      <form class="interest-form" name="register-interest" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="register-interest">
+        <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="text" name="contact" placeholder="Email or phone number" required>
+        <select name="age-group" id="interestAgeGroup" required>
+          <option value="" disabled selected>Select your age range</option>
+          <option value="6-8">6 - 8 Years</option>
+          <option value="9-12">9 - 12 Years</option>
+          <option value="teens">Teens</option>
+          <option value="adults">Adults</option>
+        </select>
+        <textarea name="interests" placeholder="What are you interested in? Tell us as much or as little as you like." required></textarea>
+        <select name="ndis" required>
+          <option value="" disabled selected>Are you an NDIS participant?</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="not-sure">Not sure yet</option>
+        </select>
+        <div>
+          <button type="submit" class="btn-primary" style="cursor:pointer;border:none">Register My Interest</button>
+        </div>
+        <p class="form-note">Registering your interest does not commit you to anything. We will be in touch when enough people have registered the same interest to start a conversation about building a session. Your details are stored securely and used only for this purpose.</p>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- DELIVERY AND PRICING -->
+<div class="section-wrap">
+<div class="section">
+  <span class="section-tag">How We Work</span>
+  <div class="two-col-narrow">
     <div>
-      <h2>Capacity Building and Recovery Coaching</h2>
-      <p style="color:var(--text-mid);margin-top:1rem">We offer two distinct 1:1 coaching supports: <strong>Capacity Building Coaching</strong> and <strong>Psychosocial Recovery Coaching</strong>. Both are delivered one-to-one, are not activity-led, and centre the person, their goals, and what they need to build skills, connection, and self-understanding over time.</p>
-      <p style="color:var(--text-mid);margin-top:0.75rem">Recovery Coaching is specifically for participants living with psychosocial disability. It focuses on building recovery capital, navigating mental health systems, developing daily routines, and working toward a life that feels meaningful and self-directed. Recovery Coaches work alongside participants, not above them.</p>
-      <p style="color:var(--text-mid);margin-top:1rem">Coaching can include:</p>
+      <h2>Delivery and Pricing</h2>
+      <p style="color:var(--text-mid);margin-top:1rem">Supports at The Nest are delivered alongside other participants who share your interests. This is why you will see multiple team members working together in the space at any one time - each participant has their own support plan, and the environment is designed so that connection happens naturally between people who genuinely have something in common.</p>
+
+      <button class="expand-toggle" id="pricingToggle" aria-expanded="false" aria-controls="pricingExtra">
+        Pricing details <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+      </button>
+
+      <div class="expandable collapsed" id="pricingExtra">
+        <p style="color:var(--text-mid);margin-top:1.25rem">Because of how our team operates together, the ratio of support works out to just under 1:1 per participant, despite the shared delivery environment.</p>
+        <p style="color:var(--text-mid);margin-top:1rem">Our current pricing:</p>
+        <ul style="margin-top:0.75rem;margin-left:1.25rem;color:var(--text-mid);display:grid;gap:0.4rem">
+          <li>Under 18, weekday: <strong>$45 per hour</strong></li>
+          <li>Under 18, weekend: <strong>$55 per hour</strong></li>
+          <li>18 and over: <strong>$35 per hour</strong></li>
+        </ul>
+        <p style="color:var(--text-mid);margin-top:1rem">These rates sit well below the NDIS price limits for community participation and capacity building supports, and reflect our commitment to keeping access affordable. Your support coordinator can confirm which rate applies to your plan and goals.</p>
+        <p style="color:var(--text-mid);margin-top:1rem">Spaces are limited. Pricing under shared delivery is calculated differently to individual 1:1 support - your support coordinator can advise on what applies to your plan.</p>
+      </div>
+    </div>
+    <div class="info-panel" style="position:sticky;top:6rem">
+      <h3>A note on pricing</h3>
+      <p>Our rates are set below NDIS price limits to keep access as broad as possible.</p>
+      <p style="margin-top:0.75rem">If you are a plan-managed or self-managed participant, your support coordinator or plan manager can confirm how support costs are claimed from your plan.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SUPPORT COORDINATION AND RECOVERY COACHING -->
+<div class="section-wrap">
+<div class="section">
+  <span class="section-tag">Coordination - 1:1 Support</span>
+  <h2>Support Coordination and Recovery Coaching</h2>
+  <p style="color:var(--text-mid);margin-top:1rem">We offer two distinct coordination supports under Registration Code 0106: <strong>Support Coordination</strong> and <strong>Psychosocial Recovery Coaching</strong>. Both are funded coordination supports, not coaching programmes. They are delivered one-to-one, are not activity-led, and centre the person, their goals, and what they need to build capacity, connection, and self-direction over time.</p>
+  <button class="expand-toggle" id="scToggle" aria-expanded="false" aria-controls="scExtra" style="margin-top:0.75rem">
+    Read more <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+  </button>
+  <div class="expandable collapsed" id="scExtra">
+  <div class="two-col" style="margin-top:1.5rem">
+    <div>
+      <p style="color:var(--text-mid);margin-top:0.75rem"><strong>Support Coordination</strong> helps participants understand and implement their NDIS plans, connect with providers, navigate systems, and build the confidence to direct their own support. It is a coordination function - the support coordinator works alongside you to strengthen your capacity to manage your own life and plan.</p>
+      <p style="color:var(--text-mid);margin-top:0.75rem"><strong>Psychosocial Recovery Coaching</strong> is specifically for participants living with psychosocial disability. It focuses on building recovery capital, navigating mental health systems, developing daily routines, and working toward a life that feels meaningful and self-directed. Recovery Coaches work alongside participants, not above them. This is a coordination support, not a clinical or therapeutic intervention.</p>
+      <p style="color:var(--text-mid);margin-top:1rem">These supports can include:</p>
       <ul style="margin-top:0.75rem;margin-left:1.25rem;color:var(--text-mid);display:grid;gap:0.5rem">
         <li>Goal setting and life planning support</li>
         <li>Managing daily routines and transitions</li>
         <li>Developing self-advocacy skills</li>
         <li>Understanding and navigating systems (NDIS, health, education, employment)</li>
         <li>Building independence in community settings</li>
-        <li>Recovery-focused support for participants with psychosocial disability</li>
+        <li>Recovery-focused coordination for participants with psychosocial disability</li>
         <li>Preparing for and working through life changes</li>
       </ul>
     </div>
     <div class="info-panel">
       <h3>Funding Information</h3>
-      <p><strong>Capacity Building Coaching</strong> is funded under registration group 0106 (Support Coordination and Life Stages).</p>
-      <p style="margin-top:0.75rem"><strong>Psychosocial Recovery Coaching</strong> is funded under its own line item within registration group 0106, and is available to participants whose plans include a psychosocial component.</p>
-      <p style="margin-top:0.75rem">Your Support Coordinator can advise on which coaching type aligns with your current plan and goals.</p>
+      <p><strong>Support Coordination</strong> is funded under Registration Code 0106 and is available to participants with Support Coordination in their plan.</p>
+      <p style="margin-top:0.75rem"><strong>Psychosocial Recovery Coaching</strong> is funded under its own line item within Registration Code 0106, and is available to participants whose plans include a psychosocial component.</p>
+      <p style="margin-top:0.75rem">Both are coordination supports. Your Support Coordinator or LAC can advise on which applies to your current plan.</p>
     </div>
+  </div>
   </div>
 </div>
 </div>
@@ -523,8 +1043,13 @@ footer{
 <div class="section">
   <span class="section-tag">Eligibility</span>
   <h2>Who This Is For</h2>
-  <p style="color:var(--text-mid);max-width:680px;margin-top:1rem">Our services are designed for people who have not been well-served by standard approaches. You do not need to mask, perform readiness, or meet anyone else's benchmarks to access support here.</p>
-  <div class="who-list">
+  <p style="color:var(--text-mid);max-width:680px;margin-top:1rem">Neurodivergent Empowered is an Autistic-specialist service. We work exclusively with Autistic and neurodivergent people. This is not a general disability service that accommodates neurodivergence - it is a specialist environment built around it, by people who understand it from the inside.</p>
+  <button class="expand-toggle" id="whoToggle" aria-expanded="false" aria-controls="whoExtra" style="margin-top:0.75rem">
+    Read more <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+  </button>
+  <div class="expandable collapsed" id="whoExtra" style="margin-top:1rem">
+  <p style="color:var(--text-mid);max-width:680px">Our services are designed for people who have not been well-served by standard approaches. You do not need to mask, perform readiness, or meet anyone else's benchmarks to access support here.</p>
+  <div class="who-list" style="margin-top:1.5rem">
     <div class="who-item">Autistic children, young people and adults</div>
     <div class="who-item">People with co-occurring neurodivergence and psychosocial disability</div>
     <div class="who-item">People with sensory processing differences</div>
@@ -533,6 +1058,7 @@ footer{
     <div class="who-item">People whose previous supports have not worked</div>
     <div class="who-item">Early childhood participants (0 to 9 years) under the NDIS early childhood approach</div>
     <div class="who-item">Participants in any phase of their NDIS journey</div>
+  </div>
   </div>
 </div>
 </div>
@@ -552,16 +1078,21 @@ footer{
 <div class="section-wrap-mist">
 <div class="section">
   <span class="section-tag">Families and Carers</span>
-  <div class="two-col">
+  <h2>Supporting the People Around You</h2>
+  <p style="color:var(--text-mid);margin-top:1rem">We recognise that family members and carers often carry a significant load. Where a participant consents, we welcome family involvement in planning, goal setting, and understanding how best to support their person at home and in the community.</p>
+  <button class="expand-toggle" id="familiesToggle" aria-expanded="false" aria-controls="familiesExtra" style="margin-top:0.75rem">
+    Read more <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+  </button>
+  <div class="expandable collapsed" id="familiesExtra">
+  <div class="two-col" style="margin-top:1.5rem">
     <div>
-      <h2>Supporting the People Around You</h2>
-      <p style="color:var(--text-mid);margin-top:1rem">We recognise that family members and carers often carry a significant load. Where a participant consents, we welcome family involvement in planning, goal setting, and understanding how best to support their person at home and in the community.</p>
-      <p style="color:var(--text-mid);margin-top:1rem">We also work collaboratively with families around early childhood supports, where the goals of the participant and the capacity of the family system are closely connected.</p>
+      <p style="color:var(--text-mid)">We also work collaboratively with families around early childhood supports, where the goals of the participant and the capacity of the family system are closely connected.</p>
     </div>
     <div class="info-panel">
       <h3>A note on boundaries</h3>
       <p>Our primary relationship is always with the participant. Families and carers are welcome partners in support, but participant authority and decision-making comes first. We work from a position that the participant is the expert on their own experience.</p>
     </div>
+  </div>
   </div>
 </div>
 </div>
@@ -577,58 +1108,80 @@ footer{
 </div>
 </div>
 
-<!-- NDIS REGISTRATION CODES TABLE -->
+<!-- NDIS REGISTRATION CODES (combined) -->
 <div class="section-wrap-alt">
 <div class="section">
   <span class="section-tag">Funding and Registration</span>
-  <h2>NDIS Registration Groups</h2>
-  <p style="color:var(--text-mid);max-width:680px;margin-top:1rem">The table below shows the five registration groups under which we currently deliver supports, and what falls within each.</p>
-  <table class="ndis-table">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Registration Group</th>
-        <th>What We Deliver Under This Group</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="code-pill">0106</span></td>
-        <td>Support Coordination / Psychosocial Recovery Coaching</td>
-        <td>Support Coordination (Level 2), Specialist Support Coordination, <strong>Psychosocial Recovery Coaching</strong>, <strong>Capacity Building Coaching</strong>, Peer Mentoring, Managing Life Transitions</td>
-      </tr>
-      <tr>
-        <td><span class="code-pill">0117</span></td>
-        <td>Capacity Building, Daily Living and Life Skills</td>
-        <td>Development of daily living skills in community and clinic-based settings only. This does not include in-home personal care or daily personal activities.</td>
-      </tr>
-      <tr>
-        <td><span class="code-pill">0118</span></td>
-        <td>Early Childhood Supports</td>
-        <td>NDIS early childhood approach supports for children aged 0 to 9 years and their families, including goal-directed intervention and family capacity building.</td>
-      </tr>
-      <tr>
-        <td><span class="code-pill">0125</span></td>
-        <td>Community, Social and Civic Participation</td>
-        <td>Individual participation supports including The Nest session programme. Community access and inclusion activities.</td>
-      </tr>
-      <tr>
-        <td><span class="code-pill">0128</span></td>
-        <td>Therapeutic Supports</td>
-        <td>Counselling supports delivered by a registered counsellor. This does not include general allied health, physiotherapy, occupational therapy, or speech pathology, which are available via our <a href="allied-health.html" class="link-accent">Allied Health Collaboration</a> pathway.</td>
-      </tr>
-    </tbody>
-  </table>
+  <h2>NDIS Registration Codes</h2>
+  <p style="color:var(--text-mid);max-width:680px;margin-top:1rem">How your supports at The Nest are funded depends on your plan and your goals. The same support can draw from different funding lines depending on what it is working toward for you.</p>
+  <button class="expand-toggle" id="regCodesToggle" aria-expanded="false" aria-controls="regCodesExtra" style="margin-top:0.75rem">
+    View registration codes <span class="toggle-arrow" aria-hidden="true">&#9660;</span>
+  </button>
+  <div class="expandable collapsed" id="regCodesExtra" style="margin-top:1rem">
+  <p style="color:var(--text-mid);max-width:680px">Select a registration code to see what it covers and what we deliver under it.</p>
+  <div class="reg-accordion" id="regAccordion" style="margin-top:1.5rem">
+    <div class="reg-item">
+      <button class="reg-trigger" aria-expanded="false" aria-controls="rt-0106">
+        <span class="reg-code">0106</span>
+        <span class="reg-title">Support Coordination and Psychosocial Recovery Coaching</span>
+        <span class="reg-arrow">&#9660;</span>
+      </button>
+      <div class="reg-body" id="rt-0106">
+        <div class="reg-body-inner">Both Support Coordination and Psychosocial Recovery Coaching are coordination supports funded under this code - not coaching programmes. Support Coordination helps participants implement their plans, connect with providers, and build confidence to direct their own support. Psychosocial Recovery Coaching is specifically for participants living with psychosocial disability, focusing on recovery capital, navigating mental health systems, and building a meaningful, self-directed life. What we deliver: Support Coordination (Level 2), Specialist Support Coordination, Psychosocial Recovery Coaching, Peer Mentoring, Managing Life Transitions.</div>
+      </div>
+    </div>
+    <div class="reg-item">
+      <button class="reg-trigger" aria-expanded="false" aria-controls="rt-0117">
+        <span class="reg-code">0117</span>
+        <span class="reg-title">Capacity Building, Daily Living and Life Skills</span>
+        <span class="reg-arrow">&#9660;</span>
+      </button>
+      <div class="reg-body" id="rt-0117">
+        <div class="reg-body-inner">Skill development through things you care about - executive functioning, transitions, routines, confidence. Building toward independence at your pace. Delivered in community and clinic-based settings only. Does not include in-home personal care or daily personal activities.</div>
+      </div>
+    </div>
+    <div class="reg-item">
+      <button class="reg-trigger" aria-expanded="false" aria-controls="rt-0118">
+        <span class="reg-code">0118</span>
+        <span class="reg-title">Early Childhood Supports</span>
+        <span class="reg-arrow">&#9660;</span>
+      </button>
+      <div class="reg-body" id="rt-0118">
+        <div class="reg-body-inner">NDIS early childhood approach supports for children aged 0 to 9 years and their families. Interest-led participation in natural environments, directed to families as much as child. Includes goal-directed intervention and family capacity building.</div>
+      </div>
+    </div>
+    <div class="reg-item">
+      <button class="reg-trigger" aria-expanded="false" aria-controls="rt-0125">
+        <span class="reg-code">0125</span>
+        <span class="reg-title">Community, Social and Civic Participation</span>
+        <span class="reg-arrow">&#9660;</span>
+      </button>
+      <div class="reg-body" id="rt-0125">
+        <div class="reg-body-inner">Supported access to The Nest and community activities. The support alongside you is what NDIS funds. The activity is yours. Individual participation supports including The Nest support programme and community access and inclusion activities.</div>
+      </div>
+    </div>
+    <div class="reg-item">
+      <button class="reg-trigger" aria-expanded="false" aria-controls="rt-0128">
+        <span class="reg-code">0128</span>
+        <span class="reg-title">Therapeutic Supports</span>
+        <span class="reg-arrow">&#9660;</span>
+      </button>
+      <div class="reg-body" id="rt-0128">
+        <div class="reg-body-inner">Counselling supports delivered by a registered counsellor within scope. Separate from interest-based supports - different funding line, different conversation. Does not include general allied health, physiotherapy, occupational therapy, or speech pathology, which are available via our <a href="allied-health.html" class="link-accent">Allied Health Collaboration</a> pathway.</div>
+      </div>
+    </div>
+  </div>
+  <p style="color:var(--text-soft);font-size:0.9rem;margin-top:1.5rem">Not sure which funding line applies? Your support coordinator can help. If you do not yet have a support coordinator, <a href="contact.html" class="link-accent">contact us</a> and we can point you in the right direction.</p>
+  <p style="color:var(--text-soft);font-size:0.9rem;margin-top:0.75rem">Our practice across all registration codes is grounded in peer-reviewed evidence for neurodivergent-affirming approaches. If you are a support coordinator or allied health practitioner seeking evidence references to support a plan or reassessment report, <a href="contact.html" class="link-accent">contact us directly</a> and we will provide the relevant documentation.</p>
+  </div>
 </div>
 </div>
-
-<!-- PRIVATE FUNDING NOTE -->
 <div class="section-wrap">
 <div class="section" style="max-width:780px">
   <span class="section-tag">Private Access</span>
   <h2>Privately Funded Participation</h2>
-  <p style="color:var(--text-mid);margin-top:1rem">Access to Interest-Based Participation Supports at The Nest does not require an NDIS plan. A formal diagnosis is not required for privately funded participation in our group sessions. If you are seeking to participate without NDIS funding, please contact us directly to discuss privately funded options and current availability.</p>
-  <p style="color:var(--text-mid);margin-top:1rem">Support Coordination and Capacity Building Coaching are funded supports and require an active NDIS plan with the relevant budget category.</p>
+  <p style="color:var(--text-mid);margin-top:1rem">Access to Interest-Based Participation Supports at The Nest does not require an NDIS plan. A formal diagnosis is not required for privately funded participation in our sessions. If you are seeking to participate without NDIS funding, please contact us directly to discuss privately funded options and current availability.</p>
+
 </div>
 </div>
 
@@ -676,4 +1229,83 @@ const toggle = document.getElementById('navToggle');
 const links = document.getElementById('navLinks');
 
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+// Section expand toggles
+[
+  ['scToggle', 'scExtra'],
+  ['whoToggle', 'whoExtra'],
+  ['familiesToggle', 'familiesExtra'],
+  ['regCodesToggle', 'regCodesExtra']
+].forEach(([btnId, bodyId]) => {
+  const btn = document.getElementById(btnId);
+  const body = document.getElementById(bodyId);
+  if (btn && body) {
+    btn.addEventListener('click', () => {
+      const isOpen = body.classList.contains('expanded');
+      body.classList.toggle('expanded', !isOpen);
+      body.classList.toggle('collapsed', isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      btn.querySelector('span:first-of-type') && (btn.childNodes[0].textContent = isOpen ? 'Read more ' : 'Read less ');
+    });
+  }
+});
+
+// Expand / collapse (IBS)
+const ibsToggle = document.getElementById('ibsToggle');
+const ibsExtra = document.getElementById('ibsExtra');
+if (ibsToggle && ibsExtra) {
+  ibsToggle.addEventListener('click', () => {
+    const isOpen = ibsExtra.classList.contains('expanded');
+    ibsExtra.classList.toggle('expanded', !isOpen);
+    ibsExtra.classList.toggle('collapsed', isOpen);
+    ibsToggle.classList.toggle('open', !isOpen);
+    ibsToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+}
+
+// Pricing expand toggle
+const pricingToggle = document.getElementById('pricingToggle');
+const pricingExtra = document.getElementById('pricingExtra');
+if (pricingToggle && pricingExtra) {
+  pricingToggle.addEventListener('click', () => {
+    const isOpen = pricingExtra.classList.contains('expanded');
+    pricingExtra.classList.toggle('expanded', !isOpen);
+    pricingExtra.classList.toggle('collapsed', isOpen);
+    pricingToggle.classList.toggle('open', !isOpen);
+    pricingToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+}
+
+// Registration code accordions
+document.querySelectorAll('.reg-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const bodyId = btn.getAttribute('aria-controls');
+    const body = document.getElementById(bodyId);
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    body.classList.toggle('open', !isOpen);
+  });
+});
+
+// Week grid filter
+const filterBtns = document.querySelectorAll('.filter-btn');
+const weekGrid = document.getElementById('weekGrid');
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const group = btn.dataset.group;
+    weekGrid.classList.remove('filter-6-8','filter-9-12','filter-teens','filter-adults');
+    if (group !== 'all') weekGrid.classList.add('filter-' + group);
+    // Sync interest form age group
+    const ageSelect = document.getElementById('interestAgeGroup');
+    if (ageSelect && group !== 'all') ageSelect.value = group;
+  });
+});
+</script>
+</body>
+</html>
