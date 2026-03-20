@@ -200,6 +200,14 @@ footer a:hover { color: #fff; }
   footer { padding: 3rem 1.5rem 2rem; }
 }
 /* === END NAV & FOOTER CSS === */
+.modal-overlay { position: fixed; inset: 0; background: rgba(28,17,40,0.72); display: none; align-items: center; justify-content: center; padding: 1.5rem; z-index: 1200; }
+.modal-overlay.open { display: flex; }
+.modal-card { width: min(760px, 100%); max-height: 88vh; overflow: auto; background: var(--warm-white); border: 1px solid var(--purple-pale); border-radius: 8px; box-shadow: 0 20px 60px rgba(28,17,40,0.25); padding: 2rem; }
+.modal-card h3 { font-size: 2rem; margin-bottom: 0.8rem; color: var(--text); }
+.modal-card p, .modal-card li { color: var(--text-mid); font-size: 0.95rem; line-height: 1.8; }
+.modal-card ul { margin: 0.8rem 0 1rem 1.2rem; }
+.modal-actions { display: flex; justify-content: flex-end; margin-top: 1.2rem; }
+.modal-close { background: var(--purple); color: #fff; border: none; border-radius: 4px; padding: 0.8rem 1.2rem; font: inherit; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -780,7 +788,7 @@ footer a:hover { color: #fff; }
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="assets/footer-logo.png" alt="Neurodivergent Empowered">
+      <img src="assets/neurodivergent-empowered-logo-light.png" alt="Neurodivergent Empowered">
       <p>NDIS Registered Provider</p>
       <div class="ndis-badge">NDIS Registered <span>4-K6GFD9R</span></div>
     </div>
@@ -812,6 +820,40 @@ footer a:hover { color: #fff; }
   </div>
 </footer>
 
+
+<div class="modal-overlay" id="privacy-modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <h3 id="privacy-modal-title">Privacy Policy</h3>
+    <p>We handle personal information in line with the privacy and dignity expectations in the NDIS Practice Standards and the privacy obligations set out under the Australian Privacy Principles. We only collect information that is relevant to providing supports, meeting legal and compliance requirements, responding to enquiries, and administering our services.</p>
+    <ul>
+      <li>Information is collected, used, stored and shared only for support, service, safety, billing, legal, and regulatory purposes.</li>
+      <li>Privacy and confidentiality information should be provided in the language, mode of communication, and terms most likely to be understood by the person receiving supports.</li>
+      <li>You can ask to access or correct your personal information.</li>
+      <li>You can raise a privacy concern or complaint and it will be handled fairly and without reprisal.</li>
+    </ul>
+    <p>If you need privacy information in a different format or communication style, please let us know and we will work with you to provide it in a way that is more accessible.</p>
+    <div class="modal-actions"><button class="modal-close" type="button" data-modal-close>Close</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="accessibility-modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="accessibility-modal-title">
+    <h3 id="accessibility-modal-title">Accessibility</h3>
+    <p>We want this site to be usable across different communication, sensory and access needs. Practical improvements we can continue to add across the site include:</p>
+    <ul>
+      <li>clear keyboard navigation and visible focus states</li>
+      <li>stronger colour contrast where needed</li>
+      <li>plain language and consistent headings</li>
+      <li>alt text for meaningful images</li>
+      <li>captions and transcripts for video or audio content</li>
+      <li>forms with clear labels, instructions and error messages</li>
+      <li>support for reduced motion and less visual overload</li>
+      <li>larger tap targets and readable text at zoom</li>
+    </ul>
+    <p>If something on the site is hard to read, hear, navigate or use, please tell us so we can improve it.</p>
+    <div class="modal-actions"><button class="modal-close" type="button" data-modal-close>Close</button></div>
+  </div>
+</div>
 <script>
 (function(){
   var reveals = document.querySelectorAll('.reveal');
@@ -830,6 +872,41 @@ footer a:hover { color: #fff; }
 <script>
 window.addEventListener('scroll', function() {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+
+function setModalState(id, open) {
+  var modal = document.getElementById(id);
+  if (!modal) return;
+  modal.classList.toggle('open', open);
+  modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+}
+
+document.querySelectorAll('[data-modal-open]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    setModalState(btn.getAttribute('data-modal-open'), true);
+  });
+});
+
+document.querySelectorAll('[data-modal-close]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var overlay = btn.closest('.modal-overlay');
+    if (overlay) setModalState(overlay.id, false);
+  });
+});
+
+document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) setModalState(overlay.id, false);
+  });
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(overlay) {
+      setModalState(overlay.id, false);
+    });
+  }
 });
 </script>
 </body>
