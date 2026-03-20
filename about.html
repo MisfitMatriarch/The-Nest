@@ -909,12 +909,94 @@ footer a:hover { color: #fff; }
         .impact-card summary::after { content:'\25BE'; font-size:1.2rem; color:var(--purple); transition:transform .3s ease; }
         .impact-card[open] summary::after { transform:rotate(180deg); }
         .impact-card .impact-body { padding:0 1.6rem 1.4rem; color:var(--text-mid); font-size:.95rem; line-height:1.65; }
+        .award-tier { margin-bottom:1rem; }
+        .award-tier summary { list-style:none; }
+        .award-tier summary::-webkit-details-marker { display:none; }
+        .award-tier summary::before { content:'\25B8 '; margin-right:0.4rem; }
+        .award-tier[open] summary::before { content:'\25BE '; }
+        .award-list { list-style:none; padding:0; margin:0 0 0.5rem; }
+        .award-list li { padding:0.5rem 0; border-bottom:1px solid rgba(0,0,0,0.06); font-size:0.88rem; line-height:1.5; }
+        .award-list li:last-child { border-bottom:none; }
+        .award-year { display:inline-block; font-weight:700; min-width:3rem; color:var(--purple-deep); margin-right:0.5rem; }
+        .award-source { display:block; font-size:0.78rem; color:rgba(0,0,0,0.45); margin-top:0.15rem; }
       </style>
       <div style="margin-top:2rem;">
 
         <details class="impact-card">
           <summary>Awards</summary>
-          <p class="impact-body">Neurodivergent Empowered has been recognised where it matters most, by the community it serves. We were nominated by Sunshine Coast Council for awards acknowledging our work in inclusion, dignity, and genuine connection for neurodivergent people and their families. These aren&rsquo;t accolades chased or applied for. They are the natural result of building something real, in a space where people have historically been overlooked, misunderstood, or made to feel like the problem.</p>
+          <div class="impact-body">
+            <p style="margin-bottom:1.5rem;">Neurodivergent Empowered has been recognised where it matters most, by the community it serves. These aren't accolades chased or applied for. They are the natural result of building something real.</p>
+
+            <details class="award-tier" open>
+              <summary class="tier-label" style="font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;color:#b8960c;">Gold Winners</summary>
+              <ul class="award-list">
+                <li><span class="award-year">2025</span> Non Profit Organisation of the Year <span class="award-source">Global Stevies Awards for Women in Business, USA</span></li>
+                <li><span class="award-year">2025</span> Childrens Education <span class="award-source">Global Women Changing the World Awards, London</span></li>
+                <li><span class="award-year">2025</span> Emerging Non Profit Business Excellence <span class="award-source">Global Women Changing the World Awards, London</span></li>
+                <li><span class="award-year">2025</span> Rising Star <span class="award-source">Women Changing the World Regional Awards APAC</span></li>
+                <li><span class="award-year">2024</span> Gold Winner Global Female Executive <span class="award-source">International Stevies Awards, USA (Sparkly Aliens Inc.)</span></li>
+                <li><span class="award-year">2024</span> Education Provider of the Year <span class="award-source">Sunshine Coast Business Awards</span></li>
+                <li><span class="award-year">2024</span> Community Leader of the Year <span class="award-source">Beam National Awards, Australia</span></li>
+                <li><span class="award-year">2024</span> Overcoming the Odds Award <span class="award-source">AusMumPreneur National Awards, Australia</span></li>
+                <li><span class="award-year">2023</span> ND/Autistic Excellence Provider of the Year <span class="award-source">Divergantz Autistic Business Awards, Queensland</span></li>
+                <li><span class="award-year">2023</span> Community Inclusion Award <span class="award-source">Sunshine Coast Community Gala Awards</span></li>
+                <li><span class="award-year">2022</span> Emerging Community Leader Award <span class="award-source">Sunshine Coast Community Gala Awards</span></li>
+              </ul>
+            </details>
+
+            <details class="award-tier">
+              <summary class="tier-label" style="font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;color:#9ca0a6;">Silver Winners</summary>
+              <ul class="award-list">
+                <li><span class="award-year">2025</span> Achievement in Diversity &amp; Inclusion <span class="award-source">Global Stevies Awards for Women in Business, USA</span></li>
+                <li><span class="award-year">2025</span> Women in Education <span class="award-source">Women Changing the World Regional Awards APAC</span></li>
+                <li><span class="award-year">2025</span> Childrens Education <span class="award-source">London Global Women Changing the World Awards</span></li>
+                <li><span class="award-year">2025</span> Emerging AusMumPreneur of the Year <span class="award-source">London Global Women Changing the World Awards</span></li>
+                <li><span class="award-year">2024</span> Global Woman of the Year <span class="award-source">International Stevies Awards, USA (Sparkly Aliens Inc.)</span></li>
+                <li><span class="award-year">2024</span> Global Female Executive <span class="award-source">International Stevies Awards, USA (Neurodivergent Empowered)</span></li>
+                <li><span class="award-year">2024</span> Disabled Business Excellence <span class="award-source">AusMumPreneur National Awards, Australia</span></li>
+              </ul>
+            </details>
+
+            <details class="award-tier">
+              <summary class="tier-label" style="font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;color:#cd7f32;">Bronze Winners</summary>
+              <ul class="award-list">
+                <li><span class="award-year">2025</span> Most Resilient Woman Owned Business <span class="award-source">Global Stevies Awards for Women in Business, USA</span></li>
+                <li><span class="award-year">2025</span> Advocacy &amp; Impact <span class="award-source">London Global Women Changing the World Awards</span></li>
+              </ul>
+            </details>
+
+            <details class="award-tier">
+              <summary class="tier-label" style="font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;color:#7c6d9e;">Finalists</summary>
+              <ul class="award-list">
+                <li><span class="award-year">2026</span> Community Group of the Year <span class="award-source">Sunshine Coast Council Community Australia Day Awards</span></li>
+                <li><span class="award-year">2026</span> Citizen of the Year <span class="award-source">Sunshine Coast Council Community Australia Day Awards</span></li>
+                <li><span class="award-year">2026</span> Girl of the Year (Under 16) <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Rising Star <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Woman in Education <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Woman in Therapy &amp; Counselling Services <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Disability Inclusion Impact <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Human Rights <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Innovation <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Thought Leader of the Year <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2026</span> Big Idea <span class="award-source">Women Changing the World Global Awards, Paris</span></li>
+                <li><span class="award-year">2024</span> Outstanding Growth <span class="award-source">Telstra Best of Business Awards, Australia</span></li>
+                <li><span class="award-year">2024</span> Championing Health <span class="award-source">Telstra Best of Business Awards, Australia</span></li>
+                <li><span class="award-year">2024</span> Woman of the Year <span class="award-source">Beam National Awards, Australia</span></li>
+                <li><span class="award-year">2024</span> Excellence in Diversity &amp; Inclusion <span class="award-source">Beam National Awards, Australia</span></li>
+                <li><span class="award-year">2023</span> Fisher Business of the Year <span class="award-source">Fisher Community Awards, Caloundra</span></li>
+                <li><span class="award-year">2022</span> Community Leadership Award <span class="award-source">Sunshine Coast Community Gala Awards</span></li>
+                <li><span class="award-year">2022</span> Social Commitment Award <span class="award-source">Sunshine Coast Community Gala Awards</span></li>
+                <li><span class="award-year">2021</span> Best Childrens Disability Service <span class="award-source">Sunshine Coast Community Gala Awards</span></li>
+              </ul>
+            </details>
+
+            <details class="award-tier">
+              <summary class="tier-label" style="font-weight:700;font-size:0.95rem;cursor:pointer;margin-bottom:0.8rem;color:#8b6fb0;">Honourable Mentions</summary>
+              <ul class="award-list">
+                <li><span class="award-year">2025</span> Thought Leader of the Year <span class="award-source">Women Changing the World Regional Awards APAC</span></li>
+              </ul>
+            </details>
+          </div>
         </details>
 
         <details class="impact-card">
