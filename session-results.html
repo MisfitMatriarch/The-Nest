@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Results | Neurodivergent Empowered</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#5DCAA5;--teal-dark:#085041;
+  --amber:#EF9F27;--amber-light:#FAEEDA;--amber-mid:#FAC775;
+  --coral:#D85A30;--coral-light:#FAECE7;
+  --purple:#7F77DD;--purple-light:#EEEDFE;
+  --blue:#378ADD;--blue-light:#E6F1FB;
+  --bg:#F7F5F2;--white:#FFFFFF;
+  --text:#1A1A1A;--muted:#666;--hint:#999;
+  --border:rgba(0,0,0,0.09);--border-strong:rgba(0,0,0,0.18);
+  --r:12px;--r-sm:8px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;font-size:15px}
+
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.5rem;position:sticky;top:0;z-index:20}
+.header-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.logo-text{font-size:14px;font-weight:600;color:var(--teal-dark)}
+.header-right{display:flex;align-items:center;gap:12px}
+.header-date{font-size:12px;color:var(--muted)}
+.refresh-btn{padding:6px 14px;font-size:12px;font-weight:600;border:1.5px solid var(--teal);border-radius:20px;background:var(--white);color:var(--teal-dark);cursor:pointer;transition:all .15s}
+.refresh-btn:hover{background:var(--teal-light)}
+
+.main{max-width:800px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+.intro{text-align:center;padding:1.5rem 1rem 2rem}
+.intro-title{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:4px}
+.intro-sub{font-size:14px;color:var(--muted)}
+.session-name{display:inline-block;background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:20px;padding:4px 14px;font-size:13px;font-weight:600;color:var(--teal-dark);margin-top:8px}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;text-align:center}
+.stat-num{font-size:32px;font-weight:800;color:var(--teal);line-height:1}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:6px;font-weight:600}
+
+/* Activity ranking */
+.rank-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:12px}
+.rank-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.rank-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.rank-item:last-child{border-bottom:none}
+.rank-pos{width:28px;height:28px;border-radius:50%;background:var(--teal-light);color:var(--teal-dark);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rank-pos.top{background:var(--teal);color:#fff}
+.rank-name{flex:1;font-size:14px;font-weight:500}
+.rank-bar-wrap{width:120px;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;flex-shrink:0}
+.rank-bar{height:100%;background:var(--teal);border-radius:4px;transition:width .3s}
+.rank-count{font-size:13px;font-weight:700;color:var(--teal-dark);min-width:30px;text-align:right}
+
+/* Energy/Social summary */
+.metre-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.metre-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem}
+.metre-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+.metre-row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.metre-emoji{font-size:18px;width:24px;text-align:center}
+.metre-label{flex:1;font-size:12px;color:var(--muted)}
+.metre-count{font-size:13px;font-weight:700;color:var(--text);min-width:20px;text-align:right}
+
+/* Participant list */
+.participant-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:12px}
+.p-item{padding:10px 0;border-bottom:1px solid var(--border)}
+.p-item:last-child{border-bottom:none}
+.p-name{font-weight:600;font-size:14px;margin-bottom:4px}
+.p-meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.p-tags{display:flex;flex-wrap:wrap;gap:4px}
+.p-tag{display:inline-block;background:var(--teal-light);border:1px solid var(--teal-mid);border-radius:14px;padding:2px 8px;font-size:11px;color:var(--teal-dark);font-weight:500}
+
+/* Loading / empty */
+.loading{text-align:center;padding:3rem;color:var(--muted)}
+.empty{text-align:center;padding:3rem;color:var(--hint)}
+.empty-icon{font-size:48px;margin-bottom:1rem}
+
+/* No session */
+.no-session{text-align:center;padding:3rem 1rem}
+.no-session h2{font-size:20px;font-weight:700;margin-bottom:8px}
+.no-session p{color:var(--muted);font-size:14px;margin-bottom:6px}
+.no-session code{background:var(--teal-light);padding:2px 8px;border-radius:4px;font-size:13px}
+
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr}
+  .metre-summary{grid-template-columns:1fr}
+  .rank-bar-wrap{width:60px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <span class="logo-text">Neurodivergent Empowered</span>
+    </div>
+    <div class="header-right">
+      <div class="header-date" id="hdr-date"></div>
+      <button class="refresh-btn" onclick="loadResults()">↻ Refresh</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="intro">
+    <div class="intro-title">Session Results 📊</div>
+    <div class="intro-sub">Live votes from participants</div>
+    <div class="session-name" id="session-label"></div>
+  </div>
+
+  <div id="content">
+    <div class="loading" id="loading">Loading results...</div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const sessionId = params.get('session');
+
+const d = new Date();
+document.getElementById('hdr-date').textContent = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+
+const energyLabels = {1:'😴 Very low',2:'🌿 Low',3:'😊 Medium',4:'⚡ High',5:'🚀 Very high'};
+const socialLabels = {1:'🌙 Solo',2:'🌱 Parallel',3:'👥 Small group',4:'🎉 Group',5:'🌟 Everyone'};
+
+if(!sessionId){
+  document.getElementById('session-label').textContent = 'No session selected';
+  document.getElementById('content').innerHTML = `
+    <div class="no-session">
+      <h2>No session specified</h2>
+      <p>Add a session parameter to the URL:</p>
+      <p><code>session-results.html?session=your-session-name</code></p>
+      <p style="margin-top:12px;font-size:13px;color:var(--hint)">Use the same session name you gave participants in the vote link.</p>
+    </div>`;
+} else {
+  document.getElementById('session-label').textContent = sessionId.replace(/-/g,' ');
+  loadResults();
+  // Auto-refresh every 30 seconds
+  setInterval(loadResults, 30000);
+}
+
+function loadResults(){
+  fetch('/api/votes?session='+encodeURIComponent(sessionId))
+    .then(r=>r.json())
+    .then(votes=>render(votes))
+    .catch(()=>{
+      document.getElementById('content').innerHTML='<div class="empty"><div class="empty-icon">⚠️</div><p>Could not load results. Make sure the site is deployed on Netlify.</p></div>';
+    });
+}
+
+function render(votes){
+  if(!votes.length){
+    document.getElementById('content').innerHTML='<div class="empty"><div class="empty-icon">🕐</div><p>No votes yet. Share the vote link with participants and results will appear here.</p></div>';
+    return;
+  }
+
+  // Tally activities
+  const actCount = {};
+  votes.forEach(v=>{
+    (v.activities||[]).forEach(a=>{
+      actCount[a] = (actCount[a]||0) + 1;
+    });
+  });
+  const sorted = Object.entries(actCount).sort((a,b)=>b[1]-a[1]);
+  const maxCount = sorted.length ? sorted[0][1] : 1;
+
+  // Energy/social tallies
+  const energyTally = {};
+  const socialTally = {};
+  votes.forEach(v=>{
+    if(v.energy) energyTally[v.energy] = (energyTally[v.energy]||0) + 1;
+    if(v.social) socialTally[v.social] = (socialTally[v.social]||0) + 1;
+  });
+
+  // Total unique activities voted for
+  const uniqueActs = Object.keys(actCount).length;
+
+  let html = '';
+
+  // Stats
+  html += `<div class="stats-row">
+    <div class="stat-card"><div class="stat-num">${votes.length}</div><div class="stat-label">Participants</div></div>
+    <div class="stat-card"><div class="stat-num">${uniqueActs}</div><div class="stat-label">Activities chosen</div></div>
+    <div class="stat-card"><div class="stat-num">${sorted.length?sorted[0][1]:0}</div><div class="stat-label">Top vote count</div></div>
+  </div>`;
+
+  // Activity ranking
+  html += `<div class="rank-card"><div class="rank-title">Activity votes (most popular first)</div>`;
+  sorted.forEach(([name,count],i)=>{
+    const pct = Math.round(count/maxCount*100);
+    html += `<div class="rank-item">
+      <div class="rank-pos ${i<3?'top':''}">${i+1}</div>
+      <div class="rank-name">${name}</div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%"></div></div>
+      <div class="rank-count">${count}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Energy + Social
+  html += `<div class="metre-summary">`;
+  html += `<div class="metre-card"><div class="metre-title">Energy levels</div>`;
+  for(let i=1;i<=5;i++){
+    html += `<div class="metre-row"><span class="metre-emoji">${energyLabels[i].split(' ')[0]}</span><span class="metre-label">${energyLabels[i]}</span><span class="metre-count">${energyTally[i]||0}</span></div>`;
+  }
+  html += `</div>`;
+  html += `<div class="metre-card"><div class="metre-title">Social levels</div>`;
+  for(let i=1;i<=5;i++){
+    html += `<div class="metre-row"><span class="metre-emoji">${socialLabels[i].split(' ')[0]}</span><span class="metre-label">${socialLabels[i]}</span><span class="metre-count">${socialTally[i]||0}</span></div>`;
+  }
+  html += `</div></div>`;
+
+  // Individual participants
+  html += `<div class="participant-card"><div class="rank-title">Individual responses</div>`;
+  votes.forEach(v=>{
+    const name = v.name || 'Anonymous';
+    const age = v.age_group ? `Age: ${v.age_group}` : '';
+    const energy = v.energy ? energyLabels[v.energy] : '';
+    const social = v.social ? socialLabels[v.social] : '';
+    const meta = [age,energy?'Energy: '+energy:'',social?'Social: '+social:''].filter(Boolean).join(' · ');
+
+    html += `<div class="p-item">
+      <div class="p-name">${name}</div>
+      ${meta?`<div class="p-meta">${meta}</div>`:''}
+      <div class="p-tags">${(v.activities||[]).map(a=>`<span class="p-tag">${a}</span>`).join('')}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  document.getElementById('content').innerHTML = html;
+}
+</script>
+</body>
+</html>
