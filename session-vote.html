@@ -339,7 +339,17 @@ const params = new URLSearchParams(location.search);
 let weatherOk = params.get('weather') !== 'no';
 let selectedAge = null;
 const isSaturday = new Date().getDay() === 6;
-const sessionId = params.get('session') || 'default';
+
+// Auto-append week number so results reset each week
+function getWeekId(){
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,1);
+  const diff = now - start;
+  const week = Math.ceil((diff/86400000 + start.getDay()+1)/7);
+  return now.getFullYear()+'-w'+String(week).padStart(2,'0');
+}
+const sessionBase = params.get('session') || 'default';
+const sessionId = sessionBase + '-' + getWeekId();
 
 if(params.get('admin')==='1') document.getElementById('admin-bar').style.display='flex';
 

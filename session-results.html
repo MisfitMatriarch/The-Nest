@@ -119,7 +119,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 const params = new URLSearchParams(location.search);
-const sessionId = params.get('session');
+
+// Auto-append week number to match vote page
+function getWeekId(){
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,1);
+  const diff = now - start;
+  const week = Math.ceil((diff/86400000 + start.getDay()+1)/7);
+  return now.getFullYear()+'-w'+String(week).padStart(2,'0');
+}
+const sessionBase = params.get('session');
+const sessionId = sessionBase ? sessionBase + '-' + getWeekId() : null;
 
 const d = new Date();
 document.getElementById('hdr-date').textContent = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
@@ -137,7 +147,7 @@ if(!sessionId){
       <p style="margin-top:12px;font-size:13px;color:var(--hint)">Use the same session name you gave participants in the vote link.</p>
     </div>`;
 } else {
-  document.getElementById('session-label').textContent = sessionId.replace(/-/g,' ');
+  document.getElementById('session-label').textContent = sessionBase.replace(/-/g,' ') + ' — week ' + getWeekId().split('-w')[1];
   loadResults();
   // Auto-refresh every 30 seconds
   setInterval(loadResults, 30000);
