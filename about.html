@@ -911,13 +911,13 @@ footer a:hover { color: #fff; }
         .impact-card .impact-body { padding:0 1.6rem 1.4rem; color:var(--text-mid); font-size:.95rem; line-height:1.65; }
         .awards-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
         @media(max-width:600px){ .awards-grid { grid-template-columns:1fr; } }
-        .award-tile { background:var(--purple-deep); border-radius:10px; color:#fff; text-align:center; cursor:pointer; transition:transform 0.2s; }
+        .award-tile { background:var(--purple-deep); border-radius:10px; color:#fff; text-align:center; cursor:pointer; transition:transform 0.2s; text-shadow:0 1px 4px rgba(0,0,0,0.5); }
         .award-tile:hover { transform:translateY(-2px); }
         .award-tile summary { list-style:none; padding:1.8rem 1.2rem; display:flex; flex-direction:column; align-items:center; gap:0.4rem; }
         .award-tile summary::-webkit-details-marker { display:none; }
-        .award-tile .tile-count { font-size:2.2rem; font-weight:800; line-height:1; }
-        .award-tile .tile-label { font-size:0.85rem; text-transform:uppercase; letter-spacing:0.12em; opacity:0.7; }
-        .award-tile .tile-chevron { font-size:0.7rem; opacity:0.5; margin-top:0.3rem; transition:transform 0.3s; }
+        .award-tile .tile-count { font-size:2.2rem; font-weight:800; line-height:1; color:#fff !important; }
+        .award-tile .tile-label { font-size:0.85rem; text-transform:uppercase; letter-spacing:0.12em; font-weight:700; color:#fff !important; }
+        .award-tile .tile-chevron { font-size:0.7rem; margin-top:0.3rem; transition:transform 0.3s; color:#fff !important; }
         .award-tile[open] .tile-chevron { transform:rotate(180deg); }
         .award-tile[open] { background:var(--purple-deep); }
         .award-tile-body { padding:0 1.2rem 1.2rem; }
