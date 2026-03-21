@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What do you want to do today? | Neurodivergent Empowered</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-mid:#5DCAA5;--teal-dark:#085041;
+  --amber:#EF9F27;--amber-light:#FAEEDA;--amber-mid:#FAC775;
+  --coral:#D85A30;--coral-light:#FAECE7;
+  --purple:#7F77DD;--purple-light:#EEEDFE;
+  --pink:#D4537E;--pink-light:#FBEAF0;
+  --blue:#378ADD;--blue-light:#E6F1FB;
+  --green:#639922;--green-light:#EAF3DE;
+  --bg:#F7F5F2;--white:#FFFFFF;
+  --text:#1A1A1A;--muted:#666;--hint:#999;
+  --border:rgba(0,0,0,0.09);--border-strong:rgba(0,0,0,0.18);
+  --r:12px;--r-sm:8px;--r-xs:6px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;font-size:15px}
+
+/* ── ADMIN BAR ── */
+#admin-bar{display:none;background:#fff8e8;border-bottom:1.5px solid var(--amber-mid);padding:10px 1.5rem;text-align:center;font-size:13px;color:#5a3800;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+#admin-bar span{font-weight:600}
+.admin-toggle{padding:5px 14px;font-size:12px;border:1.5px solid var(--amber);border-radius:20px;background:var(--white);cursor:pointer;color:#5a3800;transition:all .15s;font-weight:500}
+.admin-toggle.on{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+/* ── HEADER ── */
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.5rem;position:sticky;top:0;z-index:20}
+.header-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.logo-text{font-size:14px;font-weight:600;color:var(--teal-dark)}
+.header-date{font-size:12px;color:var(--muted);text-align:right}
+
+/* ── LAYOUT ── */
+.main{max-width:680px;margin:0 auto;padding:1.5rem 1rem 4rem}
+
+/* ── INTRO ── */
+.intro{text-align:center;padding:2rem 1rem 2rem}
+.intro-title{font-size:28px;font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:6px}
+.intro-sub{font-size:15px;color:var(--muted)}
+
+/* ── CARD ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:12px}
+.card-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+
+/* ── NAME ── */
+.name-input{width:100%;padding:11px 14px;font-size:15px;border:1.5px solid var(--border-strong);border-radius:var(--r-sm);background:var(--white);color:var(--text);outline:none;transition:border-color .15s}
+.name-input:focus{border-color:var(--teal)}
+.name-input::placeholder{color:var(--hint)}
+
+/* ── AGE GRID ── */
+.age-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.age-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 8px 12px;border:1.5px solid var(--border-strong);border-radius:var(--r-sm);background:var(--bg);cursor:pointer;gap:5px;transition:all .15s}
+.age-btn:hover{border-color:var(--teal);background:var(--teal-light)}
+.age-btn.sel{border-color:var(--teal);background:var(--teal-light)}
+.age-emoji{font-size:24px}
+.age-label{font-size:13px;font-weight:700;color:var(--text)}
+.age-range{font-size:11px;color:var(--muted)}
+.age-btn.sel .age-label,.age-btn.sel .age-range{color:var(--teal-dark)}
+
+/* ── METRE ── */
+.metre-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mtre-btn{display:flex;flex-direction:column;align-items:center;padding:12px 4px 10px;border:1.5px solid var(--border-strong);border-radius:var(--r-sm);background:var(--bg);cursor:pointer;gap:5px;transition:all .15s;min-height:72px;justify-content:center}
+.mtre-btn:hover{opacity:.8}
+.mtre-emoji{font-size:22px;line-height:1}
+.mtre-label{font-size:10px;color:var(--muted);text-align:center;line-height:1.25;font-weight:500}
+
+.energy-btn.sel:nth-child(1){border-color:#5DCAA5;background:#E1F5EE}
+.energy-btn.sel:nth-child(2){border-color:#5DCAA5;background:#E1F5EE}
+.energy-btn.sel:nth-child(3){border-color:var(--amber);background:var(--amber-light)}
+.energy-btn.sel:nth-child(4){border-color:var(--coral);background:var(--coral-light)}
+.energy-btn.sel:nth-child(5){border-color:var(--coral);background:var(--coral-light)}
+.social-btn.sel:nth-child(1){border-color:#AFA9EC;background:var(--purple-light)}
+.social-btn.sel:nth-child(2){border-color:#AFA9EC;background:var(--purple-light)}
+.social-btn.sel:nth-child(3){border-color:var(--blue);background:var(--blue-light)}
+.social-btn.sel:nth-child(4){border-color:var(--teal);background:var(--teal-light)}
+.social-btn.sel:nth-child(5){border-color:var(--teal);background:var(--teal-light)}
+.energy-btn.sel .mtre-label,.social-btn.sel .mtre-label{font-weight:700;color:var(--text)}
+
+/* ── CATEGORY HEADER ── */
+.cat-block{background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.cat-head{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s}
+.cat-head:hover{background:var(--bg)}
+.cat-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.cat-name{font-size:15px;font-weight:700;flex:1;color:var(--text)}
+.cat-badge{font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:3px 8px;border-radius:20px;font-weight:600;min-width:30px;text-align:center}
+.cat-chev{font-size:11px;color:var(--hint);transition:transform .2s;margin-left:4px}
+.cat-block.open .cat-chev{transform:rotate(180deg)}
+.cat-body{display:none;border-top:1px solid var(--border);padding:10px 12px 14px}
+.cat-block.open .cat-body{display:block}
+
+/* ── ACTIVITIES ── */
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px}
+.act-item{position:relative}
+.act-item input[type=checkbox]{position:absolute;opacity:0;width:0;height:0}
+.act-item label{display:flex;flex-direction:column;padding:11px 12px;border:1.5px solid var(--border-strong);border-radius:var(--r-sm);cursor:pointer;background:var(--bg);transition:all .15s;min-height:50px;justify-content:center;gap:3px}
+.act-item label:hover{border-color:var(--teal-mid);background:var(--teal-light)}
+.act-item input:checked+label{border-color:var(--teal);background:var(--teal-light)}
+.act-name{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+.act-item input:checked+label .act-name{color:var(--teal-dark)}
+.act-tag{font-size:10px;color:var(--hint);font-weight:500}
+.act-item.age-dim label{opacity:.35;pointer-events:none}
+.act-item.age-dim input{pointer-events:none}
+.act-item.unavail label{opacity:.3;pointer-events:none;text-decoration:line-through}
+.act-item.unavail input{pointer-events:none}
+
+/* Weather note strip */
+.weather-strip{display:flex;align-items:center;gap:8px;background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--r-xs);padding:8px 12px;margin-top:8px;font-size:12px;color:#5a3800}
+
+/* ── SUBMIT ── */
+.submit-wrap{margin-top:1.5rem}
+.submit-btn{width:100%;padding:16px;font-size:16px;font-weight:700;color:var(--white);background:var(--teal);border:none;border-radius:var(--r);cursor:pointer;transition:all .15s;letter-spacing:.02em}
+.submit-btn:hover{background:#189e6d}
+.submit-btn:active{transform:scale(.99)}
+.submit-btn:disabled{opacity:.45;cursor:not-allowed}
+.val-msg{font-size:13px;color:var(--coral);margin-top:8px;text-align:center;display:none;font-weight:500}
+.hint-text{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ── THANK YOU ── */
+#thankyou{display:none;text-align:center;padding:3rem 1rem}
+#thankyou.vis{display:block}
+.ty-glyph{font-size:56px;margin-bottom:1rem}
+.ty-title{font-size:26px;font-weight:800;margin-bottom:.5rem;letter-spacing:-.5px}
+.ty-sub{font-size:15px;color:var(--muted);margin-bottom:2rem}
+.ty-picks{background:var(--teal-light);border:1.5px solid var(--teal-mid);border-radius:var(--r);padding:1.25rem;text-align:left}
+.ty-picks-title{font-size:13px;font-weight:700;color:var(--teal-dark);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.ty-tag{display:inline-flex;align-items:center;background:var(--white);border:1px solid var(--teal-mid);border-radius:20px;padding:4px 10px;font-size:12px;color:var(--teal-dark);margin:3px;font-weight:500}
+
+/* ── RESPONSIVE ── */
+@media(max-width:440px){
+  .act-grid{grid-template-columns:1fr}
+  .intro-title{font-size:22px}
+  .age-emoji{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ADMIN BAR (visible at ?admin=1) -->
+<div id="admin-bar">
+  <span>Facilitator controls:</span>
+  Weather / outdoors:
+  <button class="admin-toggle on" id="wx-yes" onclick="setWeather(true)">☀️ Available</button>
+  <button class="admin-toggle" id="wx-no" onclick="setWeather(false)">🌧 Not today</button>
+</div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <span class="logo-text">Neurodivergent Empowered</span>
+    </div>
+    <div class="header-date" id="hdr-date"></div>
+  </div>
+</div>
+
+<div class="main" id="form-area">
+  <div class="intro">
+    <div class="intro-title">What do you want to do today? 🌟</div>
+    <div class="intro-sub">Tick as many as you like. There are no wrong answers.</div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.25rem;border-left:3px solid var(--teal);padding:1.25rem 1.25rem 1.25rem 1.5rem">
+    <p style="font-size:14px;color:var(--muted);line-height:1.75;margin:0">
+      At Neurodivergent Empowered, we don't decide what the session looks like before you arrive. <strong style="color:var(--text);font-weight:600">You do.</strong><br><br>
+      Participant authority isn't something we talk about in our values document and then set aside when it gets logistically inconvenient. It's built into how we actually run a session, including this one.<br><br>
+      Knowing what you want to do, how much energy you have, and how social you're feeling today means we can set up the space <em>for you</em>, not for a version of you that we assumed would show up. This tool is how that works in practice.
+    </p>
+  </div>
+
+  <form name="session-vote" method="POST" data-netlify="true" id="vote-form">
+    <input type="hidden" name="form-name" value="session-vote">
+    <input type="hidden" name="session_date" id="h-date">
+    <input type="hidden" name="age_group" id="h-age">
+    <input type="hidden" name="energy_level" id="h-energy">
+    <input type="hidden" name="social_level" id="h-social">
+
+    <!-- NAME -->
+    <div class="card">
+      <div class="card-label">Your name (optional)</div>
+      <input type="text" name="participant_name" class="name-input" placeholder="First name or nickname" maxlength="60" autocomplete="given-name">
+    </div>
+
+    <!-- AGE GROUP -->
+    <div class="card">
+      <div class="card-label">How old are you?</div>
+      <div class="age-grid">
+        <button type="button" class="age-btn" data-age="9-12" onclick="pickAge(this)">
+          <span class="age-emoji">🌱</span>
+          <span class="age-label">9 – 12</span>
+          <span class="age-range">Primary years</span>
+        </button>
+        <button type="button" class="age-btn" data-age="13-17" onclick="pickAge(this)">
+          <span class="age-emoji">⚡</span>
+          <span class="age-label">13 – 17</span>
+          <span class="age-range">Teen years</span>
+        </button>
+        <button type="button" class="age-btn" data-age="18+" onclick="pickAge(this)">
+          <span class="age-emoji">🌟</span>
+          <span class="age-label">18+</span>
+          <span class="age-range">Adult</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ENERGY METRE -->
+    <div class="card">
+      <div class="card-label">Energy level today</div>
+      <div class="metre-row">
+        <button type="button" class="mtre-btn energy-btn" data-v="1" onclick="pickMetre('energy',this)"><span class="mtre-emoji">😴</span><span class="mtre-label">Very low, I need rest</span></button>
+        <button type="button" class="mtre-btn energy-btn" data-v="2" onclick="pickMetre('energy',this)"><span class="mtre-emoji">🌿</span><span class="mtre-label">Low, gentle stuff</span></button>
+        <button type="button" class="mtre-btn energy-btn" data-v="3" onclick="pickMetre('energy',this)"><span class="mtre-emoji">😊</span><span class="mtre-label">Medium, happy to try things</span></button>
+        <button type="button" class="mtre-btn energy-btn" data-v="4" onclick="pickMetre('energy',this)"><span class="mtre-emoji">⚡</span><span class="mtre-label">High, ready to move</span></button>
+        <button type="button" class="mtre-btn energy-btn" data-v="5" onclick="pickMetre('energy',this)"><span class="mtre-emoji">🚀</span><span class="mtre-label">Very high, need to burn it off</span></button>
+      </div>
+    </div>
+
+    <!-- SOCIAL METRE -->
+    <div class="card">
+      <div class="card-label">Social level today</div>
+      <div class="metre-row">
+        <button type="button" class="mtre-btn social-btn" data-v="1" onclick="pickMetre('social',this)"><span class="mtre-emoji">🌙</span><span class="mtre-label">Solo only, just me</span></button>
+        <button type="button" class="mtre-btn social-btn" data-v="2" onclick="pickMetre('social',this)"><span class="mtre-emoji">🌱</span><span class="mtre-label">Near others, parallel</span></button>
+        <button type="button" class="mtre-btn social-btn" data-v="3" onclick="pickMetre('social',this)"><span class="mtre-emoji">👥</span><span class="mtre-label">Small group, 2 or 3</span></button>
+        <button type="button" class="mtre-btn social-btn" data-v="4" onclick="pickMetre('social',this)"><span class="mtre-emoji">🎉</span><span class="mtre-label">Group activity</span></button>
+        <button type="button" class="mtre-btn social-btn" data-v="5" onclick="pickMetre('social',this)"><span class="mtre-emoji">🌟</span><span class="mtre-label">Everyone together</span></button>
+      </div>
+    </div>
+
+    <!-- AGE FILTER NOTE -->
+    <div style="padding:.25rem 0 .75rem">
+      <p style="font-size:13px;color:var(--muted);text-align:center">Activities that don't match your age group will be faded. All others are fair game.</p>
+    </div>
+
+    <!-- CATEGORIES built by JS -->
+    <div id="cats"></div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button type="button" class="submit-btn" onclick="doSubmit()">Submit my picks ✓</button>
+      <div class="val-msg" id="val-msg">Please tick at least one activity before you submit.</div>
+      <p class="hint-text">You can choose as many as you like. Your facilitator will see all the votes before the session.</p>
+    </div>
+  </form>
+</div>
+
+<!-- THANK YOU -->
+<div id="thankyou">
+  <div class="ty-glyph">🎉</div>
+  <div class="ty-title">You're in!</div>
+  <div class="ty-sub">Your picks have been sent. See you at the session.</div>
+  <div class="ty-picks">
+    <div class="ty-picks-title">What you chose</div>
+    <div id="ty-acts"></div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+// ages: 'all' | '9-12' | 'teen+' | '18+'
+// weather: true = needs good weather
+// notSat: true = not available Saturdays
+const CATS = [
+  { id:'quiz', icon:'🧠', name:'Quizzes & trivia', acts:[
+    {id:'q1',n:'Aha Slides quiz'},
+    {id:'q3',n:'Anime quiz, ranking & discussion'},
+  ]},
+  { id:'creative', icon:'🎨', name:'Creative & craft', acts:[
+    {id:'cr1',n:'Drawing & art'},
+    {id:'cr2',n:'Painting'},
+    {id:'cr3',n:'Collage & craft'},
+    {id:'cr4',n:'Colouring'},
+    {id:'cr5',n:'Beading'},
+    {id:'cr6',n:'Chalk art'},
+    {id:'cr7',n:'Pastels'},
+    {id:'cr8',n:'Sharpie & specialist pen art'},
+    {id:'cr9',n:'Plasticine & clay'},
+    {id:'cr10',n:'Whiteboard art'},
+    {id:'cr12',n:'Cosplay & character creation'},
+    {id:'cr13',n:'Storytelling & comic making'},
+    {id:'cr14',n:'Group building & construction'},
+    {id:'cr15',n:'Content creator / YouTuber challenge',ages:'teen+'},
+    {id:'cr16',n:'Anime Connections'},
+  ]},
+  { id:'music', icon:'🎵', name:'Music & performance', acts:[
+    {id:'mu1',n:'Music jam (ukuleles, organ, singing)'},
+    {id:'mu2',n:'Glow-in-the-dark activities'},
+    {id:'mu3',n:'Talent show'},
+  ]},
+  { id:'movement', icon:'🏃', name:'Movement', acts:[
+    {id:'mv1',n:'Dance & movement games'},
+    {id:'mv2',n:'Balance & coordination challenges'},
+    {id:'mv3',n:'Yoga & stretching'},
+    {id:'mv4',n:'Free movement'},
+    {id:'mv5',n:'Outdoor free play (balls, mats, hopscotch, punching bag)',weather:true},
+    {id:'mv6',n:'Community walk to Bulcock Street',weather:true},
+  ]},
+  { id:'gaming', icon:'🎮', name:'Gaming & tech', acts:[
+    {id:'ga1',n:'Nintendo / PlayStation'},
+    {id:'ga2',n:'Nintendo interactive movement'},
+    {id:'ga3',n:'VR gaming'},
+    {id:'ga4',n:'Tech time (own devices, playing the same game)'},
+  ]},
+  { id:'tabletop', icon:'🎲', name:'Tabletop & games', acts:[
+    {id:'tb1',n:'Board games'},
+    {id:'tb2',n:'Card games'},
+    {id:'tb3',n:'Lego challenge'},
+    {id:'tb4',n:'Beanbag Banter'},
+    {id:'tb5',n:'Imaginative & toy play'},
+  ]},
+  { id:'sensory', icon:'🌊', name:'Sensory & regulation', acts:[
+    {id:'se1',n:'Bubble boards & sensory play'},
+    {id:'se2',n:'Sensory fidgets & toys'},
+    {id:'se3',n:'Weighted blanket quiet time'},
+    {id:'se4',n:'Sensory tent rest'},
+    {id:'se5',n:'Chill & chat'},
+    {id:'se6',n:'Coco the axolotl 🦎'},
+    {id:'se7',n:'Furry Friends, guinea pigs',notSat:true},
+  ]},
+  { id:'social', icon:'💬', name:'Social & community', acts:[
+    {id:'so1',n:'Check-in circle'},
+    {id:'so4',n:'Lunch & social eating'},
+    {id:'so5',n:'Walk and talk'},
+  ]},
+  { id:'reading', icon:'📚', name:'Reading & quiet', acts:[
+    {id:'re1',n:'Quiet corner, reading & rest'},
+    {id:'re2',n:'Animal books & reference'},
+    {id:'re3',n:'Chill out tents'},
+  ]},
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+const params = new URLSearchParams(location.search);
+let weatherOk = params.get('weather') !== 'no';
+let selectedAge = null;
+const isSaturday = new Date().getDay() === 6;
+
+if(params.get('admin')==='1') document.getElementById('admin-bar').style.display='flex';
+
+// Set date display
+const d = new Date();
+document.getElementById('hdr-date').textContent = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('h-date').value = d.toISOString().split('T')[0];
+
+// ─── BUILD CATEGORIES ────────────────────────────────────────────────────────
+function build(){
+  const c = document.getElementById('cats');
+  c.innerHTML='';
+  CATS.forEach(cat=>{
+    const block = document.createElement('div');
+    block.className='cat-block';
+    block.id='cat-'+cat.id;
+
+    const hasWeather = cat.acts.some(a=>a.weather);
+    const visCount = getVisCount(cat);
+
+    block.innerHTML=`
+      <div class="cat-head" onclick="toggleCat('${cat.id}')">
+        <span class="cat-icon">${cat.icon}</span>
+        <span class="cat-name">${cat.name}</span>
+        <span class="cat-badge" id="badge-${cat.id}">${visCount}</span>
+        <span class="cat-chev">▼</span>
+      </div>
+      <div class="cat-body">
+        <div class="act-grid" id="grid-${cat.id}"></div>
+        ${hasWeather?`<div class="weather-strip" id="wx-${cat.id}">☀️ <strong>Some activities need good weather.</strong> Your facilitator will confirm on the day.</div>`:''}
+      </div>`;
+
+    c.appendChild(block);
+    renderCatActs(cat);
+  });
+}
+
+function renderCatActs(cat){
+  const grid = document.getElementById('grid-'+cat.id);
+  grid.innerHTML='';
+  cat.acts.forEach(act=>{
+    const ages = act.ages||'all';
+    const isWeatherItem = !!act.weather;
+    const isNotSat = !!act.notSat && isSaturday;
+    const ageOk = ageMatch(ages);
+    const wxOk = !isWeatherItem||weatherOk;
+
+    const item=document.createElement('div');
+    item.className='act-item';
+    item.id='i-'+act.id;
+    if(!ageOk) item.classList.add('age-dim');
+    if(isNotSat) item.classList.add('unavail');
+
+    let tags='';
+    if(isWeatherItem) tags+=`<span class="act-tag">☀️ weather permitting</span>`;
+    if(isNotSat) tags+=`<span class="act-tag">not Saturdays</span>`;
+    if(ages==='teen+') tags+=`<span class="act-tag">teens &amp; adults</span>`;
+    if(ages==='9-12') tags+=`<span class="act-tag">ages 9–12</span>`;
+    if(ages==='18+') tags+=`<span class="act-tag">adults</span>`;
+
+    item.innerHTML=`
+      <input type="checkbox" name="activities" value="${act.n}" id="a-${act.id}" ${(!wxOk||isNotSat)?'disabled':''}>
+      <label for="a-${act.id}">
+        <span class="act-name">${act.n}</span>
+        ${tags}
+      </label>`;
+    grid.appendChild(item);
+  });
+  updateBadge(cat);
+}
+
+function getVisCount(cat){
+  return cat.acts.filter(a=>ageMatch(a.ages||'all') && !a.notSat).length;
+}
+
+function updateBadge(cat){
+  const el=document.getElementById('badge-'+cat.id);
+  if(el) el.textContent=getVisCount(cat);
+}
+
+function toggleCat(id){
+  const b=document.getElementById('cat-'+id);
+  b.classList.toggle('open');
+}
+
+// ─── AGE ─────────────────────────────────────────────────────────────────────
+function ageMatch(ages){
+  if(!selectedAge||ages==='all') return true;
+  if(ages==='teen+') return selectedAge==='13-17'||selectedAge==='18+';
+  return ages===selectedAge;
+}
+
+function pickAge(btn){
+  document.querySelectorAll('.age-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  selectedAge=btn.dataset.age;
+  document.getElementById('h-age').value=selectedAge;
+  CATS.forEach(cat=>{
+    renderCatActs(cat);
+    updateBadge(cat);
+  });
+}
+
+// ─── METRE ───────────────────────────────────────────────────────────────────
+function pickMetre(type,btn){
+  const cls=type==='energy'?'.energy-btn':'.social-btn';
+  document.querySelectorAll(cls).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('h-'+type).value=btn.dataset.v;
+}
+
+// ─── WEATHER ─────────────────────────────────────────────────────────────────
+function setWeather(ok){
+  weatherOk=ok;
+  document.getElementById('wx-yes').classList.toggle('on',ok);
+  document.getElementById('wx-no').classList.toggle('on',!ok);
+  CATS.forEach(cat=>renderCatActs(cat));
+}
+
+// ─── SUBMIT ──────────────────────────────────────────────────────────────────
+function doSubmit(){
+  const checked=[...document.querySelectorAll('input[name="activities"]:checked')];
+  if(checked.length===0){
+    const msg=document.getElementById('val-msg');
+    msg.style.display='block';
+    msg.scrollIntoView({behavior:'smooth',block:'nearest'});
+    return;
+  }
+  document.getElementById('val-msg').style.display='none';
+
+  const picks=checked.map(c=>c.value);
+  const form=document.getElementById('vote-form');
+  const fd=new FormData(form);
+
+  // Post to Netlify Forms
+  fetch('/',{
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams(fd).toString()
+  }).catch(()=>{});
+
+  // Show thank you
+  document.getElementById('form-area').style.display='none';
+  const ty=document.getElementById('thankyou');
+  ty.classList.add('vis');
+  document.getElementById('ty-acts').innerHTML=picks.map(p=>`<span class="ty-tag">${p}</span>`).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+build();
+</script>
+</body>
+</html>
