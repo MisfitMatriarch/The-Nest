@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Figtree:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
+
     :root {
       --purple:        #6B4C9A;
       --purple-deep:   #4a2f73;
@@ -657,6 +659,60 @@ footer a:hover { color: #fff; }
 .modal-card ul { margin: 0.8rem 0 1rem 1.2rem; }
 .modal-actions { display: flex; justify-content: flex-end; margin-top: 1.2rem; }
 .modal-close { background: var(--purple); color: #fff; border: none; border-radius: 4px; padding: 0.8rem 1.2rem; font: inherit; cursor: pointer; }
+
+/* Accessibility */
+body.dyslexia-mode, body.dyslexia-mode p, body.dyslexia-mode span, body.dyslexia-mode div, body.dyslexia-mode li, body.dyslexia-mode input, body.dyslexia-mode button, body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3, body.dyslexia-mode h4, body.dyslexia-mode td, body.dyslexia-mode th, body.dyslexia-mode label, body.dyslexia-mode textarea, body.dyslexia-mode select {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+body.high-contrast { background: #000 !important; color: #fff !important; }
+body.high-contrast p, body.high-contrast span, body.high-contrast div, body.high-contrast li, body.high-contrast td, body.high-contrast th, body.high-contrast label { color: #fff !important; }
+body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast h4 { color: #FFFF00 !important; }
+body.high-contrast a { color: #00FFFF !important; text-decoration: underline !important; }
+body.high-contrast input, body.high-contrast textarea, body.high-contrast select { background: #111 !important; color: #fff !important; border-color: #FFFF00 !important; }
+body.high-contrast nav, body.high-contrast #nav { background: #000 !important; }
+body.high-contrast footer { background: #000 !important; }
+body.high-contrast .btn-primary, body.high-contrast .nav-cta { background: #FFFF00 !important; color: #000 !important; }
+body.reduced-motion *, body.reduced-motion *::before, body.reduced-motion *::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+}
+body.spacing-mode p, body.spacing-mode li, body.spacing-mode td, body.spacing-mode label { line-height: 2.4 !important; letter-spacing: 0.5px !important; word-spacing: 3px !important; }
+body.highlight-links a { outline: 2px solid #6B3FA0 !important; outline-offset: 2px; background: rgba(107,63,160,0.1) !important; }
+body.dark-mode { background: #111 !important; color: #ddd !important; }
+body.dark-mode p, body.dark-mode span, body.dark-mode div, body.dark-mode li, body.dark-mode td, body.dark-mode th, body.dark-mode label { color: rgba(255,255,255,0.85) !important; }
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 { color: #fff !important; }
+body.dark-mode nav, body.dark-mode #nav { background: rgba(26,26,26,0.95) !important; }
+body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #222 !important; color: #fff !important; border-color: #444 !important; }
+body.dark-mode footer { background: #111 !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+}
+*:focus-visible { outline: 2px solid #6B3FA0 !important; outline-offset: 3px; }
+#a11y-toggle:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(107,63,160,0.5); }
+@keyframes a11yPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(107,63,160,0.4); }
+  50% { box-shadow: 0 4px 30px rgba(107,63,160,0.7), 0 0 0 8px rgba(107,63,160,0.15); }
+}
+@keyframes blinkCursor {
+  0%, 100% { border-color: #6B3FA0; }
+  50% { border-color: transparent; }
+}
+.tts-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: 1px solid rgba(107,63,160,0.3); border-radius: 20px;
+  padding: 6px 14px; cursor: pointer; font-size: 12px; color: #6B3FA0;
+  transition: all 0.2s; margin-bottom: 16px;
+}
+.tts-btn:hover { background: rgba(107,63,160,0.08); border-color: #6B3FA0; }
+.tts-btn.speaking { background: #6B3FA0; color: #fff; border-color: #6B3FA0; }
+.a11y-switch[aria-pressed="true"] { background: #6B3FA0 !important; }
+.a11y-switch[aria-pressed="true"] span { transform: translateX(20px); }
+.a11y-btn:hover { background: rgba(255,255,255,0.1) !important; }
+.content-warning summary::-webkit-details-marker { display: none; }
+.content-warning summary::after { content: ' \25b8'; font-size: 10px; }
+.content-warning[open] summary::after { content: ' \25be'; }
+
 </style>
 </head>
 <body>
@@ -796,23 +852,23 @@ footer a:hover { color: #fff; }
 
         <div class="field-row-3">
           <div class="field-group">
-            <label>First Name <span class="req">*</span></label>
-            <input type="text" name="first_name" required>
+            <label for="field-first-name">First Name <span class="req">*</span></label>
+            <input id="field-first-name" type="text" name="first_name" required aria-required="true">
             <div class="error-msg">Please enter a first name</div>
           </div>
           <div class="field-group">
-            <label>Last Name <span class="opt">(optional)</span></label>
-            <input type="text" name="last_name">
+            <label for="field-last-name">Last Name <span class="opt">(optional)</span></label>
+            <input id="field-last-name" type="text" name="last_name">
           </div>
           <div class="field-group">
-            <label>Preferred Name <span class="opt">(optional)</span></label>
-            <input type="text" name="preferred_name" placeholder="If different from first name">
+            <label for="field-preferred-name">Preferred Name <span class="opt">(optional)</span></label>
+            <input id="field-preferred-name" type="text" name="preferred_name" placeholder="If different from first name">
           </div>
         </div>
 
         <div class="field-group">
-          <label>Age <span class="req">*</span></label>
-          <select name="age_group" id="ageGroup" required>
+          <label for="ageGroup">Age <span class="req">*</span></label>
+          <select name="age_group" id="ageGroup" required aria-required="true">
             <option value="">Select age range...</option>
             <option value="6-8">6 to 8 years</option>
             <option value="9-12">9 to 12 years</option>
@@ -827,9 +883,9 @@ footer a:hover { color: #fff; }
         </div>
 
         <div class="field-group">
-          <label>Are you completing this for: <span class="req">*</span></label>
+          <label for="field-contact-name">Are you completing this for: <span class="req">*</span></label>
           <div class="eoi-radio-group">
-            <label class="eoi-radio-item"><input type="radio" name="completing_for" value="Myself" required> Myself</label>
+            <label class="eoi-radio-item"><input type="radio" name="completing_for" value="Myself" required aria-required="true"> Myself</label>
             <label class="eoi-radio-item"><input type="radio" name="completing_for" value="My child"> My child</label>
             <label class="eoi-radio-item"><input type="radio" name="completing_for" value="Someone I support"> Someone I support</label>
           </div>
@@ -839,31 +895,31 @@ footer a:hover { color: #fff; }
         <div class="field-row eoi-cond" id="contactNameRow">
           <div class="field-group">
             <label>Your Name <span class="req">*</span></label>
-            <input type="text" name="contact_name">
+            <input id="field-contact-name" type="text" name="contact_name">
             <div class="error-msg">Please enter your name</div>
           </div>
           <div class="field-group">
-            <label>Relationship to Participant <span class="req">*</span></label>
-            <input type="text" name="relationship" placeholder="e.g. Parent, Carer, Support Worker">
+            <label for="field-relationship">Relationship to Participant <span class="req">*</span></label>
+            <input id="field-relationship" type="text" name="relationship" placeholder="e.g. Parent, Carer, Support Worker">
             <div class="error-msg">Please enter the relationship</div>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field-group">
-            <label>Mobile <span class="req">*</span></label>
-            <input type="tel" name="mobile" required>
+            <label for="field-mobile">Mobile <span class="req">*</span></label>
+            <input id="field-mobile" type="tel" name="mobile" required aria-required="true">
             <div class="error-msg">Please enter a mobile number</div>
           </div>
           <div class="field-group">
-            <label>Email <span class="req">*</span></label>
-            <input type="email" name="email" required>
+            <label for="field-email">Email <span class="req">*</span></label>
+            <input id="field-email" type="email" name="email" required aria-required="true">
             <div class="error-msg">Please enter a valid email</div>
           </div>
         </div>
 
         <div class="field-group">
-          <label>Preferred contact method</label>
+          <label for="field-additional-info">Preferred contact method</label>
           <div class="eoi-radio-group">
             <label class="eoi-radio-item"><input type="radio" name="contact_method" value="SMS"> SMS</label>
             <label class="eoi-radio-item"><input type="radio" name="contact_method" value="Email"> Email</label>
@@ -880,7 +936,7 @@ footer a:hover { color: #fff; }
 
         <div class="interest-grid">
           <label class="interest-card">
-            <input type="radio" name="interest_type" value="Nest" required>
+            <input type="radio" name="interest_type" value="Nest" required aria-required="true">
             <div class="ic-content">
               <div class="ic-title">Interest-based supports at the Nest</div>
               <div class="ic-desc">Programs built around passions - gaming, art, music, social connection, and more.</div>
@@ -1026,7 +1082,7 @@ footer a:hover { color: #fff; }
 
         <div class="field-group">
           <label>Anything else we should know? <span class="opt">(optional)</span></label>
-          <textarea name="additional_info" rows="3" placeholder="Anything at all - no detail is too small."></textarea>
+          <textarea id="field-additional-info" name="additional_info" rows="3" placeholder="Anything at all - no detail is too small."></textarea>
         </div>
       </div>
 
@@ -1038,11 +1094,11 @@ footer a:hover { color: #fff; }
 
         <div class="consent-list">
           <label class="consent-item" id="consentContact">
-            <input type="checkbox" name="consent_contact" required>
+            <input type="checkbox" name="consent_contact" required aria-required="true">
             <span>I consent to Neurodivergent Empowered contacting me about this Expression of Interest.</span>
           </label>
           <label class="consent-item" id="consentStorage">
-            <input type="checkbox" name="consent_storage" required>
+            <input type="checkbox" name="consent_storage" required aria-required="true">
             <span>I understand my information will be stored securely for service enquiry and intake purposes.</span>
           </label>
           <label class="consent-item eoi-cond" id="consentAuthorityItem">
@@ -1576,6 +1632,196 @@ document.addEventListener('keydown', function(e) {
     });
   }
 });
+</script>
+
+
+<!-- Accessibility Widget -->
+<div id="sr-announcements" aria-live="polite" aria-atomic="true" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);"></div>
+
+<button id="a11y-toggle" aria-label="Accessibility options" style="position: fixed; bottom: 24px; right: 24px; z-index: 99999; height: 52px; border-radius: 26px; background: #6B3FA0; color: #fff; border: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; padding: 0 20px 0 16px; box-shadow: 0 4px 20px rgba(107,63,160,0.4); transition: all 0.3s ease; animation: a11yPulse 2s ease-in-out 3;">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v5"/><path d="M8 10l4 2 4-2"/><path d="M9 19l3-7 3 7"/></svg>
+  <span style="font-weight: 600; letter-spacing: 0.5px;">Accessibility</span>
+</button>
+
+<div id="a11y-panel" style="position: fixed; bottom: 88px; right: 24px; z-index: 99999; width: 320px; max-height: 80vh; overflow-y: auto; background: #1c1128; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 24px; display: none; box-shadow: 0 20px 60px rgba(0,0,0,0.4); color: #fff;" role="dialog" aria-label="Accessibility settings">
+  <p style="font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #C5B3E0; margin-bottom: 20px;">Accessibility</p>
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Font Size</span>
+    <div style="display: flex; gap: 8px;">
+      <button class="a11y-btn" onclick="changeFontSize(-1)" aria-label="Decrease font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 16px;">A-</button>
+      <button class="a11y-btn" onclick="changeFontSize(0)" aria-label="Reset font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 13px;">&#8634;</button>
+      <button class="a11y-btn" onclick="changeFontSize(1)" aria-label="Increase font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 16px;">A+</button>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Dyslexia-friendly font</span>
+    <button id="dyslexia-toggle" class="a11y-switch" onclick="toggleDyslexia()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">High contrast</span>
+    <button id="contrast-toggle" class="a11y-switch" onclick="toggleContrast()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Reduce motion</span>
+    <button id="motion-toggle" class="a11y-switch" onclick="toggleReducedMotion()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Reading guide</span>
+    <button id="guide-toggle" class="a11y-switch" onclick="toggleReadingGuide()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Line spacing</span>
+    <button id="spacing-toggle" class="a11y-switch" onclick="toggleLineSpacing()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Highlight links</span>
+    <button id="links-toggle" class="a11y-switch" onclick="toggleHighlightLinks()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Dark mode</span>
+    <button id="dark-toggle" class="a11y-switch" onclick="toggleDarkMode()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+</div>
+
+<div id="reading-guide" style="display: none; position: fixed; left: 0; right: 0; height: 40px; background: rgba(107,63,160,0.08); border-top: 1px solid rgba(107,63,160,0.2); border-bottom: 1px solid rgba(107,63,160,0.2); pointer-events: none; z-index: 99990; transition: top 0.05s linear;"></div>
+
+<script>
+// Accessibility Widget
+document.getElementById('a11y-toggle').addEventListener('click', function() {
+  var panel = document.getElementById('a11y-panel');
+  var isOpen = panel.style.display === 'block';
+  panel.style.display = isOpen ? 'none' : 'block';
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('a11y-panel').style.display = 'none';
+});
+
+var fontSizeLevel = 0;
+function changeFontSize(dir) {
+  if (dir === 0) fontSizeLevel = 0;
+  else fontSizeLevel = Math.max(-2, Math.min(4, fontSizeLevel + dir));
+  document.documentElement.style.fontSize = (100 + fontSizeLevel * 12.5) + '%';
+  saveA11yPrefs();
+}
+
+function toggleSwitch(id) {
+  var btn = document.getElementById(id);
+  var pressed = btn.getAttribute('aria-pressed') === 'true';
+  btn.setAttribute('aria-pressed', !pressed);
+  return !pressed;
+}
+
+function toggleDyslexia() { document.body.classList.toggle('dyslexia-mode', toggleSwitch('dyslexia-toggle')); saveA11yPrefs(); }
+function toggleContrast() { document.body.classList.toggle('high-contrast', toggleSwitch('contrast-toggle')); saveA11yPrefs(); }
+function toggleReducedMotion() { document.body.classList.toggle('reduced-motion', toggleSwitch('motion-toggle')); saveA11yPrefs(); }
+function toggleLineSpacing() { document.body.classList.toggle('spacing-mode', toggleSwitch('spacing-toggle')); saveA11yPrefs(); }
+function toggleHighlightLinks() { document.body.classList.toggle('highlight-links', toggleSwitch('links-toggle')); saveA11yPrefs(); }
+function toggleDarkMode() { document.body.classList.toggle('dark-mode', toggleSwitch('dark-toggle')); saveA11yPrefs(); }
+
+function toggleReadingGuide() {
+  var on = toggleSwitch('guide-toggle');
+  var guide = document.getElementById('reading-guide');
+  guide.style.display = on ? 'block' : 'none';
+  if (on) { document.addEventListener('mousemove', moveGuide); }
+  else { document.removeEventListener('mousemove', moveGuide); }
+  saveA11yPrefs();
+}
+function moveGuide(e) { document.getElementById('reading-guide').style.top = (e.clientY - 20) + 'px'; }
+
+// Auto-detect reduced motion
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.body.classList.add('reduced-motion');
+  var mt = document.getElementById('motion-toggle');
+  if (mt) mt.setAttribute('aria-pressed', 'true');
+}
+
+// Text-to-speech
+var currentTTSBtn = null;
+if (window.speechSynthesis) {
+  window.speechSynthesis.getVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+  }
+}
+function speakSection(btn) {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.tts-btn').forEach(function(b) { b.classList.remove('speaking'); });
+    if (currentTTSBtn === btn) { currentTTSBtn = null; return; }
+  }
+  var section = btn.closest('section') || btn.parentElement;
+  if (!section) return;
+  var text = '';
+  section.querySelectorAll('h2, h3, p:not([class*="eyebrow"])').forEach(function(el) { text += el.textContent + '. '; });
+  var utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.92;
+  utterance.pitch = 1.05;
+  var voices = window.speechSynthesis.getVoices();
+  var preferred = ['Samantha','Karen','Moira','Tessa','Google UK English Female','Google US English','Microsoft Zira','English (Australia)'];
+  var bestVoice = null;
+  for (var i = 0; i < preferred.length; i++) {
+    bestVoice = voices.find(function(v) { return v.name.indexOf(preferred[i]) !== -1; });
+    if (bestVoice) break;
+  }
+  if (!bestVoice) bestVoice = voices.find(function(v) { return v.lang.indexOf('en') === 0; });
+  if (bestVoice) utterance.voice = bestVoice;
+  utterance.onend = function() { btn.classList.remove('speaking'); currentTTSBtn = null; };
+  btn.classList.add('speaking');
+  currentTTSBtn = btn;
+  window.speechSynthesis.speak(utterance);
+}
+
+// Persist preferences
+function saveA11yPrefs() {
+  var prefs = {
+    fontSize: fontSizeLevel,
+    dyslexia: document.body.classList.contains('dyslexia-mode'),
+    contrast: document.body.classList.contains('high-contrast'),
+    motion: document.body.classList.contains('reduced-motion'),
+    spacing: document.body.classList.contains('spacing-mode'),
+    links: document.body.classList.contains('highlight-links'),
+    dark: document.body.classList.contains('dark-mode'),
+    guide: document.getElementById('guide-toggle').getAttribute('aria-pressed') === 'true'
+  };
+  try { localStorage.setItem('ne-a11y-prefs', JSON.stringify(prefs)); } catch(e) {}
+}
+
+// Load saved preferences
+try {
+  var saved = JSON.parse(localStorage.getItem('ne-a11y-prefs'));
+  if (saved) {
+    if (saved.fontSize) { fontSizeLevel = saved.fontSize; document.documentElement.style.fontSize = (100 + fontSizeLevel * 12.5) + '%'; }
+    if (saved.dyslexia) toggleDyslexia();
+    if (saved.contrast) toggleContrast();
+    if (saved.motion) toggleReducedMotion();
+    if (saved.spacing) toggleLineSpacing();
+    if (saved.links) toggleHighlightLinks();
+    if (saved.dark) toggleDarkMode();
+    if (saved.guide) toggleReadingGuide();
+  }
+} catch(e) {}
 </script>
 
 </body>

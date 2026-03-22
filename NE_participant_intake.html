@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
+
 :root {
   --purple: #6B4C9A;
   --purple-deep: #4a2f73;
@@ -381,6 +383,60 @@ footer a:hover { color: #fff; }
   footer { padding: 3rem 1.5rem 2rem; }
 }
 /* === END NAV & FOOTER CSS === */
+
+/* Accessibility */
+body.dyslexia-mode, body.dyslexia-mode p, body.dyslexia-mode span, body.dyslexia-mode div, body.dyslexia-mode li, body.dyslexia-mode input, body.dyslexia-mode button, body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3, body.dyslexia-mode h4, body.dyslexia-mode td, body.dyslexia-mode th, body.dyslexia-mode label, body.dyslexia-mode textarea, body.dyslexia-mode select {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+body.high-contrast { background: #000 !important; color: #fff !important; }
+body.high-contrast p, body.high-contrast span, body.high-contrast div, body.high-contrast li, body.high-contrast td, body.high-contrast th, body.high-contrast label { color: #fff !important; }
+body.high-contrast h1, body.high-contrast h2, body.high-contrast h3, body.high-contrast h4 { color: #FFFF00 !important; }
+body.high-contrast a { color: #00FFFF !important; text-decoration: underline !important; }
+body.high-contrast input, body.high-contrast textarea, body.high-contrast select { background: #111 !important; color: #fff !important; border-color: #FFFF00 !important; }
+body.high-contrast nav, body.high-contrast #nav { background: #000 !important; }
+body.high-contrast footer { background: #000 !important; }
+body.high-contrast .btn-primary, body.high-contrast .nav-cta { background: #FFFF00 !important; color: #000 !important; }
+body.reduced-motion *, body.reduced-motion *::before, body.reduced-motion *::after {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+}
+body.spacing-mode p, body.spacing-mode li, body.spacing-mode td, body.spacing-mode label { line-height: 2.4 !important; letter-spacing: 0.5px !important; word-spacing: 3px !important; }
+body.highlight-links a { outline: 2px solid #6B3FA0 !important; outline-offset: 2px; background: rgba(107,63,160,0.1) !important; }
+body.dark-mode { background: #111 !important; color: #ddd !important; }
+body.dark-mode p, body.dark-mode span, body.dark-mode div, body.dark-mode li, body.dark-mode td, body.dark-mode th, body.dark-mode label { color: rgba(255,255,255,0.85) !important; }
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 { color: #fff !important; }
+body.dark-mode nav, body.dark-mode #nav { background: rgba(26,26,26,0.95) !important; }
+body.dark-mode input, body.dark-mode textarea, body.dark-mode select { background: #222 !important; color: #fff !important; border-color: #444 !important; }
+body.dark-mode footer { background: #111 !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+}
+*:focus-visible { outline: 2px solid #6B3FA0 !important; outline-offset: 3px; }
+#a11y-toggle:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(107,63,160,0.5); }
+@keyframes a11yPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(107,63,160,0.4); }
+  50% { box-shadow: 0 4px 30px rgba(107,63,160,0.7), 0 0 0 8px rgba(107,63,160,0.15); }
+}
+@keyframes blinkCursor {
+  0%, 100% { border-color: #6B3FA0; }
+  50% { border-color: transparent; }
+}
+.tts-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: 1px solid rgba(107,63,160,0.3); border-radius: 20px;
+  padding: 6px 14px; cursor: pointer; font-size: 12px; color: #6B3FA0;
+  transition: all 0.2s; margin-bottom: 16px;
+}
+.tts-btn:hover { background: rgba(107,63,160,0.08); border-color: #6B3FA0; }
+.tts-btn.speaking { background: #6B3FA0; color: #fff; border-color: #6B3FA0; }
+.a11y-switch[aria-pressed="true"] { background: #6B3FA0 !important; }
+.a11y-switch[aria-pressed="true"] span { transform: translateX(20px); }
+.a11y-btn:hover { background: rgba(255,255,255,0.1) !important; }
+.content-warning summary::-webkit-details-marker { display: none; }
+.content-warning summary::after { content: ' \25b8'; font-size: 10px; }
+.content-warning[open] summary::after { content: ' \25be'; }
+
 </style>
 </head>
 <body>
@@ -467,8 +523,8 @@ footer a:hover { color: #fff; }
 
     <div class="consent-block">
       <h4>Required to proceed</h4>
-      <label class="consent-item">
-        <input type="checkbox" id="consent-core" required>
+      <label for="consent-name" class="consent-item">
+        <input type="checkbox" id="consent-core" required aria-required="true">
         <span>I understand that Neurodivergent Empowered will collect, store and use the information I provide to plan and deliver my supports, in accordance with the Privacy Act 1988 and NDIS Practice Standards.</span>
       </label>
       <label class="consent-item">
@@ -501,12 +557,12 @@ footer a:hover { color: #fff; }
           <input type="text" id="consent-name" placeholder="Your full legal name">
         </div>
         <div class="field">
-          <label>Date <span class="req">*</span></label>
+          <label for="consent-date">Date <span class="req">*</span></label>
           <input type="date" id="consent-date">
         </div>
       </div>
       <div class="field">
-        <label>If signing on behalf of participant, your name and relationship</label>
+        <label for="consent-rep">If signing on behalf of participant, your name and relationship</label>
         <input type="text" id="consent-rep" placeholder="e.g. Jane Smith - Parent / Guardian">
       </div>
     </div>
@@ -538,7 +594,7 @@ footer a:hover { color: #fff; }
     <h3>Are you an NDIS participant?</h3>
     <p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:1rem;">We support both NDIS participants and people accessing services privately or through other funding. Select whichever applies to you - this changes what information we ask for next.</p>
     <div class="radio-cards">
-      <label class="radio-card">
+      <label for="first-name" class="radio-card">
         <input type="radio" name="client-type" value="ndis" id="client-ndis">
         <div class="radio-card-body">
           <strong>Yes, I have an NDIS plan</strong>
@@ -577,31 +633,31 @@ footer a:hover { color: #fff; }
         <input type="text" id="first-name" placeholder="First name">
       </div>
       <div class="field">
-        <label>Last name <span class="req">*</span></label>
+        <label for="last-name">Last name <span class="req">*</span></label>
         <input type="text" id="last-name" placeholder="Last name">
       </div>
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Date of birth <span class="req">*</span></label>
+        <label for="dob">Date of birth <span class="req">*</span></label>
         <input type="date" id="dob">
       </div>
       <div class="field">
-        <label>Pronouns</label>
+        <label for="pronouns">Pronouns</label>
         <input type="text" id="pronouns" placeholder="e.g. she/her, they/them, he/him">
       </div>
     </div>
     <div class="field">
-      <label>Address <span class="req">*</span></label>
+      <label for="address">Address <span class="req">*</span></label>
       <input type="text" id="address" placeholder="Street address">
     </div>
     <div class="field-row-3">
       <div class="field">
-        <label>Suburb <span class="req">*</span></label>
+        <label for="suburb">Suburb <span class="req">*</span></label>
         <input type="text" id="suburb">
       </div>
       <div class="field">
-        <label>State</label>
+        <label for="state">State</label>
         <select id="state">
           <option value="">Select</option>
           <option value="QLD" selected>QLD</option>
@@ -615,17 +671,17 @@ footer a:hover { color: #fff; }
         </select>
       </div>
       <div class="field">
-        <label>Postcode</label>
+        <label for="postcode">Postcode</label>
         <input type="text" id="postcode" placeholder="4000">
       </div>
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Phone <span class="req">*</span></label>
+        <label for="phone">Phone <span class="req">*</span></label>
         <input type="tel" id="phone" placeholder="0400 000 000">
       </div>
       <div class="field">
-        <label>Email <span class="req">*</span></label>
+        <label for="email">Email <span class="req">*</span></label>
         <input type="email" id="email" placeholder="your@email.com">
       </div>
     </div>
@@ -637,11 +693,11 @@ footer a:hover { color: #fff; }
     <div class="alert alert-info">We need your NDIS number and plan dates to create your file and process claims correctly. Without these, we cannot bill on your behalf.</div>
     <div class="field-row">
       <div class="field">
-        <label>NDIS number <span class="req">*</span></label>
+        <label for="ndis-number">NDIS number <span class="req">*</span></label>
         <input type="text" id="ndis-number" placeholder="43XXXXXXX">
       </div>
       <div class="field">
-        <label>Funding type <span class="req">*</span></label>
+        <label for="funding-type">Funding type <span class="req">*</span></label>
         <select id="funding-type">
           <option value="">Select</option>
           <option value="plan-managed">Plan Managed</option>
@@ -652,21 +708,21 @@ footer a:hover { color: #fff; }
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Plan start date <span class="req">*</span></label>
+        <label for="plan-start">Plan start date <span class="req">*</span></label>
         <input type="date" id="plan-start">
       </div>
       <div class="field">
-        <label>Plan end date <span class="req">*</span></label>
+        <label for="plan-end">Plan end date <span class="req">*</span></label>
         <input type="date" id="plan-end">
       </div>
     </div>
     <div class="field" id="plan-manager-wrap" style="display:none;">
-      <label>Plan manager name and contact</label>
+      <label for="plan-manager">Plan manager name and contact</label>
       <input type="text" id="plan-manager" placeholder="Organisation name, phone or email">
     </div>
     <div class="section-divider"><span>Support Coordinator / Psychosocial Recovery Coach</span></div>
     <div class="field">
-      <label>Do you have a Support Coordinator or Psychosocial Recovery Coach?</label>
+      <label for="sc-role">Do you have a Support Coordinator or Psychosocial Recovery Coach?</label>
       <div class="check-group" style="grid-template-columns:1fr 1fr 1fr;">
         <label class="check-item"><input type="radio" name="has-sc" value="yes" id="has-sc-yes"> Yes</label>
         <label class="check-item"><input type="radio" name="has-sc" value="no"> No</label>
@@ -685,26 +741,26 @@ footer a:hover { color: #fff; }
           </select>
         </div>
         <div class="field">
-          <label>Name</label>
+          <label for="sc-name">Name</label>
           <input type="text" id="sc-name" placeholder="Full name">
         </div>
       </div>
       <div class="field">
-        <label>Organisation</label>
+        <label for="sc-org">Organisation</label>
         <input type="text" id="sc-org" placeholder="Organisation name">
       </div>
       <div class="field-row">
         <div class="field">
-          <label>Phone</label>
+          <label for="sc-phone">Phone</label>
           <input type="tel" id="sc-phone" placeholder="0400 000 000">
         </div>
         <div class="field">
-          <label>Email</label>
+          <label for="sc-email">Email</label>
           <input type="email" id="sc-email" placeholder="email@example.com">
         </div>
       </div>
       <div class="field">
-        <label>Permission to send quarterly progress reports?</label>
+        <label for="other-funding">Permission to send quarterly progress reports?</label>
         <div class="check-group" style="grid-template-columns:1fr 1fr;">
           <label class="check-item"><input type="radio" name="sc-report-perm" value="yes"> Yes</label>
           <label class="check-item"><input type="radio" name="sc-report-perm" value="no"> No</label>
@@ -729,7 +785,7 @@ footer a:hover { color: #fff; }
     <h3>NDIS application</h3>
     <div class="alert alert-info">We can support you while you wait and help you navigate the process. In the meantime, we can discuss private or fee-for-service options.</div>
     <div class="field">
-      <label>Where are you up to with your NDIS application?</label>
+      <label for="ndis-application-stage">Where are you up to with your NDIS application?</label>
       <select id="ndis-application-stage">
         <option value="">Select</option>
         <option>Just starting - gathering evidence</option>
@@ -741,7 +797,7 @@ footer a:hover { color: #fff; }
       </select>
     </div>
     <div class="field">
-      <label>Are you working with a Local Area Coordinator (LAC) or support person through the NDIS access process?</label>
+      <label for="primary-diagnosis">Are you working with a Local Area Coordinator (LAC) or support person through the NDIS access process?</label>
       <div class="check-group" style="grid-template-columns:1fr 1fr;">
         <label class="check-item"><input type="radio" name="has-lac" value="yes"> Yes</label>
         <label class="check-item"><input type="radio" name="has-lac" value="no"> No</label>
@@ -764,12 +820,12 @@ footer a:hover { color: #fff; }
         <input type="text" id="primary-diagnosis" placeholder="e.g. Autism, ADHD">
       </div>
       <div class="field">
-        <label>Secondary diagnosis (if applicable)</label>
+        <label for="secondary-diagnosis">Secondary diagnosis (if applicable)</label>
         <input type="text" id="secondary-diagnosis" placeholder="e.g. Anxiety, PTSD">
       </div>
     </div>
     <div class="field" id="impairment-wrap">
-      <label>Impairment category (from your NDIS plan, if known)</label>
+      <label for="impairment-category">Impairment category (from your NDIS plan, if known)</label>
       <select id="impairment-category">
         <option value="">Not sure / not listed</option>
         <option value="autism">Autism</option>
@@ -782,7 +838,7 @@ footer a:hover { color: #fff; }
       <p class="field-hint">You can find this on your NDIS plan or ask your Support Coordinator.</p>
     </div>
 
-    <label class="decline-option">
+    <label for="cald-detail" class="decline-option">
       <input type="checkbox" id="decline-diagnosis" onchange="document.getElementById('decline-diagnosis-note').style.display=this.checked?'block':'none'">
       I prefer not to share diagnosis information at this time
     </label>
@@ -812,7 +868,7 @@ footer a:hover { color: #fff; }
       <input type="text" id="cald-detail" placeholder="e.g. Vietnamese, Sudanese, Lebanese">
     </div>
     <div class="field">
-      <label>Do you need an interpreter?</label>
+      <label for="interp-lang">Do you need an interpreter?</label>
       <div class="check-group" style="grid-template-columns:1fr 1fr;">
         <label class="check-item"><input type="radio" name="interpreter" value="yes" id="interp-yes"> Yes</label>
         <label class="check-item"><input type="radio" name="interpreter" value="no"> No</label>
@@ -842,11 +898,11 @@ footer a:hover { color: #fff; }
     <h3>Emergency contact 1</h3>
     <div class="field-row">
       <div class="field">
-        <label>Name <span class="req">*</span></label>
+        <label for="ec1-name">Name <span class="req">*</span></label>
         <input type="text" id="ec1-name" placeholder="Full name">
       </div>
       <div class="field">
-        <label>Relationship</label>
+        <label for="ec1-role">Relationship</label>
         <select id="ec1-role">
           <option value="">Select role</option>
           <option>Parent</option>
@@ -864,16 +920,16 @@ footer a:hover { color: #fff; }
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Phone</label>
+        <label for="ec1-phone">Phone</label>
         <input type="tel" id="ec1-phone" placeholder="0400 000 000">
       </div>
       <div class="field">
-        <label>Email</label>
+        <label for="ec1-email">Email</label>
         <input type="email" id="ec1-email" placeholder="email@example.com">
       </div>
     </div>
     <div class="field">
-      <label>Can we share information with this person?</label>
+      <label for="ec1-share">Can we share information with this person?</label>
       <select id="ec1-share">
         <option value="">Select</option>
         <option value="yes">Yes, freely</option>
@@ -887,11 +943,11 @@ footer a:hover { color: #fff; }
     <h3>Emergency contact 2 (optional)</h3>
     <div class="field-row">
       <div class="field">
-        <label>Name</label>
+        <label for="ec2-name">Name</label>
         <input type="text" id="ec2-name" placeholder="Full name">
       </div>
       <div class="field">
-        <label>Relationship</label>
+        <label for="ec2-role">Relationship</label>
         <select id="ec2-role">
           <option value="">Select role</option>
           <option>Parent</option>
@@ -909,11 +965,11 @@ footer a:hover { color: #fff; }
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Phone</label>
+        <label for="ec2-phone">Phone</label>
         <input type="tel" id="ec2-phone">
       </div>
       <div class="field">
-        <label>Email</label>
+        <label for="ec2-email">Email</label>
         <input type="email" id="ec2-email">
       </div>
     </div>
@@ -922,7 +978,7 @@ footer a:hover { color: #fff; }
   <div class="form-card">
     <h3>How you like to communicate</h3>
     <div class="field">
-      <label>Communication style</label>
+      <label for="comm-notes">Communication style</label>
       <div class="check-group">
         <label class="check-item"><input type="checkbox" name="comm-type" value="verbal"> Verbal / spoken</label>
         <label class="check-item"><input type="checkbox" name="comm-type" value="written"> Written / text</label>
@@ -945,7 +1001,7 @@ footer a:hover { color: #fff; }
       <label>Anything else we should know about how to communicate with you well?</label>
       <textarea id="comm-notes" placeholder="e.g. Please give me time to process before expecting a response. I prefer written summaries after verbal conversations."></textarea>
     </div>
-    <label class="decline-option">
+    <label for="physical-other-detail" class="decline-option">
       <input type="checkbox" id="decline-comm" onchange="document.getElementById('decline-comm-note').style.display=this.checked?'block':'none'">
       I prefer not to share communication preferences at this time
     </label>
@@ -1010,7 +1066,7 @@ footer a:hover { color: #fff; }
       <input type="text" id="physical-other-detail" placeholder="Please describe the condition">
     </div>
     <div class="field">
-      <label>Anything else about your physical health we should know for safe support delivery?</label>
+      <label for="physical-notes">Anything else about your physical health we should know for safe support delivery?</label>
       <textarea id="physical-notes" placeholder="e.g. I have a latex allergy. I need to move around frequently. I have chronic fatigue and may need to stop early."></textarea>
     </div>
   </div>
@@ -1018,7 +1074,7 @@ footer a:hover { color: #fff; }
   <div class="form-card">
     <h3>Mental health and wellbeing</h3>
     <div class="field">
-      <label>Do you experience any of the following?</label>
+      <label for="therapy-history">Do you experience any of the following?</label>
       <div class="check-group">
         <label class="check-item"><input type="checkbox" name="mental" value="anxiety"> Anxiety</label>
         <label class="check-item"><input type="checkbox" name="mental" value="depression"> Depression</label>
@@ -1041,7 +1097,7 @@ footer a:hover { color: #fff; }
       <label>Is there anything from your history with previous therapy or support that we should know - what has helped, or what has not worked well?</label>
       <textarea id="therapy-history" placeholder="e.g. CBT was not helpful for me. I respond well to somatic approaches. I have had bad experiences with particular techniques."></textarea>
       <p class="field-hint">This helps us avoid approaches that could cause harm and build on what actually works for you.</p>
-      <label class="decline-option" style="margin-top:0.6rem;">
+      <label for="meds-list" class="decline-option" style="margin-top:0.6rem;">
         <input type="checkbox" id="decline-therapy" onchange="document.getElementById('decline-therapy-note').style.display=this.checked?'block':'none'; updateHealthRiskIndemnity();">
         I prefer not to share therapy history at this time
       </label>
@@ -1071,7 +1127,7 @@ footer a:hover { color: #fff; }
         <textarea id="meds-list" placeholder="Medication name, dose, frequency (e.g. Ritalin 10mg - morning and lunchtime)"></textarea>
       </div>
       <div class="field">
-        <label>Do you take medication during support session hours?</label>
+        <label for="mealtime-detail">Do you take medication during support session hours?</label>
         <div class="check-group" style="grid-template-columns:1fr 1fr;">
           <label class="check-item"><input type="radio" name="meds-during-session" value="yes" id="meds-session-yes"> Yes</label>
           <label class="check-item"><input type="radio" name="meds-during-session" value="no"> No</label>
@@ -1120,7 +1176,7 @@ footer a:hover { color: #fff; }
       You have chosen not to share some health or safety information. We respect that choice. We do need you to acknowledge that choosing not to share this information means we may not be able to plan for all risks, and that responsibility for any outcomes arising from undisclosed information rests with you.
     </div>
     <div class="field">
-      <label>Which information are you choosing not to share? <span class="req">*</span></label>
+      <label for="ri-health-partial">Which information are you choosing not to share? <span class="req">*</span></label>
       <div id="ri-health-gap-summary" style="font-size:0.88rem;color:var(--text-mid);padding:0.75rem;background:white;border:1px solid var(--purple-pale);border-radius:4px;min-height:2.5rem;"></div>
       <p class="field-hint">This is auto-populated from your selections above.</p>
     </div>
@@ -1131,16 +1187,16 @@ footer a:hover { color: #fff; }
     </div>
     <div class="consent-block">
       <h4>Acknowledgement <span class="req">*</span></h4>
-      <label class="consent-item">
-        <input type="checkbox" id="ri-health-ack1" required>
+      <label for="ri-health-name" class="consent-item">
+        <input type="checkbox" id="ri-health-ack1" required aria-required="true">
         <span>I understand that by not disclosing this information, Neurodivergent Empowered may not be able to plan adequately for all risks during service delivery.</span>
       </label>
       <label class="consent-item">
-        <input type="checkbox" id="ri-health-ack2" required>
+        <input type="checkbox" id="ri-health-ack2" required aria-required="true">
         <span>I understand that I can share this information at any time, and that doing so will help the team support me more safely and effectively.</span>
       </label>
       <label class="consent-item">
-        <input type="checkbox" id="ri-health-ack3" required>
+        <input type="checkbox" id="ri-health-ack3" required aria-required="true">
         <span>I acknowledge that Neurodivergent Empowered has informed me of the implications of not disclosing, and that I am making this choice of my own free will.</span>
       </label>
     </div>
@@ -1150,7 +1206,7 @@ footer a:hover { color: #fff; }
         <input type="text" id="ri-health-name" placeholder="Your full name">
       </div>
       <div class="field">
-        <label>Date</label>
+        <label for="ri-health-date">Date</label>
         <input type="date" id="ri-health-date">
       </div>
     </div>
@@ -1173,18 +1229,18 @@ footer a:hover { color: #fff; }
   <div class="form-card">
     <h3>What matters most to you right now</h3>
     <div class="field">
-      <label>In your own words, what is most important to you right now?</label>
+      <label for="whats-important">In your own words, what is most important to you right now?</label>
       <textarea id="whats-important" style="min-height:100px;" placeholder="This could be about relationships, independence, feeling safe, doing something you love, finishing something you started - anything that matters to you."></textarea>
     </div>
     <div class="field">
-      <label>What do you hope support from us will help with?</label>
+      <label for="hope-for">What do you hope support from us will help with?</label>
       <textarea id="hope-for" style="min-height:100px;" placeholder="You do not need to have this figured out. Even partial answers help us plan with you."></textarea>
     </div>
     <div class="field">
-      <label>Is there anything that has got in the way of reaching your goals before?</label>
+      <label for="barriers">Is there anything that has got in the way of reaching your goals before?</label>
       <textarea id="barriers" placeholder="e.g. Burnout, not the right support, life got in the way, my needs changed, I did not feel heard."></textarea>
     </div>
-    <label class="decline-option">
+    <label for="what-helps" class="decline-option">
       <input type="checkbox" id="decline-matters" onchange="document.getElementById('decline-matters-note').style.display=this.checked?'block':'none'">
       I prefer not to share this information at this time
     </label>
@@ -1239,7 +1295,7 @@ footer a:hover { color: #fff; }
       <textarea id="what-helps" style="min-height:110px;" placeholder="e.g. Having a clear plan for the session. Being able to move around. Quiet spaces. Knowing I can leave if I need to. Weighted items. Fidgets. My headphones."></textarea>
     </div>
     <div class="field">
-      <label>Are there any sensory sensitivities we should know about?</label>
+      <label for="sensory-detail">Are there any sensory sensitivities we should know about?</label>
       <div class="check-group">
         <label class="check-item"><input type="checkbox" name="sensory" value="sound"> Sound / noise</label>
         <label class="check-item"><input type="checkbox" name="sensory" value="light"> Light / brightness</label>
@@ -1255,7 +1311,7 @@ footer a:hover { color: #fff; }
       <label>Can you tell us more about your sensory sensitivities and what helps?</label>
       <textarea id="sensory-detail" placeholder="e.g. Fluorescent lighting causes headaches - natural light or lamps are much better. Unexpected loud noises can trigger shutdowns. I need at least 10 minutes of quiet time between transitions."></textarea>
     </div>
-    <label class="decline-option">
+    <label for="what-makes-harder" class="decline-option">
       <input type="checkbox" id="decline-sensory" onchange="document.getElementById('decline-sensory-note').style.display=this.checked?'block':'none'">
       I prefer not to share sensory information at this time
     </label>
@@ -1271,11 +1327,11 @@ footer a:hover { color: #fff; }
       <textarea id="what-makes-harder" style="min-height:110px;" placeholder="e.g. Being asked to make a decision quickly when I am already overwhelmed. Being touched without warning. Certain smells. Unexpected changes to plans. Being talked about like I am not there."></textarea>
     </div>
     <div class="field">
-      <label>How do you let people know when you are struggling or need a break?</label>
+      <label for="struggle-signals">How do you let people know when you are struggling or need a break?</label>
       <textarea id="struggle-signals" placeholder="e.g. I go quiet and avoid eye contact. I will say I need a minute. I might leave the room. I might not be able to speak - I will hold up my hand."></textarea>
       <p class="field-hint">This helps our team notice and respond without making things harder.</p>
     </div>
-    <label class="decline-option">
+    <label for="safety-info" class="decline-option">
       <input type="checkbox" id="decline-harder" onchange="document.getElementById('decline-harder-note').style.display=this.checked?'block':'none'">
       I prefer not to share this information at this time
     </label>
@@ -1292,10 +1348,10 @@ footer a:hover { color: #fff; }
       <p class="field-hint">This information goes directly into your Emergency Plan. If you are not sure what to include, we can go through it together at our first session.</p>
     </div>
     <div class="field">
-      <label>Is there anyone who should not be contacted or involved in your support for safety reasons?</label>
+      <label for="safety-exclusions">Is there anyone who should not be contacted or involved in your support for safety reasons?</label>
       <textarea id="safety-exclusions" placeholder="You do not have to explain why. We will document this and make sure it is respected."></textarea>
     </div>
-    <label class="decline-option">
+    <label for="ri-safety-partial" class="decline-option">
       <input type="checkbox" id="decline-safety" onchange="document.getElementById('decline-safety-note').style.display=this.checked?'block':'none'; updateSafetyRiskIndemnity();">
       I prefer not to share safety information at this time
     </label>
@@ -1316,12 +1372,12 @@ footer a:hover { color: #fff; }
     </div>
     <div class="consent-block">
       <h4>Acknowledgement <span class="req">*</span></h4>
-      <label class="consent-item">
-        <input type="checkbox" id="ri-safety-ack1" required>
+      <label for="ri-safety-name" class="consent-item">
+        <input type="checkbox" id="ri-safety-ack1" required aria-required="true">
         <span>I understand that by not sharing safety information at this stage, my Emergency Plan cannot be fully completed prior to my first session. I agree that this will be addressed at my first appointment.</span>
       </label>
       <label class="consent-item">
-        <input type="checkbox" id="ri-safety-ack2" required>
+        <input type="checkbox" id="ri-safety-ack2" required aria-required="true">
         <span>I acknowledge that Neurodivergent Empowered has informed me of the implications and that I am making this choice freely. I understand I can share this information at any time.</span>
       </label>
     </div>
@@ -1331,7 +1387,7 @@ footer a:hover { color: #fff; }
         <input type="text" id="ri-safety-name" placeholder="Your full name">
       </div>
       <div class="field">
-        <label>Date</label>
+        <label for="ri-safety-date">Date</label>
         <input type="date" id="ri-safety-date">
       </div>
     </div>
@@ -1343,7 +1399,7 @@ footer a:hover { color: #fff; }
     <div class="field">
       <p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:0.75rem;">You have the right to involve an advocate or trusted support person in your planning, sessions, or at any point during our service. This can be a family member, friend, or a professional advocate.</p>
       <div class="check-group" style="grid-template-columns:1fr 1fr 1fr;">
-        <label class="check-item"><input type="radio" name="advocate" value="yes" id="advocate-yes"> Yes</label>
+        <label for="advocate-name" class="check-item"><input type="radio" name="advocate" value="yes" id="advocate-yes"> Yes</label>
         <label class="check-item"><input type="radio" name="advocate" value="no"> No, not at this stage</label>
         <label class="check-item"><input type="radio" name="advocate" value="maybe"> I would like more information first</label>
       </div>
@@ -1355,17 +1411,17 @@ footer a:hover { color: #fff; }
           <input type="text" id="advocate-name" placeholder="Full name">
         </div>
         <div class="field">
-          <label>Relationship to you</label>
+          <label for="advocate-rel">Relationship to you</label>
           <input type="text" id="advocate-rel" placeholder="e.g. Mum, friend, disability advocate">
         </div>
       </div>
       <div class="field-row">
         <div class="field">
-          <label>Phone</label>
+          <label for="advocate-phone">Phone</label>
           <input type="tel" id="advocate-phone">
         </div>
         <div class="field">
-          <label>Email</label>
+          <label for="advocate-email">Email</label>
           <input type="email" id="advocate-email">
         </div>
       </div>
@@ -1457,7 +1513,7 @@ footer a:hover { color: #fff; }
     <h3>Interest-Based and Everyday Supports</h3>
     <p style="font-size:0.88rem;color:var(--text-mid);margin-bottom:1.25rem;">These are our core supports - building skills, connection and independence in ways that are meaningful to you. We deliver these across The Nest and in the community.</p>
     <div class="field">
-      <label>What are you interested in? (select all that apply)</label>
+      <label for="bs-behaviours">What are you interested in? (select all that apply)</label>
       <div class="check-group" style="grid-template-columns:1fr;">
         <label class="check-item"><input type="checkbox" name="services-primary" value="interest-based-0125"> <div><strong>Interest-based group and community participation</strong><br><span style="font-size:0.8rem;color:var(--text-soft);">The Nest programs, hobby groups, community outings and social connection - billed under Community Participation (0125)</span></div></label>
         <label class="check-item"><input type="checkbox" name="services-primary" value="daily-living-0117"> <div><strong>Daily living and life skills</strong><br><span style="font-size:0.8rem;color:var(--text-soft);">Independence, self-management, routines and practical life skills - billed under Daily Living Skills (0117)</span></div></label>
@@ -1497,7 +1553,7 @@ footer a:hover { color: #fff; }
       <textarea id="bs-behaviours" placeholder="Please describe what is happening and in what situations. There is no need to use clinical language."></textarea>
     </div>
     <div class="field">
-      <label>Are any restrictive practices currently in use?</label>
+      <label for="bs-rp-detail">Are any restrictive practices currently in use?</label>
       <div class="check-group" style="grid-template-columns:1fr 1fr 1fr;">
         <label class="check-item"><input type="radio" name="bs-rp" value="yes" id="bs-rp-yes"> Yes</label>
         <label class="check-item"><input type="radio" name="bs-rp" value="no"> No</label>
@@ -1512,7 +1568,7 @@ footer a:hover { color: #fff; }
       <div class="alert alert-warning">Restrictive practices require authorisation through the NDIS Commission. We will discuss this with you as a priority and support you to understand your rights and options.</div>
     </div>
     <div class="field">
-      <label>Has there been a previous Behaviour Support Plan?</label>
+      <label for="bs-referrer">Has there been a previous Behaviour Support Plan?</label>
       <div class="check-group" style="grid-template-columns:1fr 1fr 1fr;">
         <label class="check-item"><input type="radio" name="bs-prev-plan" value="yes"> Yes</label>
         <label class="check-item"><input type="radio" name="bs-prev-plan" value="no"> No</label>
@@ -1526,7 +1582,7 @@ footer a:hover { color: #fff; }
   </div>
 
   <div class="field" style="margin-top:1.5rem;">
-    <label>Anything else you are hoping for, or any questions about what we offer?</label>
+    <label for="services-notes">Anything else you are hoping for, or any questions about what we offer?</label>
     <textarea id="services-notes" placeholder="Not sure what you need? That is completely okay. Write anything here and we will talk it through."></textarea>
   </div>
 
@@ -1550,7 +1606,7 @@ footer a:hover { color: #fff; }
       A Service Agreement is a written record of what supports we will provide, how often, the costs involved, your rights, and how either of us can make changes or end the arrangement. It is not a lock-in contract. You can change or exit at any time with notice. The NDIS Practice Standards say we must offer this to you in writing.
     </p>
     <div class="field">
-      <label>How would you like to handle your Service Agreement?</label>
+      <label for="anything-else">How would you like to handle your Service Agreement?</label>
       <div class="radio-cards">
         <label class="radio-card">
           <input type="radio" name="sa-preference" value="sign-now">
@@ -1591,7 +1647,7 @@ footer a:hover { color: #fff; }
       <textarea id="anything-else" style="min-height:110px;" placeholder="Anything at all. Previous experiences, things you are nervous about, things that would help, people you want involved, questions you have."></textarea>
     </div>
     <div class="field">
-      <label>How did you hear about us?</label>
+      <label for="referral-source">How did you hear about us?</label>
       <select id="referral-source">
         <option value="">Select</option>
         <option>Support Coordinator</option>
@@ -1816,11 +1872,11 @@ function addGoal() {
   card.innerHTML = `
     <button type="button" onclick="removeGoal(${idx})" style="position:absolute;top:0.75rem;right:0.75rem;background:transparent;border:none;color:var(--text-soft);font-size:1.1rem;cursor:pointer;padding:0.2rem 0.4rem;border-radius:2px;transition:color 0.2s;" onmouseover="this.style.color='var(--hot-pink)'" onmouseout="this.style.color='var(--text-soft)'" title="Remove goal">&times;</button>
     <div style="margin-bottom:1rem;">
-      <label style="font-size:0.88rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.4rem;">Goal ${idx}: Describe your goal in your own words <span class="req">*</span></label>
+      <label for="goal-desc-${idx}" style="font-size:0.88rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.4rem;">Goal ${idx}: Describe your goal in your own words <span class="req">*</span></label>
       <textarea id="goal-desc-${idx}" style="width:100%;padding:0.75rem 1rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;min-height:80px;resize:vertical;" placeholder="e.g. I want to be able to go to the shops on my own without feeling overwhelmed."></textarea>
     </div>
     <div style="margin-bottom:1rem;">
-      <label style="font-size:0.88rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.6rem;">How important is this goal to you?</label>
+      <label for="goal-p2-${idx}" style="font-size:0.88rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.6rem;">How important is this goal to you?</label>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
         ${[1,2,3,4,5].map(n => `<label style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;cursor:pointer;"><input type="radio" name="goal-importance-${idx}" value="${n}" style="accent-color:var(--purple);width:18px;height:18px;"><span style="font-size:0.8rem;color:var(--text-mid);">${n === 1 ? 'Somewhat<br>important' : n === 3 ? 'Very<br>important' : n === 5 ? 'Absolutely<br>essential' : '&nbsp;<br>&nbsp;'}<br>${n}</span></label>`).join('')}
       </div>
@@ -1832,19 +1888,19 @@ function addGoal() {
         <input type="text" id="goal-p2-${idx}" style="width:100%;padding:0.6rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.88rem;color:var(--text);background:white;" placeholder="e.g. I could go to the shops alone, browse for 30 minutes, and enjoy it.">
       </div>
       <div>
-        <label style="font-size:0.82rem;font-weight:700;color:var(--teal);display:block;margin-bottom:0.3rem;">+1 Better than expected</label>
+        <label for="goal-p1-${idx}" style="font-size:0.82rem;font-weight:700;color:var(--teal);display:block;margin-bottom:0.3rem;">+1 Better than expected</label>
         <input type="text" id="goal-p1-${idx}" style="width:100%;padding:0.6rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.88rem;color:var(--text);background:white;" placeholder="e.g. I could go to the shops alone and get what I need, even if it is stressful.">
       </div>
       <div style="background:white;border:1.5px solid var(--purple-pale);border-radius:4px;padding:0.6rem 0.9rem;">
-        <label style="font-size:0.82rem;font-weight:700;color:var(--purple);display:block;margin-bottom:0.3rem;">0 Expected outcome - what are you hoping to achieve?</label>
+        <label for="goal-0-${idx}" style="font-size:0.82rem;font-weight:700;color:var(--purple);display:block;margin-bottom:0.3rem;">0 Expected outcome - what are you hoping to achieve?</label>
         <input type="text" id="goal-0-${idx}" style="width:100%;border:none;font-family:'Figtree',sans-serif;font-size:0.88rem;color:var(--text);background:transparent;outline:none;" placeholder="e.g. I could go to the shops with a support worker and manage most of the process myself.">
       </div>
       <div>
-        <label style="font-size:0.82rem;font-weight:700;color:var(--text-soft);display:block;margin-bottom:0.3rem;">-1 Less progress than hoped</label>
+        <label for="goal-m1-${idx}" style="font-size:0.82rem;font-weight:700;color:var(--text-soft);display:block;margin-bottom:0.3rem;">-1 Less progress than hoped</label>
         <input type="text" id="goal-m1-${idx}" style="width:100%;padding:0.6rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.88rem;color:var(--text);background:white;" placeholder="e.g. I could plan a shopping trip but still need a lot of support to get there.">
       </div>
       <div>
-        <label style="font-size:0.82rem;font-weight:700;color:var(--text-soft);display:block;margin-bottom:0.3rem;">-2 Much less progress than expected</label>
+        <label for="goal-m2-${idx}" style="font-size:0.82rem;font-weight:700;color:var(--text-soft);display:block;margin-bottom:0.3rem;">-2 Much less progress than expected</label>
         <input type="text" id="goal-m2-${idx}" style="width:100%;padding:0.6rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.88rem;color:var(--text);background:white;" placeholder="e.g. Shopping remains too overwhelming to attempt even with support.">
       </div>
     </div>
@@ -1908,28 +1964,28 @@ function addTeamMember() {
     " onmouseover="this.style.color='var(--hot-pink)'" onmouseout="this.style.color='var(--text-soft)'" title="Remove">&times;</button>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
       <div class="field" style="margin:0;">
-        <label style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Role <span class="req">*</span></label>
+        <label for="tm-role-${idx}" style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Role <span class="req">*</span></label>
         <select id="tm-role-${idx}" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;">
           <option value="">Select role</option>
           ${opts}
         </select>
       </div>
       <div class="field" style="margin:0;">
-        <label style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Name</label>
+        <label for="tm-name-${idx}" style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Name</label>
         <input type="text" id="tm-name-${idx}" placeholder="Full name" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;">
       </div>
     </div>
     <div class="field" style="margin-bottom:0.75rem;">
-      <label style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Organisation</label>
+      <label for="tm-org-${idx}" style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Organisation</label>
       <input type="text" id="tm-org-${idx}" placeholder="Organisation or practice name" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;">
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
       <div class="field" style="margin:0;">
-        <label style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Phone</label>
+        <label for="tm-phone-${idx}" style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Phone</label>
         <input type="tel" id="tm-phone-${idx}" placeholder="0400 000 000" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;">
       </div>
       <div class="field" style="margin:0;">
-        <label style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Email</label>
+        <label for="tm-email-${idx}" style="font-size:0.82rem;font-weight:600;color:var(--text-mid);display:block;margin-bottom:0.35rem;">Email</label>
         <input type="email" id="tm-email-${idx}" placeholder="email@example.com" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--purple-pale);border-radius:4px;font-family:'Figtree',sans-serif;font-size:0.9rem;color:var(--text);background:white;">
       </div>
     </div>
@@ -1989,3 +2045,195 @@ function submitForm() {
   const email = document.getElementById('email').value;
 
   
+
+<!-- Accessibility Widget -->
+<div id="sr-announcements" aria-live="polite" aria-atomic="true" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);"></div>
+
+<button id="a11y-toggle" aria-label="Accessibility options" style="position: fixed; bottom: 24px; right: 24px; z-index: 99999; height: 52px; border-radius: 26px; background: #6B3FA0; color: #fff; border: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; padding: 0 20px 0 16px; box-shadow: 0 4px 20px rgba(107,63,160,0.4); transition: all 0.3s ease; animation: a11yPulse 2s ease-in-out 3;">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="4.5" r="2.5"/><path d="M12 7v5"/><path d="M8 10l4 2 4-2"/><path d="M9 19l3-7 3 7"/></svg>
+  <span style="font-weight: 600; letter-spacing: 0.5px;">Accessibility</span>
+</button>
+
+<div id="a11y-panel" style="position: fixed; bottom: 88px; right: 24px; z-index: 99999; width: 320px; max-height: 80vh; overflow-y: auto; background: #1c1128; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 24px; display: none; box-shadow: 0 20px 60px rgba(0,0,0,0.4); color: #fff;" role="dialog" aria-label="Accessibility settings">
+  <p style="font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #C5B3E0; margin-bottom: 20px;">Accessibility</p>
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Font Size</span>
+    <div style="display: flex; gap: 8px;">
+      <button class="a11y-btn" onclick="changeFontSize(-1)" aria-label="Decrease font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 16px;">A-</button>
+      <button class="a11y-btn" onclick="changeFontSize(0)" aria-label="Reset font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 13px;">&#8634;</button>
+      <button class="a11y-btn" onclick="changeFontSize(1)" aria-label="Increase font size" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: transparent; color: #fff; cursor: pointer; font-size: 16px;">A+</button>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Dyslexia-friendly font</span>
+    <button id="dyslexia-toggle" class="a11y-switch" onclick="toggleDyslexia()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">High contrast</span>
+    <button id="contrast-toggle" class="a11y-switch" onclick="toggleContrast()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Reduce motion</span>
+    <button id="motion-toggle" class="a11y-switch" onclick="toggleReducedMotion()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Reading guide</span>
+    <button id="guide-toggle" class="a11y-switch" onclick="toggleReadingGuide()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Line spacing</span>
+    <button id="spacing-toggle" class="a11y-switch" onclick="toggleLineSpacing()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Highlight links</span>
+    <button id="links-toggle" class="a11y-switch" onclick="toggleHighlightLinks()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Dark mode</span>
+    <button id="dark-toggle" class="a11y-switch" onclick="toggleDarkMode()" aria-pressed="false" style="width: 44px; height: 24px; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); cursor: pointer; position: relative; transition: background 0.2s;">
+      <span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform 0.2s;"></span>
+    </button>
+  </div>
+</div>
+
+<div id="reading-guide" style="display: none; position: fixed; left: 0; right: 0; height: 40px; background: rgba(107,63,160,0.08); border-top: 1px solid rgba(107,63,160,0.2); border-bottom: 1px solid rgba(107,63,160,0.2); pointer-events: none; z-index: 99990; transition: top 0.05s linear;"></div>
+
+<script>
+// Accessibility Widget
+document.getElementById('a11y-toggle').addEventListener('click', function() {
+  var panel = document.getElementById('a11y-panel');
+  var isOpen = panel.style.display === 'block';
+  panel.style.display = isOpen ? 'none' : 'block';
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('a11y-panel').style.display = 'none';
+});
+
+var fontSizeLevel = 0;
+function changeFontSize(dir) {
+  if (dir === 0) fontSizeLevel = 0;
+  else fontSizeLevel = Math.max(-2, Math.min(4, fontSizeLevel + dir));
+  document.documentElement.style.fontSize = (100 + fontSizeLevel * 12.5) + '%';
+  saveA11yPrefs();
+}
+
+function toggleSwitch(id) {
+  var btn = document.getElementById(id);
+  var pressed = btn.getAttribute('aria-pressed') === 'true';
+  btn.setAttribute('aria-pressed', !pressed);
+  return !pressed;
+}
+
+function toggleDyslexia() { document.body.classList.toggle('dyslexia-mode', toggleSwitch('dyslexia-toggle')); saveA11yPrefs(); }
+function toggleContrast() { document.body.classList.toggle('high-contrast', toggleSwitch('contrast-toggle')); saveA11yPrefs(); }
+function toggleReducedMotion() { document.body.classList.toggle('reduced-motion', toggleSwitch('motion-toggle')); saveA11yPrefs(); }
+function toggleLineSpacing() { document.body.classList.toggle('spacing-mode', toggleSwitch('spacing-toggle')); saveA11yPrefs(); }
+function toggleHighlightLinks() { document.body.classList.toggle('highlight-links', toggleSwitch('links-toggle')); saveA11yPrefs(); }
+function toggleDarkMode() { document.body.classList.toggle('dark-mode', toggleSwitch('dark-toggle')); saveA11yPrefs(); }
+
+function toggleReadingGuide() {
+  var on = toggleSwitch('guide-toggle');
+  var guide = document.getElementById('reading-guide');
+  guide.style.display = on ? 'block' : 'none';
+  if (on) { document.addEventListener('mousemove', moveGuide); }
+  else { document.removeEventListener('mousemove', moveGuide); }
+  saveA11yPrefs();
+}
+function moveGuide(e) { document.getElementById('reading-guide').style.top = (e.clientY - 20) + 'px'; }
+
+// Auto-detect reduced motion
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.body.classList.add('reduced-motion');
+  var mt = document.getElementById('motion-toggle');
+  if (mt) mt.setAttribute('aria-pressed', 'true');
+}
+
+// Text-to-speech
+var currentTTSBtn = null;
+if (window.speechSynthesis) {
+  window.speechSynthesis.getVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+  }
+}
+function speakSection(btn) {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.tts-btn').forEach(function(b) { b.classList.remove('speaking'); });
+    if (currentTTSBtn === btn) { currentTTSBtn = null; return; }
+  }
+  var section = btn.closest('section') || btn.parentElement;
+  if (!section) return;
+  var text = '';
+  section.querySelectorAll('h2, h3, p:not([class*="eyebrow"])').forEach(function(el) { text += el.textContent + '. '; });
+  var utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.92;
+  utterance.pitch = 1.05;
+  var voices = window.speechSynthesis.getVoices();
+  var preferred = ['Samantha','Karen','Moira','Tessa','Google UK English Female','Google US English','Microsoft Zira','English (Australia)'];
+  var bestVoice = null;
+  for (var i = 0; i < preferred.length; i++) {
+    bestVoice = voices.find(function(v) { return v.name.indexOf(preferred[i]) !== -1; });
+    if (bestVoice) break;
+  }
+  if (!bestVoice) bestVoice = voices.find(function(v) { return v.lang.indexOf('en') === 0; });
+  if (bestVoice) utterance.voice = bestVoice;
+  utterance.onend = function() { btn.classList.remove('speaking'); currentTTSBtn = null; };
+  btn.classList.add('speaking');
+  currentTTSBtn = btn;
+  window.speechSynthesis.speak(utterance);
+}
+
+// Persist preferences
+function saveA11yPrefs() {
+  var prefs = {
+    fontSize: fontSizeLevel,
+    dyslexia: document.body.classList.contains('dyslexia-mode'),
+    contrast: document.body.classList.contains('high-contrast'),
+    motion: document.body.classList.contains('reduced-motion'),
+    spacing: document.body.classList.contains('spacing-mode'),
+    links: document.body.classList.contains('highlight-links'),
+    dark: document.body.classList.contains('dark-mode'),
+    guide: document.getElementById('guide-toggle').getAttribute('aria-pressed') === 'true'
+  };
+  try { localStorage.setItem('ne-a11y-prefs', JSON.stringify(prefs)); } catch(e) {}
+}
+
+// Load saved preferences
+try {
+  var saved = JSON.parse(localStorage.getItem('ne-a11y-prefs'));
+  if (saved) {
+    if (saved.fontSize) { fontSizeLevel = saved.fontSize; document.documentElement.style.fontSize = (100 + fontSizeLevel * 12.5) + '%'; }
+    if (saved.dyslexia) toggleDyslexia();
+    if (saved.contrast) toggleContrast();
+    if (saved.motion) toggleReducedMotion();
+    if (saved.spacing) toggleLineSpacing();
+    if (saved.links) toggleHighlightLinks();
+    if (saved.dark) toggleDarkMode();
+    if (saved.guide) toggleReadingGuide();
+  }
+} catch(e) {}
+</script>
+
+</body>
+</html>
