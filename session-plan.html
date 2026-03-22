@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Plan | Neurodivergent Empowered</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --social:#9B8FD0;--social-bg:#EEEDFE;--social-text:#4A3F7A;
+  --indep:#5DAE8B;--indep-bg:#E1F5EE;--indep-text:#1A5A3A;
+  --reg:#D06050;--reg-bg:#FAECE7;--reg-text:#7A2A1A;
+  --comm:#5A8AB8;--comm-bg:#E6F1FB;--comm-text:#1A3A5A;
+  --exec:#C4A050;--exec-bg:#FFF8E8;--exec-text:#5A4A1A;
+  --bg:#fff;--text:#1A1A1A;--muted:#666;--hint:#999;
+  --border:#e8e4e0;--cream:#fdfaf5;
+}
+@media print{
+  @page{margin:1.5cm;size:A4}
+  .no-print{display:none!important}
+  .page-break{page-break-before:always}
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',sans-serif;background:var(--cream);color:var(--text);line-height:1.5;font-size:14px}
+.page{max-width:800px;margin:0 auto;background:#fff;padding:2.5rem;min-height:100vh}
+
+/* Header */
+.plan-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem}
+.plan-title{font-size:36px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+.plan-subtitle{font-size:14px;color:var(--muted);margin-top:4px}
+.plan-meta{text-align:right;font-size:14px;color:var(--text);font-weight:600;line-height:1.5}
+.plan-meta .initials{font-size:12px;color:var(--muted);font-weight:400}
+.plan-divider{height:3px;background:var(--text);margin:1.25rem 0 2rem;border:none}
+
+/* Links bar */
+.links-bar{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.link-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;border:1.5px solid var(--border);color:var(--text);background:#fff;transition:all .15s}
+.link-pill:hover{background:var(--cream);border-color:#999}
+.link-pill.vote{border-color:#1D9E75;color:#085041;background:#E1F5EE}
+.link-pill.results{border-color:#5A8AB8;color:#1A3A5A;background:#E6F1FB}
+
+/* Goals section */
+.section-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
+.goals-table{width:100%;border-collapse:collapse;margin-bottom:2rem}
+.goals-table th{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:8px 6px;text-align:center;border-bottom:2px solid var(--border)}
+.goals-table th:first-child{width:50px;text-align:center}
+.goals-table td{padding:12px 6px;text-align:center;vertical-align:middle;border-bottom:1px solid #f0ede8;font-size:12px;line-height:1.35}
+.goals-table tr:last-child td{border-bottom:none}
+
+.p-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;margin:0 auto;border:2px solid}
+.goal-cell{border-radius:6px;padding:6px 8px;margin:2px;font-size:11px;line-height:1.3;display:inline-block;max-width:140px}
+.goal-cell.social{background:var(--social-bg);border:1px solid var(--social);color:var(--social-text)}
+.goal-cell.indep{background:var(--indep-bg);border:1px solid var(--indep);color:var(--indep-text)}
+.goal-cell.reg{background:var(--reg-bg);border:1px solid var(--reg);color:var(--reg-text)}
+.goal-cell.comm{background:var(--comm-bg);border:1px solid var(--comm);color:var(--comm-text)}
+.goal-cell.exec{background:var(--exec-bg);border:1px solid var(--exec);color:var(--exec-text)}
+.goal-empty{color:var(--hint);font-style:italic;font-size:12px}
+.no-goals-note{font-size:11px;color:var(--hint);font-style:italic;margin-top:-1rem;margin-bottom:1.5rem}
+
+/* Legend */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:.5rem;margin-bottom:2rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
+.legend-dot{width:12px;height:4px;border-radius:2px}
+
+/* Schedule */
+.schedule-header{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.schedule-sub{font-size:13px;color:var(--muted);margin-bottom:4px}
+.schedule-time-range{font-size:14px;font-weight:600;float:right;margin-top:-2rem}
+.schedule-divider{height:2.5px;background:var(--text);margin:.75rem 0 1.5rem;border:none}
+
+/* Time block */
+.block{display:flex;gap:0;margin-bottom:6px;min-height:80px}
+.block-time{width:50px;flex-shrink:0;text-align:right;padding-right:12px;padding-top:14px;font-size:12px;color:var(--muted);line-height:1.4;font-weight:500}
+.block-bar{width:4px;flex-shrink:0;border-radius:2px;margin-right:14px}
+.block-bar.social{background:var(--social)}
+.block-bar.indep{background:var(--indep)}
+.block-bar.reg{background:var(--reg)}
+.block-bar.comm{background:var(--comm)}
+.block-bar.exec{background:var(--exec)}
+.block-bar.multi{background:linear-gradient(to bottom,var(--social),var(--indep),var(--reg),var(--comm),var(--exec))}
+.block-content{flex:1;border:1px solid var(--border);border-radius:8px;padding:14px 16px;background:#fff}
+.block-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.block-desc{font-size:13px;color:var(--muted);margin-bottom:8px;line-height:1.5}
+
+/* Choices */
+.choose-label{font-size:10px;font-weight:700;color:var(--reg);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.choice-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--cream)}
+.choice-box{width:14px;height:14px;border:1.5px solid #ccc;border-radius:3px;flex-shrink:0}
+.choice-weather::after{content:' ☁️';font-size:11px}
+.choice-lowenergy{color:var(--muted);font-style:italic}
+
+/* Domain tags */
+.domain-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.domain-tag{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600}
+.domain-tag.social{background:var(--social-bg);color:var(--social-text)}
+.domain-tag.indep{background:var(--indep-bg);color:var(--indep-text)}
+.domain-tag.reg{background:var(--reg-bg);color:var(--reg-text)}
+.domain-tag.comm{background:var(--comm-bg);color:var(--comm-text)}
+.domain-tag.exec{background:var(--exec-bg);color:var(--exec-text)}
+
+/* Print button */
+.print-bar{position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:10px 1.5rem;display:flex;align-items:center;justify-content:center;gap:12px;z-index:10}
+.print-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1.5px solid #1D9E75;border-radius:6px;background:#E1F5EE;color:#085041;cursor:pointer}
+.print-btn:hover{background:#1D9E75;color:#fff}
+.session-select{padding:6px 12px;font-size:13px;border:1.5px solid var(--border);border-radius:6px;background:#fff}
+
+/* No session */
+.no-session{text-align:center;padding:4rem 1rem}
+.no-session h2{font-size:22px;margin-bottom:12px}
+.no-session p{color:var(--muted);margin-bottom:6px}
+
+@media(max-width:600px){
+  .page{padding:1.25rem}
+  .choices-grid{grid-template-columns:1fr}
+  .plan-title{font-size:26px}
+  .goals-table{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <select class="session-select" id="session-picker" onchange="location.search='?session='+this.value">
+    <option value="">— Select session —</option>
+  </select>
+  <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+
+<div class="page" id="plan-page">
+  <div id="content"></div>
+</div>
+
+<script>
+// ─── PARTICIPANT COLOURS ─────────────────────────────────────────────────────
+const COLOURS = [
+  {bg:'#7B6BA5',border:'#6B5B95'},  // purple
+  {bg:'#5A8AB8',border:'#4A7AA8'},  // blue
+  {bg:'#5DAE8B',border:'#4D9E7B'},  // green
+  {bg:'#D4808A',border:'#C47080'},  // pink
+  {bg:'#C4A055',border:'#B49045'},  // amber
+  {bg:'#6BAEA8',border:'#5B9E98'},  // teal
+  {bg:'#A088C0',border:'#9078B0'},  // light purple
+  {bg:'#D08060',border:'#C07050'},  // coral
+  {bg:'#88A060',border:'#789050'},  // olive
+  {bg:'#B07090',border:'#A06080'},  // mauve
+];
+
+// ─── SESSION DATA ────────────────────────────────────────────────────────────
+const SESSIONS = {
+
+  'sat-912-nesting': {
+    name: '9-12 Years Nesting',
+    fullName: 'Saturday 9-12 Nesting',
+    day: 'Saturday',
+    time: '10:00 am – 2:00 pm',
+    participants: [
+      {id:'Ty', social:'Cooperative play & social awareness', indep:'Hygiene & daily independence', reg:'Self-regulate emotions & sensory needs', comm:null, exec:'Build attention, focus & persistence'},
+      {id:'Ja', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
+      {id:'Li', social:'Participate in activities & coordination', indep:'More independent at home', reg:'Cope with changes & express feelings', comm:null, exec:null},
+      {id:'Ph', social:'Make & maintain friendships', indep:null, reg:'Build confidence & regulate emotions', comm:'Enhance communication skills', exec:null},
+      {id:'Do', social:'Interact with peers & join activities', indep:'Improve self-care to peer level', reg:null, comm:'Improve communication with others', exec:null},
+      {id:'Sh', social:'Social & community participation', indep:'Build independent living skills', reg:'Regulate emotions & manage sensory needs', comm:null, exec:null},
+    ],
+    schedule: [
+      {start:'10:00',end:'10:20',title:'Welcome & check-in circle',desc:'Feelings check-in — how are we arriving today? Share one good thing.',domains:['reg','comm'],bar:'reg'},
+      {start:'10:20',end:'11:10',title:'Movement — pick an activity',desc:'Inside only. Everyone chooses what feels right for them.',domains:['social','indep','exec'],bar:'social',chooseType:'multiple',choices:['Dance / movement games','Balance & coordination challenges','Yoga / stretching','Free movement / just move']},
+      {start:'11:10',end:'12:00',title:'Collaborative creative — pick an activity',desc:'Group or solo option. Everyone contributes at their own pace.',domains:['social','comm','reg'],bar:'comm',chooseType:'multiple',choices:['Group building / construction','Drawing / art','Collage / craft','Storytelling / comic making']},
+      {start:'12:00',end:'12:30',title:'Free choice — pick an activity',desc:'Low-demand wind-down before lunch. Participant-led.',domains:['social','reg'],bar:'social',chooseType:'multiple',choices:['Board games','Card games','Drawing / colouring','Chill & chat']},
+      {start:'12:30',end:'1:00',title:'Lunch — pizza provided',desc:'Relaxed social eating. Informal conversation and connection.',domains:['social','comm'],bar:'indep'},
+      {start:'1:00',end:'1:30',title:'Tech time — own devices',desc:'Any tech activity of their choice.',domains:[],bar:'exec'},
+      {start:'1:30',end:'2:00',title:'Cool-down & reflection',desc:'Share one thing you tried or enjoyed today. Celebrate efforts big and small. Gentle goodbye ritual.',domains:['reg','social','comm'],bar:'reg'},
+    ]
+  },
+
+  'wed-autistic-teens': {
+    name: 'Wednesday Autistic Teens',
+    fullName: 'Wednesday Teen Session',
+    day: 'Wednesday',
+    time: '2:00 pm – 5:00 pm',
+    participants: [
+      {id:'Fi', social:'Teen activities with peers', indep:'Supported independently of family', reg:null, comm:'Express thoughts & needs clearly', exec:null},
+      {id:'Co', social:'Build social confidence', indep:null, reg:'Manage anxiety & routine changes', comm:'Social communication & body language', exec:null},
+      {id:'Za', social:'Social cues & friendships', indep:'Work skills for employability', reg:null, comm:'Confidence with new people', exec:null},
+      {id:'Ki', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
+      {id:'Le', social:'Social connections & friendships', indep:'Self-care & less parental prompting', reg:'Manage social battery & energy', comm:'Improve communication skills', exec:'Build routine & focus skills'},
+      {id:'Mi', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
+      {id:'Ch', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
+    ],
+    schedule: [
+      {start:'2:00',end:'2:20',title:'Welcome & check-in circle',desc:'Feelings check-in — how are we arriving today? Share one good thing.',domains:['reg','comm'],bar:'reg'},
+      {start:'2:20',end:'3:10',title:'Movement — pick an activity',desc:'Inside only. Everyone chooses what feels right for them.',domains:['social','indep','exec'],bar:'social',chooseType:'multiple',choices:['Dance / movement games','Balance & coordination challenges','Yoga / stretching','Free movement / just move']},
+      {start:'3:10',end:'4:00',title:'Collaborative creative — pick an activity',desc:'Group or solo option. Everyone contributes at their own pace.',domains:['social','comm','reg'],bar:'comm',chooseType:'multiple',choices:['Card / board games','Drawing / art','Collage / craft','Storytelling / comic making']},
+      {start:'4:00',end:'4:30',title:'Free choice — pick an activity',desc:'Low-demand wind-down. Participant-led.',domains:['social','reg'],bar:'social',chooseType:'multiple',choices:['Trivia / quiz games','Card games','Drawing / colouring','Chill & chat']},
+      {start:'4:30',end:'4:50',title:'Snack time',desc:'Relaxed social eating. Informal conversation and connection.',domains:['social','comm'],bar:'indep'},
+      {start:'4:50',end:'5:00',title:'Cool-down & reflection',desc:'Share one thing you tried or enjoyed today. Celebrate efforts big and small. Gentle goodbye ritual.',domains:['reg','social','comm'],bar:'reg'},
+    ]
+  },
+
+  'sat-autistic-teens': {
+    name: 'Saturday Autistic Teens',
+    fullName: 'Saturday Autistic Teens',
+    day: 'Saturday',
+    time: '2:15 pm – 5:15 pm',
+    participants: [
+      {id:'Ar', social:'Cooperative play & social skills', indep:'Daily self-care & living skills', reg:'Regulate emotions & recovery', comm:null, exec:'Planning, sequencing & safety awareness'},
+      {id:'Ev', social:'School & social participation', indep:'Life skills & growing independence', reg:'Emotional wellbeing & self-awareness', comm:'Initiating & sustaining conversations', exec:null},
+      {id:'Li', social:'Teen activities & peer connection', indep:'Community independence', reg:null, comm:'Communication with peers', exec:null},
+      {id:'Pi', social:'Social navigation & friendships', indep:'Self-care routines', reg:'Managing regulation & fatigue', comm:null, exec:null},
+      {id:'Hy', social:'Social skills through group & community activities', indep:'Community access, independent living & fine motor skills', reg:'Emotional resilience & reducing anxiety', comm:'Communicating more effectively with others', exec:null},
+      {id:'Ma', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
+    ],
+    schedule: [
+      {start:'2:15',end:'2:35',title:'Arrival & settle in',desc:'Free choice arrival — no group expectation. Sensory tent, beanbags, fidgets, Coco the axolotl, whiteboard with today\'s plan.',domains:['indep','reg'],bar:'indep'},
+      {start:'2:35',end:'3:30',title:'Activity 1 — pick an activity',desc:'Look at everyone\'s goals above. Choose one together.',domains:['social','indep','reg','comm','exec'],bar:'multi',chooseType:'single',choices:['Aha Slides quiz','Music jam','Cosplay & character creation','Creative craft challenge','Content creator challenge','Nintendo or PlayStation (low energy)']},
+      {start:'3:30',end:'3:55',title:'Movement break — pick an activity',desc:'Reset and move. Choose what works for today\'s energy and weather.',domains:['social','indep','reg','comm','exec'],bar:'social',chooseType:'single',choices:['Community walk to Bulcock Street ☁','Outdoor free play ☁','Nintendo interactive movement','Yoga & body-based stretch (low energy)']},
+      {start:'3:55',end:'4:50',title:'Activity 2 — pick an activity',desc:'Look at everyone\'s goals. Choose one together.',domains:['social','indep','reg','comm','exec'],bar:'multi',chooseType:'single',choices:['Board game or Lego challenge','VR gaming','Magic the Gathering / card games','Aha Slides quiz','Community walk to Bulcock Street ☁','Content creator challenge','Art session (low energy)','Quiet corner — reading & rest (low energy)','Coco the axolotl (low energy)']},
+      {start:'4:50',end:'5:15',title:'Wind-down & check-out',desc:'Brief group check-out — one word for today or feelings scale on the whiteboard. No pressure to share. Quiet sensory options available.',domains:['social','reg','comm'],bar:'reg'},
+    ]
+  },
+
+};
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+const params = new URLSearchParams(location.search);
+const sessionKey = params.get('session');
+
+// Populate picker
+const picker = document.getElementById('session-picker');
+Object.keys(SESSIONS).forEach(k => {
+  const opt = document.createElement('option');
+  opt.value = k;
+  opt.textContent = SESSIONS[k].name;
+  if(k === sessionKey) opt.selected = true;
+  picker.appendChild(opt);
+});
+
+if(!sessionKey || !SESSIONS[sessionKey]){
+  document.getElementById('content').innerHTML = '<div class="no-session"><h2>Select a session</h2><p>Use the dropdown above or add <code>?session=sat-912-nesting</code> to the URL.</p></div>';
+} else {
+  render(SESSIONS[sessionKey], sessionKey);
+}
+
+function getSessionDate(dayName){
+  const days = {Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};
+  const target = days[dayName];
+  const now = new Date();
+  const current = now.getDay();
+  let diff = target - current;
+  if(diff < 0) diff += 7;
+  if(diff === 0) diff = 0; // today
+  const date = new Date(now);
+  date.setDate(now.getDate() + diff);
+  return date;
+}
+
+function formatDate(d){
+  return d.toLocaleDateString('en-AU',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+
+function render(session, key){
+  const sessionDate = getSessionDate(session.day);
+  const dateStr = formatDate(sessionDate);
+  const initials = session.participants.map(p=>p.id).join(' · ');
+
+  let html = '';
+
+  // ── HEADER ──
+  html += `<div class="plan-header">
+    <div>
+      <div class="plan-title">Session Plan</div>
+      <div class="plan-subtitle">Neurodivergent Empowered — ${dateStr}</div>
+    </div>
+    <div class="plan-meta">
+      ${session.time}
+      <div class="initials">${initials}</div>
+    </div>
+  </div>
+  <hr class="plan-divider">`;
+
+  // ── LINKS ──
+  html += `<div class="links-bar no-print">
+    <a class="link-pill vote" href="session-vote.html?session=${key}" target="_blank">🗳 Participant Vote</a>
+    <a class="link-pill results" href="session-results.html?session=${key}" target="_blank">📊 Live Results</a>
+  </div>`;
+
+  // ── GOALS GRID ──
+  html += `<div class="section-label">Everyone's Goals Today</div>`;
+  html += `<table class="goals-table"><thead><tr>
+    <th></th><th>Social</th><th>Independence</th><th>Regulation</th><th>Communication</th><th>Executive fn.</th>
+  </tr></thead><tbody>`;
+
+  session.participants.forEach((p, i) => {
+    const c = COLOURS[i % COLOURS.length];
+    html += `<tr>
+      <td><div class="p-circle" style="background:${c.bg};border-color:${c.border}">${p.id}</div></td>
+      <td>${goalCell(p.social,'social',p.noFile)}</td>
+      <td>${goalCell(p.indep,'indep',p.noFile)}</td>
+      <td>${goalCell(p.reg,'reg',p.noFile)}</td>
+      <td>${goalCell(p.comm,'comm',p.noFile)}</td>
+      <td>${goalCell(p.exec,'exec',p.noFile)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+
+  // Legend
+  html += `<div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--social)"></div> Social</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--indep)"></div> Independence</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--reg)"></div> Regulation</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--comm)"></div> Communication</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--exec)"></div> Executive function</div>
+  </div>`;
+
+  const hasNoFile = session.participants.some(p => p.noFile);
+  if(hasNoFile){
+    html += `<div class="no-goals-note">— no goal file on record</div>`;
+  }
+
+  // ── SCHEDULE ──
+  html += `<div class="page-break"></div>`;
+  html += `<div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <div>
+      <div class="schedule-header">Today's schedule</div>
+      <div class="schedule-sub">${dateStr} — ${session.time}</div>
+    </div>
+    <div style="font-size:14px;font-weight:600;padding-top:8px">${session.time}</div>
+  </div>
+  <hr class="schedule-divider">`;
+
+  session.schedule.forEach(block => {
+    html += renderBlock(block);
+  });
+
+  document.getElementById('content').innerHTML = html;
+}
+
+function goalCell(text, domain, noFile){
+  if(noFile && !text) return '<span class="goal-empty">—</span>';
+  if(!text) return '<span class="goal-empty">—</span>';
+  return `<span class="goal-cell ${domain}">${text}</span>`;
+}
+
+function renderBlock(block){
+  let choicesHtml = '';
+  if(block.choices){
+    const label = block.chooseType === 'single' ? 'CHOOSE ONE' : 'CHOOSE ONE OR MORE';
+    choicesHtml += `<div class="choose-label">${label}</div><div class="choices-grid">`;
+    block.choices.forEach(ch => {
+      const isWeather = ch.includes('☁');
+      const isLow = ch.toLowerCase().includes('low energy');
+      let cls = '';
+      if(isWeather) cls += ' choice-weather';
+      if(isLow) cls += ' choice-lowenergy';
+      const clean = ch.replace(' ☁','');
+      choicesHtml += `<div class="choice-item${cls}"><div class="choice-box"></div>${clean}${isWeather?' ☁':''}</div>`;
+    });
+    choicesHtml += `</div>`;
+  }
+
+  let domainsHtml = '';
+  if(block.domains.length){
+    domainsHtml = '<div class="domain-tags">';
+    const labels = {social:'Social',indep:'Independence',reg:'Regulation',comm:'Communication',exec:'Executive fn.'};
+    block.domains.forEach(d => {
+      domainsHtml += `<span class="domain-tag ${d}">${labels[d]}</span>`;
+    });
+    domainsHtml += '</div>';
+  }
+
+  return `<div class="block">
+    <div class="block-time">${block.start}<br>${block.end}</div>
+    <div class="block-bar ${block.bar}"></div>
+    <div class="block-content">
+      <div class="block-title">${block.title}</div>
+      <div class="block-desc">${block.desc}</div>
+      ${choicesHtml}
+      ${domainsHtml}
+    </div>
+  </div>`;
+}
+</script>
+</body>
+</html>
