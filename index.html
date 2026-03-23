@@ -330,7 +330,9 @@ body.high-contrast [style*="background"]:not([id="a11y-panel"]):not(.a11y-switch
 body.high-contrast #a11y-panel [style*="background"] { background: transparent !important; background-color: transparent !important; }
 body.high-contrast #a11y-panel .a11y-switch[style] { background: rgba(255,255,255,0.3) !important; }
 body.high-contrast #a11y-panel .a11y-switch[aria-pressed="true"][style] { background: #FFFF00 !important; }
-body.high-contrast .btn-primary, body.high-contrast .nav-cta, body.high-contrast button[type="submit"] { background: #FFFF00 !important; color: #000 !important; border: 2px solid #FFFF00 !important; }
+body.high-contrast .btn-primary, body.high-contrast .btn-secondary, body.high-contrast .btn-ghost, body.high-contrast .nav-cta, body.high-contrast button[type="submit"], body.high-contrast .modal-close, body.high-contrast .linkish, body.high-contrast button:not(.a11y-switch):not(.a11y-btn):not(.tts-btn):not(#a11y-toggle), body.high-contrast a[class*="btn"] { background: #FFFF00 !important; color: #000 !important; border: 2px solid #FFFF00 !important; }
+body.high-contrast .tts-btn { background: #000 !important; color: #FFFF00 !important; border: 2px solid #FFFF00 !important; }
+body.high-contrast #a11y-toggle { background: #FFFF00 !important; color: #000 !important; }
 body.high-contrast .card, body.high-contrast [class*="card"], body.high-contrast [class*="box"], body.high-contrast [class*="wrapper"], body.high-contrast [class*="hero"], body.high-contrast [class*="banner"] { background: #000 !important; border-color: #fff !important; }
 body.reduced-motion *, body.reduced-motion *::before, body.reduced-motion *::after {
   animation-duration: 0.001s !important;
