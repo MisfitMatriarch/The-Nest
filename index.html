@@ -422,6 +422,7 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
     <div>
       <div class="hero-badge">NDIS Registered Provider &middot; 4-K6GFD9R</div>
       <h1>Support that <em>sees</em> the whole of you</h1>
+      <button class="tts-btn" onclick="speakSection(this)" aria-label="Listen to this section">🔈 Listen</button>
       <p class="hero-desc">Capacity building, therapeutic supports, and community participation for autistic and neurodivergent people on the Sunshine Coast.</p>
       <div class="hero-actions">
         <a href="get-started.html" class="btn-primary">Get started &#8594;</a>
@@ -478,6 +479,7 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
       <div class="reveal right">
         <span class="section-label">Who we are</span>
         <h2 class="section-title">Built different, <em>on purpose</em></h2>
+        <button class="tts-btn" onclick="speakSection(this)" aria-label="Listen to this section">🔈 Listen</button>
         <p class="section-sub">Neurodivergent Empowered delivers capacity building, therapeutic supports, and community participation infrastructure for autistic and neurodivergent children, teens, and adults on the Sunshine Coast. Feeling safe comes first. Masking is not expected. Participation is paced to capacity.</p>
         <div class="values-grid">
           <div class="card">
@@ -622,6 +624,7 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
     <div class="contact-grid">
       <div class="reveal left">
         <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; margin-top: 3rem;">How it works</h3>
+        <button class="tts-btn" onclick="speakSection(this)" aria-label="Listen to this section">🔈 Listen</button>
         <p style="font-size: 0.85rem; color: var(--text-mid); margin-bottom: 1.5rem; line-height: 1.75;">Four steps, no surprises.</p>
         <div class="steps">
           <div class="step"><div class="step-n">1</div><div><div class="step-title"><a href="get-started.html">Open the Get Started page</a></div><div class="step-desc">Go straight to the dedicated Get Started page for the next step that fits you best.</div></div></div>
@@ -934,6 +937,21 @@ function speakSection(btn) {
   currentTTSBtn = btn;
   window.speechSynthesis.speak(utterance);
 }
+
+// Auto-inject TTS buttons after every h1, h2, h3 that doesn't already have one
+document.querySelectorAll('h1, h2, h3').forEach(function(heading) {
+  // Skip if already has a tts-btn as next sibling or within same parent
+  if (heading.nextElementSibling && heading.nextElementSibling.classList.contains('tts-btn')) return;
+  if (heading.parentElement.querySelector('.tts-btn')) return;
+  // Skip modal headings and acknowledgement
+  if (heading.closest('.modal') || heading.closest('#ack-overlay')) return;
+  var btn = document.createElement('button');
+  btn.className = 'tts-btn';
+  btn.setAttribute('onclick', 'speakSection(this)');
+  btn.setAttribute('aria-label', 'Listen to this section');
+  btn.textContent = '\uD83D\uDD08 Listen';
+  heading.insertAdjacentElement('afterend', btn);
+});
 
 // Persist preferences
 function saveA11yPrefs() {

@@ -1481,6 +1481,21 @@ function speakSection(btn) {
   window.speechSynthesis.speak(utterance);
 }
 
+// Auto-inject TTS buttons after every h1, h2, h3 that doesn't already have one
+document.querySelectorAll('h1, h2, h3').forEach(function(heading) {
+  // Skip if already has a tts-btn as next sibling or within same parent
+  if (heading.nextElementSibling && heading.nextElementSibling.classList.contains('tts-btn')) return;
+  if (heading.parentElement.querySelector('.tts-btn')) return;
+  // Skip modal headings and acknowledgement
+  if (heading.closest('.modal') || heading.closest('#ack-overlay')) return;
+  var btn = document.createElement('button');
+  btn.className = 'tts-btn';
+  btn.setAttribute('onclick', 'speakSection(this)');
+  btn.setAttribute('aria-label', 'Listen to this section');
+  btn.textContent = '\uD83D\uDD08 Listen';
+  heading.insertAdjacentElement('afterend', btn);
+});
+
 // Persist preferences
 function saveA11yPrefs() {
   var prefs = {
