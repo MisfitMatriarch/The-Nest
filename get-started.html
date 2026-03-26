@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Started | Neurodivergent Empowered</title>
   <meta name="description" content="Take the first step. Fill in our expression of interest form and we will reach out within 2 business days. No pressure, no commitment.">
+  <!-- Supabase JS client for lead submission -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Figtree:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
@@ -1264,6 +1266,45 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
   var MAIN_ENDPOINT = 'https://formsubmit.co/ajax/' + MAIN_EMAIL;
   var RCO_ENDPOINT = 'https://formsubmit.co/ajax/' + RCO_EMAIL;
 
+  // Supabase client for lead record creation
+  var SUPABASE_URL = 'https://uwzzensmmwiztrccnvcj.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enplbnNtbXdpenRyY2NudmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njc1NDksImV4cCI6MjA5MDA0MzU0OX0.9isPxMhy7QwJ6ue07812ReNoH-oCysymU0sXPp_QLsU';
+  var supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+  async function submitToSupabase(formData, eoiRef, hasSafetyFlags) {
+    if (!supabaseClient) { console.warn('Supabase client not loaded, skipping lead creation'); return; }
+    try {
+      var leadRecord = {
+        eoi_ref: eoiRef,
+        status: 'new',
+        first_name: formData.first_name || '',
+        last_name: formData.last_name || null,
+        preferred_name: formData.preferred_name || null,
+        age_group: formData.age_group || null,
+        completing_for: formData.completing_for || null,
+        contact_name: formData.contact_name || null,
+        relationship: formData.relationship || null,
+        mobile: formData.mobile || null,
+        email: formData.email || null,
+        contact_method: formData.contact_method || null,
+        interest_type: formData.interest_type || null,
+        programs_interested: formData.programs_interested || null,
+        ndis_status: formData.ndis_status || null,
+        plan_management: formData.plan_management || null,
+        bsp_exists: formData.bsp_exists || null,
+        restrictive_practices: formData.restrictive_practices || null,
+        safety_flags: formData.safety || null,
+        has_safety_flags: hasSafetyFlags,
+        additional_info: formData.additional_info || null
+      };
+      var { error } = await supabaseClient.from('leads').insert([leadRecord]);
+      if (error) console.error('Supabase lead insert error:', error);
+      else console.log('Lead created in Supabase:', eoiRef);
+    } catch (err) {
+      console.error('Supabase submission failed (non-blocking):', err);
+    }
+  }
+
   var programs = {
     "6-8": [
       { name: "Nesting Session", day: "Wednesday", time: "11:00am - 2:00pm", isNew: true },
@@ -1584,6 +1625,9 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
       var response = await fetch(MAIN_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(mainData) });
 
       if (response.ok) {
+        // Also submit to Supabase (non-blocking — email is the primary channel)
+        submitToSupabase(formData, eoiRef, hasSafetyFlags);
+
         form.style.display = 'none';
         document.getElementById('thankYou').classList.add('visible');
         if (needsRCO) document.getElementById('safetyThankYou').style.display = 'block';
