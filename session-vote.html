@@ -137,6 +137,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   .age-emoji{font-size:20px}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -261,6 +262,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <script>
+var SB_URL = 'https://uwzzensmmwiztrccnvcj.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enplbnNtbXdpenRyY2NudmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njc1NDksImV4cCI6MjA5MDA0MzU0OX0.9isPxMhy7QwJ6ue07812ReNoH-oCysymU0sXPp_QLsU';
+var sbVote = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+
 // ─── DATA ───────────────────────────────────────────────────────────────────
 // ages: 'all' | '9-12' | 'teen+' | '18+'
 // weather: true = needs good weather
@@ -492,19 +497,18 @@ function doSubmit(){
     body:new URLSearchParams(fd).toString()
   }).catch(()=>{});
 
-  // Post to votes API (per-session results)
-  const voteData = {
-    name: fd.get('participant_name') || 'Anonymous',
-    age_group: fd.get('age_group') || '',
-    energy: fd.get('energy_level') || '',
-    social: fd.get('social_level') || '',
-    activities: picks,
-  };
-  fetch('/api/votes?session='+encodeURIComponent(sessionId),{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(voteData)
-  }).catch(()=>{});
+  // Post to Supabase (primary)
+  if (sbVote) {
+    sbVote.from('session_votes').insert({
+      session_key: sessionBase,
+      vote_key: sessionId,
+      participant_name: fd.get('participant_name') || 'Anonymous',
+      age_group: fd.get('age_group') || null,
+      energy: parseInt(fd.get('energy_level')) || null,
+      social: parseInt(fd.get('social_level')) || null,
+      activities: picks
+    }).then(function(r) { if(r.error) console.warn('Vote save:', r.error); });
+  }
 
   // Show thank you
   document.getElementById('form-area').style.display='none';

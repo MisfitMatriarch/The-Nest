@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Session Plan | Neurodivergent Empowered</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -145,58 +146,91 @@ const COLOURS = [
   {bg:'#B07090',border:'#A06080'},  // mauve
 ];
 
-// ─── SESSION DATA ────────────────────────────────────────────────────────────
-const SESSIONS = {
+// ─── SUPABASE ────────────────────────────────────────────────────────────────
+const SB_URL = 'https://uwzzensmmwiztrccnvcj.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enplbnNtbXdpenRyY2NudmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njc1NDksImV4cCI6MjA5MDA0MzU0OX0.9isPxMhy7QwJ6ue07812ReNoH-oCysymU0sXPp_QLsU';
+const sbPlan = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+const DAY_NAMES_PLAN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-  'sat-912-nesting': {
-    name: '9-12 Years Nesting',
-    fullName: 'Saturday 9-12 Nesting',
-    day: 'Saturday',
-    time: '10:00 am – 2:00 pm',
-    participants: [
-      {id:'Ty', social:'Cooperative play & social awareness', indep:'Hygiene & daily independence', reg:'Self-regulate emotions & sensory needs', comm:null, exec:'Build attention, focus & persistence'},
-      {id:'Ja', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
-      {id:'Li', social:'Participate in activities & coordination', indep:'More independent at home', reg:'Cope with changes & express feelings', comm:null, exec:null},
-      {id:'Ph', social:'Make & maintain friendships', indep:null, reg:'Build confidence & regulate emotions', comm:'Enhance communication skills', exec:null},
-      {id:'Do', social:'Interact with peers & join activities', indep:'Improve self-care to peer level', reg:null, comm:'Improve communication with others', exec:null},
-      {id:'Sh', social:'Social & community participation', indep:'Build independent living skills', reg:'Regulate emotions & manage sensory needs', comm:null, exec:null},
-    ],
-    schedule: [
-      {start:'10:00',end:'10:20',title:'Welcome & check-in circle',desc:'Feelings check-in — how are we arriving today? Share one good thing.',domains:['reg','comm'],bar:'reg'},
-      {start:'10:20',end:'11:10',title:'Movement — pick an activity',desc:'Inside only. Everyone chooses what feels right for them.',domains:['social','indep','exec'],bar:'social',chooseType:'multiple',choices:['Dance / movement games','Balance & coordination challenges','Yoga / stretching','Free movement / just move']},
-      {start:'11:10',end:'12:00',title:'Collaborative creative — pick an activity',desc:'Group or solo option. Everyone contributes at their own pace.',domains:['social','comm','reg'],bar:'comm',chooseType:'multiple',choices:['Group building / construction','Drawing / art','Collage / craft','Storytelling / comic making']},
-      {start:'12:00',end:'12:30',title:'Free choice — pick an activity',desc:'Low-demand wind-down before lunch. Participant-led.',domains:['social','reg'],bar:'social',chooseType:'multiple',choices:['Board games','Card games','Drawing / colouring','Chill & chat']},
-      {start:'12:30',end:'1:00',title:'Lunch — pizza provided',desc:'Relaxed social eating. Informal conversation and connection.',domains:['social','comm'],bar:'indep'},
-      {start:'1:00',end:'1:30',title:'Tech time — own devices',desc:'Any tech activity of their choice.',domains:[],bar:'exec'},
-      {start:'1:30',end:'2:00',title:'Cool-down & reflection',desc:'Share one thing you tried or enjoyed today. Celebrate efforts big and small. Gentle goodbye ritual.',domains:['reg','social','comm'],bar:'reg'},
-    ]
-  },
+// ─── SESSION DATA (dynamic from Supabase) ────────────────────────────────────
+let SESSIONS = {};
 
-  'wed-autistic-teens': {
-    name: 'Wednesday Autistic Teens',
-    fullName: 'Wednesday Teen Session',
-    day: 'Wednesday',
-    time: '2:00 pm – 5:00 pm',
-    participants: [
-      {id:'Fi', social:'Teen activities with peers', indep:'Supported independently of family', reg:null, comm:'Express thoughts & needs clearly', exec:null},
-      {id:'Co', social:'Build social confidence', indep:null, reg:'Manage anxiety & routine changes', comm:'Social communication & body language', exec:null},
-      {id:'Za', social:'Social cues & friendships', indep:'Work skills for employability', reg:null, comm:'Confidence with new people', exec:null},
-      {id:'Ki', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
-      {id:'Le', social:'Social connections & friendships', indep:'Self-care & less parental prompting', reg:'Manage social battery & energy', comm:'Improve communication skills', exec:'Build routine & focus skills'},
-      {id:'Mi', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
-      {id:'Ch', social:null, indep:null, reg:null, comm:null, exec:null, noFile:true},
-    ],
-    schedule: [
-      {start:'2:00',end:'2:20',title:'Welcome & check-in circle',desc:'Feelings check-in — how are we arriving today? Share one good thing.',domains:['reg','comm'],bar:'reg'},
-      {start:'2:20',end:'3:10',title:'Movement — pick an activity',desc:'Inside only. Everyone chooses what feels right for them.',domains:['social','indep','exec'],bar:'social',chooseType:'multiple',choices:['Dance / movement games','Balance & coordination challenges','Yoga / stretching','Free movement / just move']},
-      {start:'3:10',end:'4:00',title:'Collaborative creative — pick an activity',desc:'Group or solo option. Everyone contributes at their own pace.',domains:['social','comm','reg'],bar:'comm',chooseType:'multiple',choices:['Card / board games','Drawing / art','Collage / craft','Storytelling / comic making']},
-      {start:'4:00',end:'4:30',title:'Free choice — pick an activity',desc:'Low-demand wind-down. Participant-led.',domains:['social','reg'],bar:'social',chooseType:'multiple',choices:['Trivia / quiz games','Card games','Drawing / colouring','Chill & chat']},
-      {start:'4:30',end:'4:50',title:'Snack time',desc:'Relaxed social eating. Informal conversation and connection.',domains:['social','comm'],bar:'indep'},
-      {start:'4:50',end:'5:00',title:'Cool-down & reflection',desc:'Share one thing you tried or enjoyed today. Celebrate efforts big and small. Gentle goodbye ritual.',domains:['reg','social','comm'],bar:'reg'},
-    ]
-  },
+async function loadAllSessionData() {
+  if (!sbPlan) { document.getElementById('content').innerHTML = '<div class="no-session"><h2>Error</h2><p>Could not connect to database.</p></div>'; return; }
 
-  'sat-autistic-teens': {
+  const { data: sessions } = await sbPlan.from('sessions').select('*').eq('is_active', true);
+  if (!sessions?.length) { document.getElementById('content').innerHTML = '<div class="no-session"><h2>No sessions configured</h2></div>'; return; }
+
+  // Load all enrollments with client names
+  const { data: enrollments } = await sbPlan.from('session_enrollments').select('session_id, clients(id, preferred_name)').eq('is_active', true);
+
+  // Get all enrolled client IDs
+  const allClientIds = [...new Set((enrollments || []).map(e => e.clients?.id).filter(Boolean))];
+
+  // Load all goal domains for enrolled clients
+  let allGoals = [];
+  if (allClientIds.length) {
+    const { data: gd } = await sbPlan.from('client_goal_domains').select('*').in('client_id', allClientIds);
+    allGoals = gd || [];
+  }
+
+  // Build SESSIONS object
+  sessions.forEach(s => {
+    const sessionEnrollments = (enrollments || []).filter(e => e.session_id === s.id && e.clients);
+    const participants = sessionEnrollments.map(e => {
+      const cGoals = allGoals.filter(g => g.client_id === e.clients.id);
+      const findGoal = (domain) => { const g = cGoals.find(x => x.domain === domain); return g ? g.goal_text : null; };
+      const name = e.clients.preferred_name || '';
+      const initials = name.substring(0, 2);
+      const hasGoals = cGoals.length > 0;
+      return {
+        id: initials,
+        social: findGoal('social'),
+        indep: findGoal('independence'),
+        reg: findGoal('regulation'),
+        comm: findGoal('communication'),
+        exec: findGoal('executive_function'),
+        noFile: !hasGoals
+      };
+    });
+
+    const startH = parseInt(s.start_time.substring(0,2));
+    const startM = s.start_time.substring(3,5);
+    const endH = parseInt(s.end_time.substring(0,2));
+    const endM = s.end_time.substring(3,5);
+    const fmtTime = (h, m) => { const ap = h >= 12 ? 'pm' : 'am'; const h12 = h > 12 ? h - 12 : (h === 0 ? 12 : h); return h12 + ':' + m + ' ' + ap; };
+    const timeStr = fmtTime(startH, startM) + ' – ' + fmtTime(endH, endM);
+
+    SESSIONS[s.session_key] = {
+      name: s.name,
+      fullName: s.name,
+      day: DAY_NAMES_PLAN[s.day_of_week],
+      time: timeStr,
+      participants: participants,
+      schedule: s.schedule || []
+    };
+  });
+
+  // Populate picker
+  Object.keys(SESSIONS).forEach(k => {
+    const opt = document.createElement('option');
+    opt.value = k;
+    opt.textContent = SESSIONS[k].name;
+    if (k === sessionKey) opt.selected = true;
+    picker.appendChild(opt);
+  });
+
+  if (sessionKey && SESSIONS[sessionKey]) {
+    render(SESSIONS[sessionKey], sessionKey);
+  } else if (!sessionKey) {
+    document.getElementById('content').innerHTML = '<div class="no-session"><h2>Select a session</h2><p>Use the dropdown above or add <code>?session=sat-912-nesting</code> to the URL.</p></div>';
+  } else {
+    document.getElementById('content').innerHTML = '<div class="no-session"><h2>Session not found</h2><p><code>' + sessionKey + '</code> is not in the database.</p></div>';
+  }
+}
+
+// Legacy fallback data for sessions with schedules not yet in DB
+const FALLBACK_SESSIONS = {
     name: 'Saturday Autistic Teens',
     fullName: 'Saturday Autistic Teens',
     day: 'Saturday',
@@ -223,22 +257,11 @@ const SESSIONS = {
 // ─── RENDER ──────────────────────────────────────────────────────────────────
 const params = new URLSearchParams(location.search);
 const sessionKey = params.get('session');
-
-// Populate picker
 const picker = document.getElementById('session-picker');
-Object.keys(SESSIONS).forEach(k => {
-  const opt = document.createElement('option');
-  opt.value = k;
-  opt.textContent = SESSIONS[k].name;
-  if(k === sessionKey) opt.selected = true;
-  picker.appendChild(opt);
-});
 
-if(!sessionKey || !SESSIONS[sessionKey]){
-  document.getElementById('content').innerHTML = '<div class="no-session"><h2>Select a session</h2><p>Use the dropdown above or add <code>?session=sat-912-nesting</code> to the URL.</p></div>';
-} else {
-  render(SESSIONS[sessionKey], sessionKey);
-}
+// Load from Supabase (async)
+document.getElementById('content').innerHTML = '<div class="no-session"><h2>Loading...</h2></div>';
+loadAllSessionData();
 
 function getSessionDate(dayName){
   const days = {Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};

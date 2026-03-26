@@ -89,6 +89,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   .rank-bar-wrap{width:60px}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -118,6 +119,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <script>
+var SB_URL = 'https://uwzzensmmwiztrccnvcj.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enplbnNtbXdpenRyY2NudmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njc1NDksImV4cCI6MjA5MDA0MzU0OX0.9isPxMhy7QwJ6ue07812ReNoH-oCysymU0sXPp_QLsU';
+var sbVote = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+
 const params = new URLSearchParams(location.search);
 
 // Auto-append week number to match vote page
@@ -153,13 +158,11 @@ if(!sessionId){
   setInterval(loadResults, 30000);
 }
 
-function loadResults(){
-  fetch('/api/votes?session='+encodeURIComponent(sessionId))
-    .then(r=>r.json())
-    .then(votes=>render(votes))
-    .catch(()=>{
-      document.getElementById('content').innerHTML='<div class="empty"><div class="empty-icon">⚠️</div><p>Could not load results. Make sure the site is deployed on Netlify.</p></div>';
-    });
+async function loadResults() {
+  if (!sbVote) return;
+  var { data: votes, error } = await sbVote.from('session_votes').select('*').eq('vote_key', sessionId).order('created_at');
+  if (error || !votes) { document.getElementById('content').innerHTML = '<div class="no-session"><h2>No results yet</h2></div>'; return; }
+  render(votes.map(function(v) { return { name: v.participant_name, age_group: v.age_group, energy: v.energy, social: v.social, activities: v.activities }; }));
 }
 
 function render(votes){
