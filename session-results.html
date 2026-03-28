@@ -90,6 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -214,18 +215,11 @@ function render(votes){
   });
   html += `</div>`;
 
-  // Energy + Social
-  html += `<div class="metre-summary">`;
-  html += `<div class="metre-card"><div class="metre-title">Energy levels</div>`;
-  for(let i=1;i<=5;i++){
-    html += `<div class="metre-row"><span class="metre-emoji">${energyLabels[i].split(' ')[0]}</span><span class="metre-label">${energyLabels[i]}</span><span class="metre-count">${energyTally[i]||0}</span></div>`;
-  }
+  // Energy + Social charts
+  html += `<div class="metre-summary" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">`;
+  html += `<div class="metre-card"><div class="metre-title">Energy Levels</div><canvas id="nest-chart-energy" height="160"></canvas></div>`;
+  html += `<div class="metre-card"><div class="metre-title">Social Preference</div><canvas id="nest-chart-social" height="160"></canvas></div>`;
   html += `</div>`;
-  html += `<div class="metre-card"><div class="metre-title">Social levels</div>`;
-  for(let i=1;i<=5;i++){
-    html += `<div class="metre-row"><span class="metre-emoji">${socialLabels[i].split(' ')[0]}</span><span class="metre-label">${socialLabels[i]}</span><span class="metre-count">${socialTally[i]||0}</span></div>`;
-  }
-  html += `</div></div>`;
 
   // Individual participants
   html += `<div class="participant-card"><div class="rank-title">Individual responses</div>`;
@@ -245,6 +239,22 @@ function render(votes){
   html += `</div>`;
 
   document.getElementById('content').innerHTML = html;
+
+  // Render Chart.js charts
+  if (typeof Chart !== 'undefined') {
+    var purpleScale = ['#EDE7F7','#C5B3E0','#9B8FD0','#6B4C9A','#4A3270'];
+    var chartOpts = { responsive: true, plugins: { legend: { display: false } }, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } };
+
+    var eCounts = [0,0,0,0,0];
+    votes.forEach(function(v) { if (v.energy >= 1 && v.energy <= 5) eCounts[v.energy-1]++; });
+    var eEl = document.getElementById('nest-chart-energy');
+    if (eEl) new Chart(eEl, { type: 'bar', data: { labels: ['Very low','Low','Medium','High','Very high'], datasets: [{ data: eCounts, backgroundColor: purpleScale, borderRadius: 4 }] }, options: chartOpts });
+
+    var sCounts = [0,0,0,0,0];
+    votes.forEach(function(v) { if (v.social >= 1 && v.social <= 5) sCounts[v.social-1]++; });
+    var sEl = document.getElementById('nest-chart-social');
+    if (sEl) new Chart(sEl, { type: 'bar', data: { labels: ['Solo','Parallel','Small grp','Group','Everyone'], datasets: [{ data: sCounts, backgroundColor: purpleScale, borderRadius: 4 }] }, options: chartOpts });
+  }
 }
 </script>
 </body>
