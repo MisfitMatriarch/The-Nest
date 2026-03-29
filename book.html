@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Call | Neurodivergent Empowered</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--purple:#6B4C9A;--purple-deep:#4a2f73;--purple-pale:#d4c3ec;--purple-mist:#ede6f7;--teal:#4a8a8e;--amber:#c9a65f;--red:#b8444e;--text:#1c1128;--text-mid:#4a3a5e;--text-light:#8a7a9e;--bg:#fdfaf5;--white:#fff;--border:rgba(107,76,154,0.15)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px;text-align:center}
+.logo{font-size:1.1rem;font-weight:700;color:var(--purple)}
+.logo-sub{font-size:0.72rem;color:var(--text-light)}
+.container{max-width:800px;margin:0 auto;padding:24px}
+h1{font-size:1.5rem;color:var(--purple);text-align:center;margin-bottom:8px}
+.subtitle{text-align:center;color:var(--text-mid);font-size:0.88rem;margin-bottom:24px}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{background:var(--white);border:2px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:center}
+.card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 4px 12px rgba(107,76,154,0.15)}
+.card.active{border-color:var(--purple);background:var(--purple-mist)}
+.card-icon{font-size:2rem;margin-bottom:8px}
+.card-title{font-weight:700;color:var(--purple);margin-bottom:6px;font-size:0.92rem}
+.card-desc{font-size:0.78rem;color:var(--text-mid);line-height:1.5}
+.card-color{width:100%;height:4px;border-radius:2px;margin-top:12px}
+.booking-panel{display:none;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px}
+.booking-panel.active{display:block}
+.step-title{font-size:1rem;font-weight:700;color:var(--purple);margin-bottom:16px}
+.slots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:20px}
+.slot{padding:10px;border:1.5px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;font-size:0.82rem;transition:all 0.15s}
+.slot:hover{border-color:var(--purple);background:var(--purple-mist)}
+.slot.selected{border-color:var(--purple);background:var(--purple);color:var(--white)}
+.slot.booked{opacity:0.3;cursor:not-allowed;text-decoration:line-through}
+.slot-date{font-weight:600;font-size:0.78rem}
+.slot-time{font-size:0.88rem;font-weight:700;color:var(--purple)}
+.slot.selected .slot-time{color:var(--white)}
+.slot-prac{font-size:0.68rem;color:var(--text-light)}
+.slot.selected .slot-prac{color:rgba(255,255,255,0.8)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:0.72rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.04em}
+.form-input{padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none;font-family:inherit}
+.form-input:focus{border-color:var(--purple)}
+.form-textarea{min-height:80px;resize:vertical}
+.btn{padding:12px 24px;border:none;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer}
+.btn-primary{background:var(--purple);color:var(--white)}
+.btn-primary:hover{opacity:0.9}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+.btn-back{background:none;border:1px solid var(--border);color:var(--text-mid);font-size:0.82rem;padding:8px 16px;border-radius:8px;cursor:pointer;margin-bottom:16px}
+.status{font-size:0.82rem;margin-top:12px}
+.status.ok{color:#2e7d5a}
+.status.err{color:#b8444e}
+.success-box{background:#e8f5ef;border:2px solid #2e7d5a;border-radius:12px;padding:24px;text-align:center;display:none}
+.success-box h2{color:#2e7d5a;margin-bottom:8px}
+.week-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.week-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:0.82rem;color:var(--purple)}
+.week-label{font-weight:600;color:var(--purple);font-size:0.88rem}
+.footer{text-align:center;padding:24px;font-size:0.72rem;color:var(--text-light);border-top:1px solid var(--border);margin-top:32px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">Neurodivergent Empowered</div>
+  <div class="logo-sub">Book a Call</div>
+</div>
+
+<div class="container">
+  <h1>Book a Call</h1>
+  <p class="subtitle">Select a call type below, choose a time that works for you, and we will be in touch.</p>
+
+  <div class="cards" id="type-cards">
+    <div class="card" onclick="selectType('support_call')">
+      <div class="card-icon">&#128222;</div>
+      <div class="card-title">Current Client Support Call</div>
+      <div class="card-desc">Thank you for being part of Neurodivergent Empowered. This is your dedicated Support Call to discuss anything about your support or our service.</div>
+      <div class="card-color" style="background:var(--teal)"></div>
+    </div>
+    <div class="card" onclick="selectType('programs_call')">
+      <div class="card-icon">&#127793;</div>
+      <div class="card-title">Neuroaffirming Programs Call</div>
+      <div class="card-desc">Interested in learning about our Interest Based Supports programs at The Nest? Book a call to find out more.</div>
+      <div class="card-color" style="background:var(--amber)"></div>
+    </div>
+    <div class="card" onclick="selectType('exit_interview')">
+      <div class="card-icon">&#128075;</div>
+      <div class="card-title">Exit Interview</div>
+      <div class="card-desc">Thank you for being part of Neurodivergent Empowered. It has been a privilege to walk alongside you. This exit process is a mandatory part of NDIS Accredited Service Provider services.</div>
+      <div class="card-color" style="background:var(--red)"></div>
+    </div>
+  </div>
+
+  <div class="booking-panel" id="booking-panel">
+    <button class="btn-back" onclick="goBack()">&#8592; Back to call types</button>
+    <div id="type-message" style="background:var(--purple-mist);border-radius:8px;padding:12px 16px;font-size:0.82rem;color:var(--text-mid);margin-bottom:16px"></div>
+
+    <div class="step-title">Choose a time</div>
+    <div class="week-nav">
+      <button class="week-btn" onclick="changeWeek(-1)">&#8592; Previous</button>
+      <span class="week-label" id="week-label"></span>
+      <button class="week-btn" onclick="changeWeek(1)">Next &#8594;</button>
+    </div>
+    <div id="slots-loading" style="text-align:center;color:var(--text-light);padding:20px">Loading available times...</div>
+    <div class="slots-grid" id="slots-grid"></div>
+
+    <div id="form-section" style="display:none">
+      <div class="step-title" style="margin-top:20px">Your Details</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="b-first" required></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="b-last" required></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="b-email" type="email" required></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="b-phone" type="tel"></div>
+        <div class="form-group full" id="participant-name-group" style="display:none"><label class="form-label">Participant Name (if booking on behalf of)</label><input class="form-input" id="b-participant"></div>
+        <div class="form-group full"><label class="form-label" id="query-label">What would you like to discuss?</label><textarea class="form-input form-textarea" id="b-query"></textarea></div>
+      </div>
+      <button class="btn btn-primary" onclick="submitBooking()" id="submit-btn" style="margin-top:16px;width:100%">Confirm Booking</button>
+      <div class="status" id="booking-status"></div>
+    </div>
+  </div>
+
+  <div class="success-box" id="success-box">
+    <h2>Booking Confirmed!</h2>
+    <p id="success-details"></p>
+    <p style="margin-top:12px;font-size:0.82rem;color:var(--text-mid)">A confirmation email has been sent. We look forward to speaking with you.</p>
+    <button class="btn btn-primary" onclick="location.reload()" style="margin-top:16px">Book Another Call</button>
+  </div>
+</div>
+
+<div class="footer">Neurodivergent Empowered | NDIS Provider 4-K6GFD9R | ABN 43 318 321 173<br>Rumba Resort, Shop 6, 10 Leeding Terrace, Caloundra QLD 4551 | admin@neurodivergentempowered.com | 0429 884 207</div>
+
+<script>
+var SB_URL = "https://uwzzensmmwiztrccnvcj.supabase.co";
+var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3enplbnNtbXdpenRyY2NudmNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Njc1NDksImV4cCI6MjA5MDA0MzU0OX0.9isPxMhy7QwJ6ue07812ReNoH-oCysymU0sXPp_QLsU";
+var sb = supabase.createClient(SB_URL, SB_KEY);
+
+var HOLIDAYS = ["2026-01-01","2026-01-26","2026-04-03","2026-04-04","2026-04-06","2026-04-25","2026-05-04","2026-06-08","2026-08-12","2026-10-26","2026-12-25","2026-12-26","2026-12-28","2027-01-01","2027-01-26","2027-03-26","2027-03-27","2027-03-29","2027-04-26","2027-05-03","2027-06-14","2027-08-11","2027-10-25","2027-12-25","2027-12-27","2027-12-28"];
+var DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var CALL_DURATION = 60;
+var BUFFER = 15;
+
+var selectedType = null;
+var selectedSlot = null;
+var weekOffset = 0;
+var availability = [];
+var existingBookings = [];
+var leaveData = [];
+var pracMap = {};
+
+var TYPE_MESSAGES = {
+  support_call: "Thank you for being part of Neurodivergent Empowered. This is your dedicated Support Call - book a time to discuss anything about your support or our service.",
+  programs_call: "Interested in our neuroaffirming Interest Based Supports programs? We would love to tell you more about how we can support you or your family.",
+  exit_interview: "Thank you for being part of Neurodivergent Empowered. It has been a privilege to walk alongside you. This exit process is a mandatory part of NDIS Accredited Service Provider services."
+};
+
+var TYPE_COLORS = { support_call: "var(--teal)", programs_call: "var(--amber)", exit_interview: "var(--red)" };
+
+async function loadData() {
+  var { data: avail } = await sb.from("booking_availability").select("*, practitioners(id, full_name)").eq("is_active", true);
+  availability = avail || [];
+  avail.forEach(function(a) { if (a.practitioners) pracMap[a.practitioners.id] = a.practitioners.full_name; });
+
+  var { data: bookings } = await sb.from("call_bookings").select("booking_date, booking_time, practitioner_id").in("status", ["confirmed"]);
+  existingBookings = bookings || [];
+
+  var { data: leave } = await sb.from("staff_leave").select("practitioner_id, leave_start, leave_end, leave_date");
+  leaveData = leave || [];
+}
+
+function selectType(type) {
+  selectedType = type;
+  selectedSlot = null;
+  document.getElementById("type-cards").style.display = "none";
+  document.getElementById("booking-panel").classList.add("active");
+  document.getElementById("type-message").textContent = TYPE_MESSAGES[type];
+  document.getElementById("form-section").style.display = "none";
+  if (type === "exit_interview") { document.getElementById("participant-name-group").style.display = ""; }
+  else { document.getElementById("participant-name-group").style.display = "none"; }
+  if (type === "programs_call") { document.getElementById("query-label").textContent = "Details of your query"; }
+  else { document.getElementById("query-label").textContent = "What would you like to discuss?"; }
+  weekOffset = 0;
+  loadSlots();
+}
+
+function goBack() {
+  document.getElementById("type-cards").style.display = "";
+  document.getElementById("booking-panel").classList.remove("active");
+  document.querySelectorAll(".card").forEach(function(c) { c.classList.remove("active"); });
+}
+
+function changeWeek(dir) { weekOffset += dir; loadSlots(); }
+
+function isOnLeave(pracId, dateStr) {
+  for (var i = 0; i < leaveData.length; i++) {
+    var l = leaveData[i];
+    if (l.practitioner_id !== pracId) continue;
+    var s = l.leave_start || l.leave_date;
+    var e = l.leave_end || l.leave_date;
+    if (dateStr >= s && dateStr <= e) return true;
+  }
+  return false;
+}
+
+function isBooked(pracId, dateStr, timeStr) {
+  for (var i = 0; i < existingBookings.length; i++) {
+    var b = existingBookings[i];
+    if (b.practitioner_id === pracId && b.booking_date === dateStr && b.booking_time === timeStr) return true;
+  }
+  return false;
+}
+
+function pad(n) { return String(n).padStart(2, "0"); }
+
+function loadSlots() {
+  var grid = document.getElementById("slots-grid");
+  var loading = document.getElementById("slots-loading");
+  grid.innerHTML = "";
+  loading.style.display = "block";
+
+  var today = new Date();
+  var weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - today.getDay() + 1 + (weekOffset * 7));
+  if (weekStart < today) weekStart = new Date(today);
+
+  var weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekStart.getDate() + 6);
+
+  document.getElementById("week-label").textContent = weekStart.toLocaleDateString("en-AU", { day: "numeric", month: "short" }) + " - " + weekEnd.toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+
+  var slots = [];
+  for (var d = 0; d < 7; d++) {
+    var date = new Date(weekStart);
+    date.setDate(weekStart.getDate() + d);
+    var dateStr = date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate());
+    var dow = date.getDay();
+
+    if (HOLIDAYS.indexOf(dateStr) >= 0) continue;
+    if (date < today) continue;
+
+    for (var a = 0; a < availability.length; a++) {
+      var avail = availability[a];
+      if (avail.day_of_week !== dow) continue;
+      if (isOnLeave(avail.practitioner_id, dateStr)) continue;
+
+      var startParts = avail.start_time.split(":");
+      var endParts = avail.end_time.split(":");
+      var startMins = parseInt(startParts[0]) * 60 + parseInt(startParts[1]);
+      var endMins = parseInt(endParts[0]) * 60 + parseInt(endParts[1]);
+
+      for (var t = startMins; t + CALL_DURATION <= endMins; t += CALL_DURATION + BUFFER) {
+        var h = Math.floor(t / 60);
+        var m = t % 60;
+        var timeStr = pad(h) + ":" + pad(m) + ":00";
+        var displayTime = (h > 12 ? h - 12 : h) + ":" + pad(m) + (h >= 12 ? "pm" : "am");
+        var booked = isBooked(avail.practitioner_id, dateStr, timeStr);
+
+        slots.push({
+          date: dateStr,
+          time: timeStr,
+          displayTime: displayTime,
+          displayDate: date.toLocaleDateString("en-AU", { weekday: "short", day: "numeric", month: "short" }),
+          pracId: avail.practitioner_id,
+          pracName: pracMap[avail.practitioner_id] || "Team",
+          booked: booked
+        });
+      }
+    }
+  }
+
+  loading.style.display = "none";
+  if (!slots.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-light);padding:20px;font-style:italic">No available times this week. Try next week.</div>';
+    return;
+  }
+
+  slots.forEach(function(s, i) {
+    var div = document.createElement("div");
+    div.className = "slot" + (s.booked ? " booked" : "");
+    div.innerHTML = '<div class="slot-date">' + s.displayDate + '</div><div class="slot-time">' + s.displayTime + '</div><div class="slot-prac">' + s.pracName + '</div>';
+    if (!s.booked) {
+      div.onclick = function() {
+        document.querySelectorAll(".slot").forEach(function(el) { el.classList.remove("selected"); });
+        div.classList.add("selected");
+        selectedSlot = s;
+        document.getElementById("form-section").style.display = "";
+      };
+    }
+    grid.appendChild(div);
+  });
+}
+
+async function submitBooking() {
+  if (!selectedSlot || !selectedType) return;
+  var first = document.getElementById("b-first").value.trim();
+  var last = document.getElementById("b-last").value.trim();
+  var email = document.getElementById("b-email").value.trim();
+  if (!first || !last || !email) { document.getElementById("booking-status").textContent = "Please fill in all required fields."; document.getElementById("booking-status").className = "status err"; return; }
+
+  document.getElementById("submit-btn").disabled = true;
+  document.getElementById("booking-status").textContent = "Booking...";
+  document.getElementById("booking-status").className = "status";
+
+  var record = {
+    booking_type: selectedType,
+    practitioner_id: selectedSlot.pracId,
+    booking_date: selectedSlot.date,
+    booking_time: selectedSlot.time,
+    duration_mins: CALL_DURATION,
+    first_name: first,
+    last_name: last,
+    email: email,
+    phone: document.getElementById("b-phone").value.trim() || null,
+    participant_name: document.getElementById("b-participant").value.trim() || null,
+    query_text: document.getElementById("b-query").value.trim() || null,
+    confirmation_sent: true
+  };
+
+  var { error } = await sb.from("call_bookings").insert(record);
+  if (error) {
+    document.getElementById("booking-status").textContent = "Error: " + error.message;
+    document.getElementById("booking-status").className = "status err";
+    document.getElementById("submit-btn").disabled = false;
+    return;
+  }
+
+  // Send confirmation emails
+  var typeLabels = { support_call: "Current Client Support Call", programs_call: "Neuroaffirming Programs Call", exit_interview: "Exit Interview" };
+  var dateFormatted = new Date(selectedSlot.date + "T00:00:00").toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+  try {
+    await fetch("https://formsubmit.co/ajax/" + email, {
+      method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ _subject: "Booking Confirmed - " + typeLabels[selectedType], _template: "table", "Call Type": typeLabels[selectedType], "Date": dateFormatted, "Time": selectedSlot.displayTime, "Duration": "60 minutes", "With": selectedSlot.pracName, "From": "Neurodivergent Empowered", "Location": "Phone/Video Call", "Contact": "admin@neurodivergentempowered.com | 0429 884 207" })
+    });
+  } catch(e) {}
+
+  var adminEmail = selectedType === "exit_interview" ? "tanya@neurodivergentempowered.com" : "sparkly@neurodivergentempowered.com";
+  try {
+    await fetch("https://formsubmit.co/ajax/" + adminEmail, {
+      method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ _subject: "New Booking - " + typeLabels[selectedType], _template: "table", "Type": typeLabels[selectedType], "Date": dateFormatted, "Time": selectedSlot.displayTime, "Name": first + " " + last, "Email": email, "Phone": record.phone || "Not provided", "Query": record.query_text || "None", "Practitioner": selectedSlot.pracName })
+    });
+  } catch(e) {}
+
+  document.getElementById("booking-panel").classList.remove("active");
+  document.getElementById("success-box").style.display = "block";
+  document.getElementById("success-details").textContent = typeLabels[selectedType] + " on " + dateFormatted + " at " + selectedSlot.displayTime + " with " + selectedSlot.pracName;
+}
+
+loadData().then(function() {
+  document.getElementById("slots-loading").style.display = "none";
+});
+</script>
+</body>
+</html>
