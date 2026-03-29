@@ -128,7 +128,7 @@ h1{font-size:1.5rem;color:var(--purple);text-align:center;margin-bottom:8px}
   </div>
 </div>
 
-<div class="footer">Neurodivergent Empowered | NDIS Provider 4-K6GFD9R | ABN 43 318 321 173<br>Rumba Resort, Shop 6, 10 Leeding Terrace, Caloundra QLD 4551 | admin@neurodivergentempowered.com | 0429 884 207</div>
+<div class="footer">Neurodivergent Empowered | NDIS Provider 4-K6GFD9R | ABN 43 318 321 173<br>Rumba Resort, Shop 6, 10 Leeding Terrace, Caloundra QLD 4551</div>
 
 <script>
 var SB_URL = "https://uwzzensmmwiztrccnvcj.supabase.co";
@@ -331,7 +331,7 @@ async function submitBooking() {
   try {
     await fetch("https://formsubmit.co/ajax/" + email, {
       method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ _subject: "Booking Confirmed - " + typeLabels[selectedType], _template: "table", "Call Type": typeLabels[selectedType], "Date": dateFormatted, "Time": selectedSlot.displayTime, "Duration": "60 minutes", "With": selectedSlot.pracName, "From": "Neurodivergent Empowered", "Location": "Phone/Video Call", "Contact": "admin@neurodivergentempowered.com | 0429 884 207" })
+      body: JSON.stringify({ _subject: "Booking Confirmed - " + typeLabels[selectedType], _template: "table", "Call Type": typeLabels[selectedType], "Date": dateFormatted, "Time": selectedSlot.displayTime, "Duration": "60 minutes", "With": selectedSlot.pracName, "From": "Neurodivergent Empowered", "Location": "Phone/Video Call", "Contact": "Neurodivergent Empowered" })
     });
   } catch(e) {}
 
