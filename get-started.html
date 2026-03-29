@@ -564,11 +564,11 @@
     .pc-new { display: inline-block; font-size: 10px; font-weight: 700; color: #c94f7a; background: #fce4ec; padding: 1px 6px; border-radius: 3px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
     .no-programs { padding: 16px; text-align: center; color: var(--text-mid); font-size: 14px; background: var(--purple-ghost); border-radius: 4px; }
     .day-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--purple); margin-top: 12px; margin-bottom: 6px; }
-    .calendly-cta {
+    .booking-cta {
       margin-top: 16px; padding: 20px; background: var(--purple-mist);
       border-radius: 4px; text-align: center; border: 1px solid #d4c3ec;
     }
-    .calendly-cta p { font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
+    .booking-cta p { font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
     .cal-btn {
       display: inline-block; padding: 12px 32px; background: var(--purple); color: white;
       border-radius: 2px; font-family: 'Figtree', sans-serif; font-size: 15px; font-weight: 500;
@@ -989,9 +989,9 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
         <div class="error-msg" id="interestError">Please select what you are interested in</div>
 
         <div id="notSureBlock" class="eoi-cond">
-          <div class="calendly-cta">
+          <div class="booking-cta">
             <p>Let us have a chat - no commitment, no pressure. We will help you figure out the best fit.</p>
-            <a href="https://calendly.com/sparkly-neurodivergentempowered/vipprogram" target="_blank" class="cal-btn">Book a Discovery Call</a>
+            <a href="/book.html" target="_blank" class="cal-btn">Book a Call</a>
             <div class="cal-note">You are welcome to continue filling in the form below if you would like, or just book the call and we will take it from there.</div>
           </div>
         </div>
@@ -1006,9 +1006,9 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
         </div>
 
         <div id="serviceBlock" class="eoi-cond">
-          <div class="calendly-cta">
+          <div class="booking-cta">
             <p>We would love to chat about how we can support you. Book a time that works and we will go from there.</p>
-            <a href="https://calendly.com/sparkly-neurodivergentempowered/vipprogram" target="_blank" class="cal-btn">Book a Call</a>
+            <a href="/book.html" target="_blank" class="cal-btn">Book a Call</a>
           </div>
         </div>
 
@@ -1141,9 +1141,9 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
       <p>We have received your Expression of Interest and we are glad you reached out.</p>
       <p>One of our team will be in touch within the next couple of business days.</p>
       <p id="safetyThankYou" style="display:none; margin-top:12px; padding:12px; background:var(--purple-mist); border-radius:6px; color:var(--text-mid);">We have also notified our clinical team to help us prepare for any safety needs you have let us know about.</p>
-      <div id="thankYouCalendly" style="display:none; margin-top:20px;">
+      <div id="thankYouour booking page" style="display:none; margin-top:20px;">
         <p style="font-weight:600; color:var(--text);">If you have not already, you can also:</p>
-        <a href="https://calendly.com/sparkly-neurodivergentempowered/vipprogram" target="_blank" class="btn-primary" style="margin-top:10px; display:inline-block;">Book a Discovery Call</a>
+        <a href="/book.html" target="_blank" class="btn-primary" style="margin-top:10px; display:inline-block;">Book a Call</a>
       </div>
     </div>
 
@@ -1170,7 +1170,7 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
-      <div class="footer-contact-item"><a class="footer-contact-link" href="https://calendly.com/sparkly-neurodivergentempowered/15mins" target="_blank" rel="noopener noreferrer">Book a 15 minute consult if you want to talk first</a></div>
+      <div class="footer-contact-item"><a class="footer-contact-link" href="/book.html" target="_blank" rel="noopener noreferrer">Book a Call</a></div>
       <div class="footer-contact-item"><a class="footer-contact-link" href="https://www.google.com/maps/search/?api=1&query=Rumba+Resort+Shop+3+10+Leeding+Crescent+Caloundra+4551" target="_blank" rel="noopener noreferrer">&#128204; The Nest, Caloundra, Sunshine Coast QLD</a></div>
       <div class="footer-sponsor">
         <span class="footer-sponsor-title">Proud sponsors of</span>
@@ -1633,7 +1633,7 @@ body.dark-mode .btn-primary, body.dark-mode .nav-cta { background: #6B3FA0 !impo
         if (needsRCO) document.getElementById('safetyThankYou').style.display = 'block';
         var interest = formData.interest_type;
         if (interest === 'Recovery Coaching' || interest === 'Support Coordination' || interest === 'Behaviour Support' || interest === 'Not Sure') {
-          document.getElementById('thankYouCalendly').style.display = 'block';
+          document.getElementById('thankYouour booking page').style.display = 'block';
         }
         document.getElementById('eoi-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else { throw new Error('Submission failed'); }
