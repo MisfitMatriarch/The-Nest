@@ -38,12 +38,22 @@ h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-
 #ack-overlay {
   position: fixed; inset: 0; z-index: 9999;
   background: linear-gradient(145deg, #0d0520 0%, #2c1257 50%, var(--purple) 100%);
-  display: flex; align-items: center; justify-content: center; padding: 2rem;
+  display: flex; align-items: flex-start; justify-content: center; padding: 2rem;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
 }
 #ack-card {
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
   backdrop-filter: blur(24px); border-radius: 4px;
   max-width: 560px; width: 100%; padding: 3rem 3.5rem; text-align: center;
+  margin: auto 0;
+}
+@media (max-height: 700px) {
+  #ack-card { padding: 1.5rem 2rem; }
+  #ack-card h2 { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  #ack-card p { font-size: 0.82rem; line-height: 1.6; margin-bottom: 0.6rem; }
+  .ack-logo-wrap { width: 70px; height: 70px; margin-bottom: 1rem; }
+  .ack-logo-wrap img { width: 56px; height: 56px; }
+  #ack-btn { margin-top: 0.8rem; padding: 0.7rem 2rem; }
 }
 .ack-logo-wrap {
   width: 110px; height: 110px; border-radius: 50%;
